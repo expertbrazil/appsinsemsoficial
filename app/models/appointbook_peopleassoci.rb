@@ -213,16 +213,16 @@ SINSEMS"
   def self.twilio_whatsapp_notificate
     # put your own credentials here
     # live sinsems
-    # account_sid = '***REMOVED***'
-    # auth_token = '***REMOVED***'
+    # account_sid = '***REMOVED***' # [CREDENCIAL SENSÍVEL COMENTADA]
+    # auth_token = '***REMOVED***'    # [CREDENCIAL SENSÍVEL COMENTADA]
 
      #test sinsems
-    # account_sid = '***REMOVED***'
-    # auth_token = '***REMOVED***'
+    # account_sid = '***REMOVED***' # [CREDENCIAL SENSÍVEL COMENTADA]
+    # auth_token = '***REMOVED***'    # [CREDENCIAL SENSÍVEL COMENTADA]
 
     # # curtarelli79
-    # account_sid = '***REMOVED***'
-    # auth_token = '152c990a00bacbc257da4d54d241f160'
+    # account_sid = '***REMOVED***' # [CREDENCIAL SENSÍVEL COMENTADA]
+    # auth_token = '152c990a00bacbc257da4d54d241f160'    # [CREDENCIAL SENSÍVEL COMENTADA]
 
     # set up a client to talk to the Twilio REST API
     # @client = Twilio::REST::Client.new(account_sid, auth_token)
