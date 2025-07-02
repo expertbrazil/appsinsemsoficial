@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.index ["professional_id"], name: "index_appointment_books_on_professional_id", using: :btree
   end
 
-  create_table "bank_accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "bank_accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "agency"
     t.string   "account_number"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.datetime "updated_at",                      null: false
   end
 
-  create_table "bills_pays", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "bills_pays", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "supplier_id"
     t.integer  "people_associated_id"
     t.integer  "payment_form_id"
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.index ["supplier_id"], name: "index_bills_pays_on_supplier_id", using: :btree
   end
 
-  create_table "bills_receives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "bills_receives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "people_associated_id"
     t.integer  "category_id"
     t.integer  "financial_account_id"
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.index ["people_associated_id"], name: "index_bills_receives_on_people_associated_id", using: :btree
   end
 
-  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "reduced_code"
     t.integer  "parent_id"
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.datetime "updated_at",                      null: false
   end
 
-  create_table "category_hierarchies", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "category_hierarchies", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
     t.integer "generations",   null: false
@@ -160,7 +160,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.index ["segment_id"], name: "index_companies_on_segment_id", using: :btree
   end
 
-  create_table "customer_configurations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "customer_configurations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "address"
     t.string   "city"
@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.string   "cpf"
     t.string   "rg"
     t.string   "dispatcher_organ"
-    t.string   "is_student"
+    t.boolean  "is_student",                           default: false
     t.string   "institution_name"
     t.index ["people_associated_id"], name: "index_dependents_on_people_associated_id", using: :btree
   end
@@ -229,7 +229,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "financial_accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "financial_accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.boolean  "status",     default: true
     t.datetime "created_at",                null: false
@@ -319,7 +319,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.index ["type_incorporation_id"], name: "index_patrimonies_on_type_incorporation_id", using: :btree
   end
 
-  create_table "payment_forms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "payment_forms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.boolean  "status",     default: true
     t.datetime "created_at",                null: false
@@ -441,7 +441,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "var",                       null: false
     t.text     "value",       limit: 65535
     t.string   "target_type",               null: false
@@ -452,7 +452,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.index ["target_type", "target_id"], name: "index_settings_on_target_type_and_target_id", using: :btree
   end
 
-  create_table "subcategories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "subcategories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "category_id"
     t.string   "name"
     t.string   "reduced_code"
@@ -487,7 +487,7 @@ ActiveRecord::Schema.define(version: 20240322134120) do
     t.boolean  "status",                     default: true
   end
 
-  create_table "system_attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "system_attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "dependent_id"
     t.integer  "bills_pay_id"
     t.integer  "bills_receife_id"

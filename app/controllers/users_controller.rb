@@ -36,14 +36,17 @@ class UsersController < ApplicationController
       user_params.delete(:password_confirmation)
     end
 
+    active_was = @user.active_was
     successfully_updated = if needs_password?(@user, user_params)
                              @user.update(user_params)
                            else
                              @user.update_without_password(user_params)
                            end
     respond_to do |format|
-      if successfully_updated #@user.update_without_password(user_params)
-        @user.professional.update_attribute(:active, @user.active) if @user.saved_change_to_active?
+      if successfully_updated
+        if active_was != @user.active
+          @user.professional.update_attribute(:active, @user.active)
+        end
         
         format.html { redirect_to users_url, notice: "#{User.model_name.human} #{I18n.t('default_messages.updated')}" }
         format.json { render :show, status: :ok, location: @user }

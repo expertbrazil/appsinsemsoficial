@@ -46,10 +46,12 @@ class ProfessionalsController < ApplicationController
   # PATCH/PUT /professionals/1.json
   def update
     respond_to do |format|
-      if @professional.update(professional_params)        
-        @professional.user.update_attribute(:active, @professional.active) if @professional.saved_change_to_active?
+      active_was = @professional.active_was
+      if @professional.update(professional_params)
+        if active_was != @professional.active
+          @professional.user.update_attribute(:active, @professional.active)
+        end
         
-
         format.html { redirect_to professionals_url, notice: "#{Professional.model_name.human} #{I18n.t('default_messages.updated')}" }
         format.json { render :show, status: :ok, location: @professional }
       else
