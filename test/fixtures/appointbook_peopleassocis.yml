@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  appointment_book: one
+  people_associated: one
+  start_datetime: 2016-08-18 15:24:40
+  end_datetime: 2016-08-18 15:24:40
+  situation: MyText
+
+two:
+  appointment_book: two
+  people_associated: two
+  start_datetime: 2016-08-18 15:24:40
+  end_datetime: 2016-08-18 15:24:40
+  situation: MyText

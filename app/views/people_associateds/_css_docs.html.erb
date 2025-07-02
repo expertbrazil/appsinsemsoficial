@@ -1,0 +1,87 @@
+<style type="text/css">
+
+/* reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;text-decoration:none}:focus{outline:0}a:active{outline:none}body{line-height:1;color:black;background:white}table{border-collapse:separate;border-spacing:0}caption,th,td{text-align:left;font-weight:normal}blockquote:before,blockquote:after,q:before,q:after{content:""}blockquote,q{quotes:"" ""}
+
+h2, h3 {
+  display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    text-decoration: none;
+    margin: 12px;
+}
+
+      
+#outer {
+    width: 100%;
+    margin: -250px auto 0;/* header plus footer height */
+    height: 100%;
+    text-align: left;
+    clear: both;
+    display: table;
+    position: relative;
+    z-index: 1;
+}
+#header {
+    width: 100%;
+    margin: auto;
+    height: 66px;
+    position: relative;
+    z-index: 2;
+    /*border-bottom: 20px solid #fff;*/
+}
+#footer {
+    width: 100%;
+    margin: auto;
+    height: 22px;
+    clear: both;
+    /*border-top: 20px solid #fff;*/
+    position: relative;
+    z-index: 2;
+}
+#content {
+    vertical-align: middle;
+    display: table-cell;
+    padding: 128px 0 0;
+}
+#content .inner {
+    /*background: blue;*/
+    padding: 0 10px;
+    /*width: 300px;*/
+    /*height: 200px;*/
+    margin: 0 auto;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+@media print{    
+  html, body {
+      width: 210mm;
+      height: 297mm;
+  }
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+</style>

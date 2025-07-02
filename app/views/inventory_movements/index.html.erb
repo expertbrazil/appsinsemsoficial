@@ -1,0 +1,35 @@
+<div class="page-header">
+  <%= link_to new_inventory_movement_path, class: 'btn btn-primary waves-effect' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Inventory movement
+  <% end %>
+  <h1>Listing inventory_movements</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Inventory</th>
+            <th>Type</th>
+            <th>Balance</th>
+            <th>Amount</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @inventory_movements) do |inventory_movement| %>
+            <td><%= inventory_movement.inventory %></td>
+            <td><%= inventory_movement.type %></td>
+            <td><%= inventory_movement.balance %></td>
+            <td><%= inventory_movement.amount %></td>
+            <td><%= link_to 'Show', inventory_movement %></td>
+        <td><%= link_to 'Edit', edit_inventory_movement_path(inventory_movement) %></td>
+        <td><%= link_to 'Destroy', inventory_movement, method: :delete, data: { confirm:  I18n.t('default_messages.confirm')  } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

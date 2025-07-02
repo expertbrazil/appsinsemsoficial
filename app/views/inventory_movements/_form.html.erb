@@ -1,0 +1,35 @@
+<%= simple_form_for([@inventory, @inventory_movement], html: { class: "content-preloader", role: "form" }, remote: true) do |f| %>
+  <div class="card-body card-padding">
+    <%= f.error_notification %>
+    <div id="inventory_movement_error"></div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group fg-line">     
+          <%= f.label :type_balance, class: "fg-label" %>                   
+          <%= f.input :type_balance, collection: InventoryMovement::TYPES, input_html: {class: "selectpicker"}, label: false %>
+        </div>
+      </div>
+
+
+      <div class="col-xs-12">
+        <div class="form-group fg-line">     
+          <%= f.label :balance, class: "fg-label" %>                   
+          <%= f.input :balance, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <%= f.button :submit, onclick: "showPreLoader()", class: "btn bgm-green waves-effect" %>     
+    <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+  </div>
+<% end %> 
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    loadSelectPicker();
+  });
+</script>

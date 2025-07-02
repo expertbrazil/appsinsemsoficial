@@ -1,0 +1,20 @@
+<% if @saved %>
+	
+	<% if @to === 0 %>
+		<% js = escape_javascript(render(partial: 'bills_pays/select_categories', locals: { bills_pay: @bills_pay }) ) %>
+		$("#bills_pay_select_category").html("<%= js %>");
+	<% end %>
+	
+	<% if @to === 1 %>
+		<% js = escape_javascript(render(partial: 'bills_receives/select_categories', locals: { bills_receife: @bills_receife }) ) %>
+		$("#bills_receife_select_category").html("<%= js %>");
+	<% end %>
+
+
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_category').modal('hide');
+<% else %>	
+	$("#category_error").html("<%= escape_javascript errors(@category) %>")
+<% end %>	
+
+hiddenPreLoader(); 

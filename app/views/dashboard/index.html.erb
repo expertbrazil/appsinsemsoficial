@@ -1,0 +1,143 @@
+<div class="block-header">
+    <h2><i class="zmdi zmdi-home"></i> <%= "Dashboard" %></h2>
+</div>
+
+<% if current_user.professional %>
+    
+<% else %>
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-lightgreen">
+                <div class="clearfix totals_system">
+                    <div class="chart"><i class="zmdi zmdi-account-box-o"></i></div>
+                    <div class="count">
+                        <small><%= CustomerConfiguration.current.menu_people_associateds.titleize %>/Dependentes</small>
+                        <% PeopleAssociated.joins(:dependents).includes(:dependents).where("dependents.name != ''").collect { |people_associated| people_associated.dependents.count }.sum if false %>
+                        <h2><%= PeopleAssociated.all.size %>/<%= Dependent.where("dependents.name != ''").count %></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-purple">
+                <div class="clearfix totals_system">
+                    <div class="chart"><i class="zmdi zmdi-accounts"></i></div>
+                    <div class="count">
+                        <small>Usuários</small>
+                        <h2><%= User.all.size %></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-orange">
+                <div class="clearfix totals_system">
+                    <div class="chart"><i class="zmdi zmdi-city-alt"></i></div>
+                    <div class="count">
+                        <small>Empresas</small>
+                        <h2><%= Company.all.size %></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="mini-charts-item bgm-bluegray">
+                <div class="clearfix totals_system">
+                    <div class="chart"><i class="zmdi zmdi-assignment"></i></div>
+                    <div class="count">
+                        <small>Patrimônios</small>
+                        <h2><%= Patrimony.all.size %></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>       
+
+
+    <div class="card">
+        <div class="card-header ch-alt m-b-20">                                    
+            <h2><i class="zmdi zmdi-chart"></i> <%= "Gráficos" %></h2>
+        </div>
+
+        <div class="card-body card-padding"> 
+            <%= pie_chart AppointbookPeopleassoci.includes(appointment_book: [:professional]).limit(5).group('professionals.name').count("appointbook_peopleassocis.start_datetime"), width: "500px", 
+            discrete: true,
+            library: {
+                title: { 
+                    text: "#{CustomerConfiguration.current.menu_people_associateds.titleize} X Atendimentos", x: -20
+                },
+                yAxis: {
+                    title: {
+                        text: 'Quantidade'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' atendimento(s)'
+                }
+            } 
+            %>      
+
+            <br><br>            
+            
+            <% if false %>
+                <%= area_chart AppointbookPeopleassoci.limit(30).group_by_day(:start_datetime, format: :custom, range: 4.weeks.ago.midnight..Time.now).order('start_datetime DESC').count("appointment_book_id"), 
+            discrete: true,
+            library: {
+                title: { 
+                    text: 'Atendimentos últimos 30 dias', x: -20
+                },
+                yAxis: {
+                    title: {
+                        text: 'Quantidade'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' atendimento(s)'
+                }
+            } 
+            %>
+            <% end %>
+
+            
+        </div>    
+</div>
+
+
+    <% unless @dependents_benefit_expired.blank? %>
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- Recent Items -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>ATENÇÃO: <%= "Dependentes com benefício expirando" %><small><%= "completando 21 anos" %></small></h2>
+                    </div>
+
+                    <div class="card-body m-t-0">
+                        <table class="table table-inner table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Benefício até</th>
+                                    <th>Associado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% @dependents_benefit_expired.each do |dependent| %>
+                                    <tr>
+                                        <td class="f-500"><%= dependent.name %></td>
+                                        <td><%= l dependent.benefit_until %></td>
+                                        <td class="f-500 c-cyan"><%= link_to dependent.people_associated.name, edit_people_associated_url(dependent.people_associated, anchor: 'people_associated_dependents'), title: "Editar" %></td>
+                                    </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                        <%= will_paginate @dependents_benefit_expired, renderer: BootstrapPagination::Rails %>               
+                    </div>                
+                </div>
+            </div>        
+        </div>
+    <% end %>
+<% end %>

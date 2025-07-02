@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Relatório de atendimetos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <%= wicked_pdf_stylesheet_link_tag "pdf" %>
+  </head>
+  <body>
+    <div id="header" class="row">     
+    </div>
+
+    <section class="row">
+      <div class="col-xs-12">
+        <br>
+        <h5 class="text-xs-center">ATENDIMENTOS</h5>
+        <hr>
+      </div>
+
+      <div class="col-xs-12">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Horário</th>
+              <th>Associado/Dependente</th>     
+              <th>Profissional</th>
+              <th>Serviço</th>                     
+            </tr>
+          </thead>
+          <tbody>
+            <% @calls.each do |cal| %>
+              <tr>
+                <td><small><%=l cal.start_datetime, format: :custom %></small></td>                            
+		            <td><small> <%=l cal.start_datetime, format: :time %> - <%=l cal.end_datetime, format: :time %></small></td>
+		            <td><small><%= cal.people_associated ? cal.people_associated.name : (cal.dependent ?  "#{cal.dependent.name}, \n#{cal.dependent.degree_of_kinship_name} de #{cal.dependent.people_associated.name}"  : 'Sem vínculo com associado') %></small></td>
+		            <td><small><%= cal.appointment_book.professional.name %></small></td>                                            
+		            <td><small><%= cal.appointment_book.professional.function_name %></small></td>                                            
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+  </body>
+</html>

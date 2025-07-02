@@ -1,0 +1,13 @@
+<div class="page-header">
+  <%= link_to heritage_groups_path, class: 'btn btn-default waves-effect' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to @heritage_group, class: 'btn btn-primary waves-effect' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+  <h1>Editing heritage_group</h1>
+</div>
+
+<%= render 'form' %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  people_associateds: one
+  name: MyString
+  birthdate: 2016-07-29
+  degree_of_kinship: 1
+
+two:
+  people_associateds: two
+  name: MyString
+  birthdate: 2016-07-29
+  degree_of_kinship: 1

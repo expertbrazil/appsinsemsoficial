@@ -1,0 +1,2 @@
+module PeopleAssociatedsHelper
+end

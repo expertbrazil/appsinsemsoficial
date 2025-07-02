@@ -1,0 +1,13 @@
+default: &DEFAULT
+  site:
+    title: "SINSEMS"
+    url: "http://localhost:3000"
+
+development:
+  <<: *DEFAULT
+
+test:
+<<: *DEFAULT
+
+production:
+  <<: *DEFAULT

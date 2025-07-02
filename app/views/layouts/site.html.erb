@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= APP_CONFIG['site']['title'] %></title>
+
+  <!-- Vendor CSS -->
+
+  <%= stylesheet_link_tag "template/vendors/fullcalendar/dist/fullcalendar.min.css", "template/vendors/animate.css/animate.min.css", "template/vendors/sweetalert/dist/sweetalert.css", "template/vendors/material-design-iconic-font/dist/css/material-design-iconic-font.min.css", "template/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css", "template/vendors/chosen/chosen.css", "template/vendors/bootstrap-select/dist/bootstrap-select.css", "template/vendors/select2.css", "template/vendors/select2-bootstrap.css", "template/vendors/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.css", "font-awesome.min.css", "template/vendors/modal-fullscreen.css", "easy-autocomplete.min", "easy-autocomplete.themes.min", "template/vendors/summernote/dist/summernote.css" %> 
+
+  <!-- CSS -->
+  <%= stylesheet_link_tag "template/app_1.min.css", "template/app_2.min.css", "custom" %>
+
+    <!-- CSS para impressão -->
+    <%= stylesheet_link_tag "print", media: "print"%>
+
+    <%= javascript_include_tag "template/jquery.min.js", "template/jquery_ujs.js", "template/jquery.flot.js", "template/jquery.flot.resize.js", "template/curvedLines.js", "template/jquery.sparkline.min.js", "template/jquery.easypiechart.min.js", "template/moment.min.js", "template/waves.min.js", "template/bootstrap.min.js", "template/fullcalendar.min.js", "template/fullcalendar_pt-br", "template/jquery.simpleWeather.min.js", "template/bootstrap-growl.min.js", "template/sweetalert.min.js", "template/jquery.mCustomScrollbar.concat.min.js", "template/bootstrap-select.js", "template/bootstrap-select-pt_BR.js", "template/bootstrap-datetimepicker.min.js", "template/datepicker-pt-BR.js", "template/chosen.jquery.js", "template/mediaelement-and-player.min.js", "jquery.maskedinput.min.js", "template/cocoon.js", "webcam", "template/select2.js", "template/select2_locale_pt-BR.js", 'jquery.bootstrap.wizard.min.js', "filterrific/filterrific-jquery.js", "highcharts.js", "chartkick.js", "jquery.easy-autocomplete.min", "template/fileinput.min.js", "best_in_place.js", "jquery.maskMoney.min.js", "summernote-updated.min", "" %>
+    <%= csrf_meta_tags %>
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" data-ma-theme="teal">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to "#{APP_CONFIG['site']['title']}", "#", class: "navbar-brand" %>
+      </div>
+
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/site/filiacao">Filiação</a></li>         
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section id="main">
+  <div class="container">
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, class: "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable", role: "alert" do %>
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <%= msg %>
+      <% end %>
+    <% end %>
+
+    <%= yield %>
+  </div>
+  </section>
+
+  <%= render 'shared/footer' %>
+<% render 'shared/loader' %>
+
+  <style type="text/css">
+  .navbar-inverse .navbar-brand {
+    color: #FFF;
+  }
+  .navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-text {
+    color: #FFF;
+}
+  .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    background-color: #4caf5096;
+  }
+  #footer {
+    padding-left: 0px; 
+}
+  </style>
+
+          <!-- Placeholder for IE9 -->
+        <!--[if IE 9 ]>
+             <%= javascript_include_tag "template/jquery.placeholder.min.js"%>
+             <![endif]-->
+
+             <%= javascript_include_tag "template/app.min.js", "sinsems.js" %>
+</body>
+</html>

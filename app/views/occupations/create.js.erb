@@ -1,0 +1,14 @@
+<% if @saved %>
+	$('#people_associated_occupation_id').append($('<option>', {
+	    value: "<%=@occupation.id%>",
+	    text: "<%=@occupation.name%>"
+	}));
+
+	
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_occupation').modal('hide');
+<% else %>	
+	$("#occupation_error").html("<%= escape_javascript errors(@occupation) %>")
+<% end %>	
+
+hiddenPreLoader(); 

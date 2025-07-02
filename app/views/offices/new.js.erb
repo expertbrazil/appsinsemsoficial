@@ -1,0 +1,8 @@
+<% js = escape_javascript(
+  render(partial: 'offices/remote_form')
+) %>
+
+$("#office_content").html("<%= js %>");
+$("#card_header_office").html("<h2><i class='zmdi zmdi-account-box-o'></i> Novo <%= Office.model_name.human %></h2>")
+
+hiddenPreLoader(); 

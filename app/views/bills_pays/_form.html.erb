@@ -1,0 +1,298 @@
+<div id="dinamic_form" class="card">  
+  <div class="card-body card-padding">
+  
+
+  <div class="wizard" style="display:<%= @bills_pay.payroll_discount ? 'block' : 'none' %>;">
+    <div class="stepper-wrapper" >
+      <div class="stepper-item active">
+        <div class="step-counter">1</div>
+        <div class="step-name">Contas a Pagar</div>
+      </div>
+      
+      <div class="stepper-item">
+        <div class="step-counter">2</div>
+        <div class="step-name">Contas a Receber</div>
+      </div>
+    </div>    
+  </div>
+
+
+    <%= simple_form_for(@bills_pay, html: { class: "", id: "form_bills_pay", role: "form" }, remote: true,  multipart: true) do |f| %>
+     <%= errors @bills_pay if @bills_pay.errors.any? %> 
+    <div id="bills_pay_error"></div>
+
+     <div class="card-body card-padding">
+      <div class="row">
+        <div class="col-sm-4 m-b-20">
+            <div class="toggle-switch toggle-switch-demo">
+                <label for="bills_receife_work_days_only" class="ts-label"><%= BillsPay.human_attribute_name :payroll_discount %>  </label>
+                <%= f.check_box :payroll_discount %>                
+                <label for="bills_receife_work_days_only" class="ts-helper"></label>
+                <br>
+                <small class="text text-danger">Ao selecionar, o sistema vai gerar uma conta a receber para o <strong><%= CustomerConfiguration.current.menu_people_associateds.upcase%></strong></small>
+            </div>
+          </div>
+
+          <div class="col-sm-4" id="selectPeopleAssociated" style="display:<%= @bills_pay.payroll_discount ? 'block' : 'none' %>;">    
+            <div class="form-group fg-line ">
+                <%= f.label :people_associated, class: "fg-label" %>
+                <%= f.association :people_associated, input_html: {class: "selectpicker", "data-live-search": true, autocomplete: 'off'}, label: false %>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="input-group">
+                <%= f.label :supplier, class: "fg-label" %>
+
+                <% if true %>
+                  <%= link_to "javascript::", class: "input-group-addon last create_supplier" do %>
+                    <i class="zmdi zmdi-plus"></i>
+                  <% end %>                                
+                <% end %>                                
+            </div>
+
+            <div class="form-group fg-line">                             
+               <%= f.association :supplier, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+            </div>
+          </div>
+      </div>
+
+      <div class="row">     
+        <div class="col-sm-3">            
+            <div class="input-group">
+                <% if false %>
+                  <%= f.label :category, class: "fg-label" %>  
+                  <%= link_to "javascript::", class: "input-group-addon last create_category" do %>
+                    <i class="zmdi zmdi-plus"></i>
+                  <% end %>                                
+                <% end %>                                
+            </div>
+          
+          <div class="form-group fg-line">              
+            <div id="bills_pay_select_category">
+              <% render "select_categories" %>
+
+               <%= search_chart_of_account(f) %>     
+            </div>          
+          </div>
+        </div>
+        
+
+        <div class="col-sm-2">
+          <div class="form-group fg-line"> 
+            <%= f.label :n_doc, class: "fg-label" %>  
+            <%= f.input :n_doc, input_html: {class: "input-sm form-control fg-input"}, label: false %>             
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group fg-line"> 
+            <%= f.label :description, class: "fg-label" %>
+            <%= f.input :description, as: :string, input_html: {class: "input-sm form-control fg-input"}, label: false %>               
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group fg-line"> 
+            <%= f.label :amount, class: "fg-label" %>  
+            <%= f.input :amount, as: :string, input_html: {class: "input-sm form-control fg-input money", value: (number_with_precision(f.object.amount, precision: 2, separator: '.', delimiter: '') || 0)}, label: false  %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">   
+        <div class="col-sm-3">
+          <div class="form-group fg-line"> 
+            <%= f.label :payment_form, class: "fg-label" %>
+            <%= f.association :payment_form, collection: PaymentForm.actives, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+          </div>
+        </div> 
+
+        <div class="col-sm-3">
+          <div class="form-group fg-line"> 
+            <%= f.label :bank_account, class: "fg-label" %>
+            <%= f.association :bank_account, collection: BankAccount.all, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group fg-line"> 
+            <%= f.label :competence_date, class: "fg-label" %>  
+            <div class="input-group form-group">
+                <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                <div class="dtp-container">
+                  <%= f.input :competence_date, as: :string, input_html: {class: "form-control date-picker", placeholder: "Clique aqui..." , value: I18n.l(@bills_pay.competence_date ? @bills_pay.competence_date : Date.today) }, label: false %>
+                </div>
+                <span class="input-group-addon"><i class="zmdi zmdi-calendar-close clear_field" title='Limpar campo'></i></span>
+            </div>                             
+          </div>
+        </div>     
+
+        <div class="col-sm-3">
+          <div class="form-group fg-line"> 
+            <%= f.label :due_date, class: "fg-label" %>  
+            
+            <div class="input-group form-group">
+              <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+              <div class="dtp-container">
+                <%= f.input :due_date, as: :string, input_html: {class: "form-control date-picker", placeholder: "Clique aqui..." , value: @bills_pay.due_date ? I18n.l(@bills_pay.due_date) : '', autocomplete: false }, label: false %>                    
+              </div>
+              <span class="input-group-addon"><i class="zmdi zmdi-calendar-close clear_field" title='Limpar campo'></i></span>
+            </div>             
+          </div>          
+        </div>
+
+      </div>
+
+
+    <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group fg-line"> 
+            <%= f.label :ocorrence, class: "fg-label" %>  
+            <%= f.input :ocorrence, collection: BillsPay::OCORRENCE, input_html: {class: "selectpicker"}, label: false %>             
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group fg-line"> 
+            <%= f.label :deadline, class: "fg-label" %>  
+            <div class="input-group form-group">
+                <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                <div class="dtp-container">
+                  <%= f.input :deadline, as: :string, input_html: {class: "form-control date-picker", placeholder: "Clique aqui..." , value: @bills_pay.deadline ? I18n.l(@bills_pay.deadline) : '' }, label: false %>                    
+                </div>
+                <span class="input-group-addon"><i class="zmdi zmdi-calendar-close clear_field" title='Limpar campo'></i></span>
+            </div>                 
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group fg-line"> 
+            <%= f.label :expiration_day, class: "fg-label" %>  
+            <%= f.input :expiration_day, input_html: {class: "input-sm form-control fg-input"}, label: false %>             
+          </div>
+        </div>
+</div>
+
+      <div class="row">        
+        
+
+         <div class="col-sm-4 m-b-20">
+            <div class="toggle-switch toggle-switch-demo">
+                <label for="bills_receife_work_days_only" class="ts-label"><%= BillsPay.human_attribute_name :work_days_only %>  </label>
+                <%= f.check_box :work_days_only %>                
+                <label for="bills_receife_work_days_only" class="ts-helper"></label>
+            </div>
+        </div>
+        
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-12 m-b-20">
+          <%= f.simple_fields_for :system_attachments do |system_attachment| %>
+            <%= render 'system_attachment_fields', f: system_attachment %>
+          <% end %>
+        </div>
+        
+        <div class="col-sm-12 m-b-20" id="system_attachment_add">
+          <%= link_to_add_association '<i class="zmdi zmdi-plus"></i> Novo Arquivo'.html_safe, f, :system_attachments, class: 'btn bgm-cyan waves-effect m-l-25 m-t-10' %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card-body card-padding">
+      <%= submit_tag 'Criar e adicionar', class: "btn bgm-teal waves-effect send_form_and_new", name: 'create_and_add', data: { disable_with: "Aguarde..."} if !edit_mode? %>
+      <%= f.button :submit, class: "btn bgm-green waves-effect send_form", data: { disable_with: "Aguarde..."} %>
+      <%= link_to "Cancelar", bills_pays_path, class: "btn bgm-red waves-effect" %>
+    </div> 
+
+
+    <% end %>    
+  </div>
+</div>
+
+
+
+
+<%= render 'suppliers/modal_supplier' %>
+<%= render 'categories/modal_category' %>
+<%= render 'bills_receives/modal_bills_receife' %>
+
+<!---Helper-->
+<%= loading_full %>
+
+<script type="text/javascript">
+    $(document).ready(function() { 
+      loadSelectPicker();
+
+       $( "#form_bills_pay" ).submit(function( ) {
+          showFullLoader();
+        });
+
+
+      $('.create_supplier').on("click", function(e){
+            $('#modal_new_supplier').modal('show');          
+            e.stopImmediatePropagation();
+            
+            
+            $.ajax({
+              url: "<%=new_supplier_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+          });      
+        });
+
+        $('.close-modal-supplier').on("click", function(e){
+            $('#modal_new_supplier').modal('hide');
+        }); 
+
+
+          $('.create_category').on("click", function(e){
+              $('#modal_new_category').modal('show');          
+              e.stopImmediatePropagation();
+              
+              
+              $.ajax({
+                url: "<%=new_category_path({to: 0, bills_pay: @bills_pay.id })%>",
+                type: 'get',
+                dataType: 'script',
+                beforeSend: function(xhr) {                     
+                  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                  showPreLoader();
+              },
+              success: function() { 
+                  hiddenPreLoader();            
+              }
+          });      
+        });
+
+        $('.close-modal-category').on("click", function(e){
+            $('#modal_new_category').modal('hide');
+        });
+
+       $('#bills_pay_payroll_discount').on('click', function() {
+         if ($(this).is(":checked")) {
+          $('#selectPeopleAssociated').show();
+          $('.wizard').show();
+         } else {
+          $('#selectPeopleAssociated').hide();
+          $('.wizard').hide();
+
+            $('#bills_pay_people_associated_id').prop("selectedIndex", 0);
+
+            
+            $('.selectpicker').selectpicker('refresh');
+         }
+       })
+    });
+</script>
+

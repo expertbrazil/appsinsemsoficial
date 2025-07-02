@@ -1,0 +1,13 @@
+<% if @saved %>
+	$('#patrimony_room_id').append($('<option>', {
+	    value: "<%=@room.id%>",
+	    text: "<%=@room.name%>"
+	}));
+
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_room').modal('hide');
+<% else %>	
+	$("#room_error").html("<%= escape_javascript errors(@room) %>")
+<% end %>	
+
+hiddenPreLoader(); 

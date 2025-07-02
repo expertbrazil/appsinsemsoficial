@@ -1,0 +1,1 @@
+json.array! @appointment_books, partial: 'appointment_books/appointment_book', as: :appointment_book

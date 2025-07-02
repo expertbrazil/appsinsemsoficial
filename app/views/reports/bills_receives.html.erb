@@ -1,0 +1,112 @@
+<%= stylesheet_link_tag "print", media: :print %> 
+<div class="card no-print">
+  <div class="card-header ch-alt m-b-10">   
+    <i class="zmdi zmdi-filter-list"></i> Filtros
+  </div>  
+  <div class="card-body card-padding"> 
+    <%= form_for_filterrific @filterrific, html: { class: "", role: "form", id: 'filterrific-no-ajax-auto-submit' } do |f| %>
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            Data do Cadastro
+            <div class="form-group fg-line">          
+             <%= f.text_field :with_due_date_gte, :class => "form-control", :placeholder => "" %>
+            </div>         
+        </div>       
+
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            Situação
+            <div class="form-group fg-line">          
+             <%= f.select :with_situation_flag, BillsReceife::STATES, { :include_blank => "Todas" }, {:class => "form-control"} %>
+            </div>         
+        </div>   
+
+         <div class="col-md-4 col-sm-4 col-xs-4">
+          Plano de Contas
+          <div class="form-group fg-line">          
+            <%= f.select :with_category_ids, options_for_select(credit_categories_options_array, @filterrific.with_category_ids), { :include_blank => "Todas" }, {:class => "form-control"} %>
+          </div>   
+        </div>   
+
+      <div class="col-md-4 col-sm-4 col-xs-4">
+        <div class="form-group fg-line">
+         <label>Agrupar por:</label>
+         <%= f.select(:grouped_by, BillsReceife.options_for_grouped_by, { selected: params[:filterrific].present? && params[:filterrific][:grouped_by].present? ? params[:filterrific][:grouped_by] : 'category_id'}, {class: 'selectpicker'} ) %>
+       </div>
+     </div>     
+
+     <div class="col-md-4 col-sm-4 col-xs-4">
+        <div class="form-group fg-line">
+         <label>Ordenar por:</label>
+         <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], {}, {class: 'selectpicker'} ) %>
+       </div>
+     </div>
+
+
+
+     <div class="col-md-8 col-sm-2 col-xs-2">
+      <div class="form-group fg-line">  
+        <%= f.submit 'Visualizar', class: "btn bgm-green waves-effect" %>                
+        <%= link_to('Resetar Filtros', reset_filterrific_url, class: "btn bgm-red waves-effect")%>
+      </div>
+    </div>
+  </div>
+
+  <%= render_filterrific_spinner %>      
+  <% end %>
+</div>
+</div>
+
+<div class="card">
+  <div class="action-header clearfix">                                       
+    <div class="ah-label hidden-xs"><i class="zmdi zmdi-money"></i> <%= "Relatório de Recebimentos" %> </div>
+
+    <% if @bills_receives %>
+    <ul class="actions no-print">
+      <li>
+          <%
+            @params = { } 
+            @params.merge!({ filterrific: @filterrific_params }) if params[:filterrific].present?
+          %>
+
+          <%= link_to bills_receives_print_path(@params), target: :blank, title: "Imprimir" do %>
+            <i class='zmdi zmdi-print'></i> 
+          <% end %>
+      </li>   
+<% if false %>
+      <li>
+         <%= link_to bills_receives_to_xls_path({format: :xls, filterrific: @filterrific.to_hash }), target: :blank, title: "Exportar Excel" do %>
+          <i class="fa fa-file-excel-o"></i>                        
+          <% end %>
+      </li>                    
+<% end %>
+    </ul>
+    <% end %>    
+  </div>
+
+  <div class="card-body"> 
+    <div class="table-responsive">
+      <% if @bills_receives %>
+      <%= render( partial: 'reports/list_bills_receives', locals: { bills_receives: @bills_receives } )  %>
+      <% else %>  
+      <p> Sem resultados </p>
+      <% end %>
+    </div>                       
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    loadSelectPicker();        
+    dateRangePicker("#filterrific_with_due_date_gte");
+  });
+</script>
+
+
+<style type="text/css">
+.daterangepicker {
+  right: 810px !important;
+}
+.daterangepicker .drp-calendar {
+  max-width: 330px;
+}
+</style>

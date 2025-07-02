@@ -1,0 +1,43 @@
+<aside id="sidebar" class="sidebar c-overflow no-print">
+	<div class="s-profile">
+		<a href="" data-ma-action="profile-menu-toggle">
+			<div class="sp-pic">
+				<img src="/assets/template/profile-pics/1.jpg" alt="">
+			</div>
+
+			<div class="sp-info">
+				<%= current_people_associated.present? ? current_people_associated.name : (current_dependent.present? ? current_dependent.name : 'Sem Informação') %>
+				<i class="zmdi zmdi-caret-down"></i>
+			</div>
+		</a>
+
+		<ul class="main-menu">
+			<li>	
+				<% if current_people_associated.present? %>			
+					<a href="<%= meu_perfil_member_access_index_path %>"><i class="zmdi zmdi-account"></i> Meu Perfil</a>
+				<% else %>
+					<a href="<%= meu_perfil_member_access_dependent_index_path %>"><i class="zmdi zmdi-account"></i> Meu Perfil</a>
+				<% end %>
+			</li>			
+			<li>
+				<%= link_to( raw("#{content_tag(:i, '', class: "zmdi zmdi-time-restore")} Sair"), current_people_associated.present? ? destroy_people_associated_session_path : (current_dependent.present? ? destroy_dependent_session_path : 'javascript:;'), data: {confirm: 'Deseja realmente sair?'}, method: "delete", class: 'dropdown-item') %>	
+			</li>
+		</ul>
+	</div>
+
+	<ul class="main-menu">
+		<% if current_people_associated.present? %>
+			<li class="<%= is_active?(:dashboard)%>">
+				<%= link_to '/area-associado' do %>
+				<i class="zmdi zmdi-home"></i> Dashboard
+				<% end %>
+			</li>
+		<% else %>
+			<li class="<%= is_active?(:dashboard)%>">
+				<%= link_to '/area-dependente' do %>
+				<i class="zmdi zmdi-home"></i> Dashboard
+				<% end %>
+			</li>
+		<% end %>
+	</ul>
+</aside>

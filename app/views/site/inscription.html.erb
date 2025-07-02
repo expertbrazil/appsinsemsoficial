@@ -1,0 +1,660 @@
+<div class="card">
+    <%= simple_form_for(@people_associated, url: site_inscription_path, html: { class: "", role: "form" }) do |f| %>
+    <%= errors @people_associated if @people_associated.errors.any? %> 
+
+    <div role="tabpanel">
+
+        <div class="tab-content p-t-0 p-b-0">
+            <div role="tabpanel" class="tab-pane active" id="personal">
+                <div class="card-header">
+                    <h2><i class="zmdi zmdi-face"></i> Dados Pessoais para Filiação</h2>
+                </div>
+
+                <div class="card-body card-padding">
+
+                    <%= f.hidden_field :number_registration %>
+                    <div class="row">
+                        <div class="col-sm-3" id="photo_cam" style="margin-bottom: 60px;">
+                            <div class="camera">                        
+                                <div class="fg-line col-sm-6">
+                                    <% if @people_associated.photo?  %>                                    
+                                        <div id="preview_photo" class="fg-line">
+                                            <% @photo_path =  File.exist?("#{Rails.root.to_s}/public#{@people_associated.photo_url(:thumb_200X150)}") ? @people_associated.photo_url(:thumb_200X150) : @people_associated.photo_url %>
+                                            <%= image_tag @photo_path if @photo_path.present? %>
+                                        </div>                         
+                                    <% end %>
+
+                                    <%= f.input :photo, as: :hidden, input_html: { class: "fileinput" } %>                                     
+                                </div>  
+
+                                <div class="fg-line col-sm-6 p-t-20">                                               
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-preview thumbnail" data-trigger="fileinput">
+                                        </div>
+                                        <div>
+                                            <span class="btn btn-info btn-file">
+                                                <span class="fileinput-new">Arquivo</span>
+                                                <span class="fileinput-exists"></span>
+                                                <input type="file" name="...">
+                                            </span>
+                                            <a href="#" class="btn btn-danger fileinput-exists"
+                                           data-dismiss="fileinput">Cancelar</a>
+                                        </div>
+                                    </div>
+                                </div>                                                 
+                            </div>                    
+                        </div>
+
+                        <div class="col-sm-9">
+                            <div class="col-sm-4">
+                                <div class="form-group fg-line m-b-5">   
+                                    <%= f.label :created_at, class: "fg-label  m-b-1" %>
+                                    <input type='text' class="form-control mask-date" name="people_associated[created_at]" value="<%=I18n.l(@people_associated.created_at ? @people_associated.created_at : DateTime.current, format: :custom)%>" >
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group fg-line">
+                                    <%= f.label :affiliate_date, class: "fg-label m-b-1" %>
+                                    <input type='text' class="form-control mask-date" name="people_associated[affiliate_date]" value="<%=@people_associated.affiliate_date ? I18n.l(@people_associated.affiliate_date) : '' %>">
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-4">
+                                <div class="form-group fg-line">   
+                                    <%= f.label :hollering_registration, class: "fg-label  m-b-1" %>
+                                    <%= f.input :hollering_registration, input_html: {class: 'form-control'}, label: false %>  
+                                </div>
+                            </div>
+
+
+               
+                            <div class="col-sm-12">    
+                                <div class="form-group fg-line ">
+                                    <%= f.label :name, class: "fg-label" %>
+                                    <%= f.input :name, input_html: {class: "input-sm form-control fg-input", autocomplete: 'off'}, label: false %>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="cpf form-group fg-line">
+                                    <%= f.label :cpf, class: "fg-label" %>
+                                    <%= f.input :cpf, input_html: {class: 'input-sm form-control fg-input input-mask mask-cpf', "data-mask": "000.000.000-00" , "data-id": @people_associated.id }, label: false %>   
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group fg-line ">
+                                    <%= f.label :rg, class: "fg-label" %>
+                                    <%= f.input :rg, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group fg-line ">
+                                    <%= f.label :dispatcher_organ, class: "fg-label" %>
+                                    <%= f.input :dispatcher_organ, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">    
+                                <div class="form-group fg-line">
+                                    <label class="string required fg-label" for="people_associated_email">
+                                        <abbr title="required">*</abbr> 
+                                        E-mail
+                                    </label>
+                                    <%= f.input :email, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group fg-line">
+                                    <%= f.label :phone, class: "fg-label" %>
+                                    <%= f.input :phone, input_html: {class: "input-sm form-control fg-input mask-phone-fixo", "data-mask": "(00) 0000-0000"}, label: false %>                        
+                                </div>
+                            </div>
+
+                              <div class="col-sm-6">
+                                <div class="form-group fg-line">
+                                    <label class="string required fg-label" for="people_associated_cell_phone1">
+                                        <abbr title="required">*</abbr> 
+                                        Celular 1
+                                    </label>
+                                    <%= f.input :cell_phone1, input_html: {class: "input-sm form-control fg-input mask-phone", "data-mask": "(00) 0000-0000"}, label: false %>                        
+                                </div>
+                            </div>
+
+                              <div class="col-sm-6">
+                                <div class="form-group fg-line">
+                                    <%= f.label :cell_phone2, class: "fg-label" %>
+                                    <%= f.input :cell_phone2, input_html: {class: "input-sm form-control fg-input mask-phone", "data-mask": "(00) 0000-0000"}, label: false %>                        
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>      
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group fg-line">
+                                <%= f.label :spouse, class: "fg-label" %>
+                                <%= f.input :spouse, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                            </div>
+                        </div> 
+<% if false %>
+                        <div class="col-sm-6">
+                            <div class="form-group fg-line">
+                                <%= f.label :mother, class: "fg-label" %>
+                                <%= f.input :mother, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                            </div>
+                        </div> 
+
+                        <div class="col-sm-6">
+                            <div class="form-group fg-line">
+                                <%= f.label :father, class: "fg-label" %>
+                                <%= f.input :father, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                            </div>
+                        </div> 
+<% end %>
+                        <div class="col-sm-6">
+                            <div class="form-group fg-line">
+                                <%= f.label :place_birth, class: "fg-label" %>
+                                <%= f.input :place_birth, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+
+                            </div>
+                        </div>
+                    </div>    
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group fg-line">
+                                <label class="string required fg-label" for="people_associated_birthdate">
+                                        <abbr title="required">*</abbr> 
+                                       Data de Nasc.
+                                    </label>
+
+                                <input type='text' class="form-control mask-date" name="people_associated[birthdate]" value="<%=@people_associated.birthdate ? I18n.l(@people_associated.birthdate) : ''%>">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group fg-line">
+                                 <label class="string required fg-label" for="people_associated_gender">
+                                        <abbr title="required">*</abbr> 
+                                       Sexo
+                                    </label>
+                                <%= f.input :gender, collection: PeopleAssociated::GENDERS, input_html: {class: "selectpicker"}, label: false %>
+                            </div>
+                        </div>
+
+                        <% if false %>
+                        <div class="col-sm-3">
+                            <div class="form-group fg-line">
+                                <%= f.label :breed, class: "fg-label" %>
+                                <%= f.input :breed, collection: PeopleAssociated::BREED, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                            </div>
+                        </div> 
+                        <% end %>
+
+                        <div class="col-sm-3">
+                            <div class="form-group fg-line">
+                                <%= f.label :marital_status, class: "fg-label" %>
+                                <%= f.input :marital_status, collection: PeopleAssociated::MARITAL_STATUS, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                            </div>
+                        </div>
+                    </div>                    
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group fg-line">
+                                 <label class="string required fg-label" for="people_associated_scholarity">
+                                        <abbr title="required">*</abbr> 
+                                       Escolaridade
+                                    </label>
+
+                                <%= f.input :scholarity, collection: PeopleAssociated::SCHOLARITY, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                            </div>
+                        </div>   
+
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                
+                                 <label class="string required fg-label" for="people_associated_office_id">
+                                        <abbr title="required">*</abbr> 
+                                       Cargo
+                                    </label>    
+                            </div>
+
+                            <div class="form-group fg-line">                             
+                               <%= f.association :office, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+                           </div>
+                       </div>
+
+                       <div class="col-sm-3">
+                        <div class="input-group">
+                            <label class="string required fg-label" for="people_associated_occupation_id">
+                                        <abbr title="required">*</abbr> 
+                                       Função
+                                    </label>   
+                        </div>                            
+
+                        <div class="form-group fg-line">
+                           <%= f.association :occupation, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+                       </div>
+                   </div>
+
+                   <div class="col-sm-3">   
+                    <div class="input-group">
+                        
+                        <label class="string required fg-label" for="people_associated_department">
+                                        <abbr title="required">*</abbr> 
+                                       Secretaria
+                                    </label>                          
+                    </div>
+                    
+                    <div class="form-group fg-line ">
+                      <%= f.association :department, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                  </div>
+              </div>                 
+          </div>
+
+          <div class='row'>
+
+            <div class="col-sm-3">
+                <div class="form-group fg-line">
+                    <label class="string required fg-label" for="people_associated_profession">
+                                        <abbr title="required">*</abbr> 
+                                       Profissão
+                                    </label> 
+                    <%= f.input :profession, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+
+
+            <div class="col-sm-3">   
+                    <div class="input-group">
+                        <label class="string required fg-label" for="people_associated_workplace">
+                            <abbr title="required">*</abbr> 
+                           Local de Trabalho
+                        </label>                           
+                    </div>
+                    
+                    <div class="form-group fg-line ">
+                      <%= f.association :workplace, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                  </div>
+              </div>        
+
+            <div class="col-sm-3">
+                <div class="form-group fg-line">
+                    <%= f.label :admission_date, class: "fg-label m-b-1" %>
+                    <input type='text' class="form-control mask-date" name="people_associated[admission_date]" value="<%=@people_associated.admission_date ? I18n.l(@people_associated.admission_date) : '' %>">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group fg-line">
+                    <%= f.label :gross_salary, class: "fg-label" %>
+                    <%= f.input :gross_salary, as: :string, input_html: {class: "input-sm form-control fg-input money", value: (number_with_precision(f.object.gross_salary, precision: 2, separator: '.', delimiter: '') || 0)}, label: false  %>
+                </div>
+            </div> 
+        </div> 
+    </div>
+
+
+    <div class="card-header">
+        <h2><i class="zmdi zmdi-pin"></i> Endereço</h2>
+    </div>
+
+
+    <div class="card-body card-padding">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group fg-line">   
+                        <div class="input-group">
+                    <%= f.label :zipcode, class: "fg-label" %> 
+
+                    <%= link_to "javascript::", class: "input-group-addon last search_cep" do %>
+                        <i class="zmdi zmdi-search"></i>
+                    <% end %>           
+                </div>
+
+                <div class="form-group fg-line">   
+                    <%= f.input :zipcode, input_html: {class: 'input-sm form-control fg-input mask-cep', "data-mask": "00000-000"}, label: false %>
+                </div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-5">
+                <div class="form-group fg-line">
+                    <%= f.label :address, class: "fg-label" %>
+                    <%= f.input :address, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="form-group fg-line">    
+                    <%= f.label :complement, class: "fg-label" %>   
+                    <%= f.input :complement, input_html: {class: "input-sm form-control fg-input"}, label: false  %>                                         
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group fg-line">    
+                    <%= f.label :number, class: "fg-label" %> 
+                    <%= f.input :number, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group fg-line"> 
+                    <%= f.label :burgh, class: "fg-label" %>
+                    <%= f.input :burgh, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group fg-line">                        
+                    <%= f.label :city, class: "fg-label" %>
+                    <%= f.input :city, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group fg-line">     
+                    <%= f.label :state, class: "fg-label" %>                   
+                    <%= f.input :state, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+        </div>                        
+    </div>
+
+
+    <div class="card-header">
+        <h2><i class="zmdi zmdi-collection-text"></i> Outras informações</h2>
+    </div>
+
+
+    <div class="card-body card-padding">
+
+
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group fg-line">     
+                     <label class="string required fg-label" for="people_associated_bond">
+                            <abbr title="required">*</abbr> 
+                           Vínculo
+                        </label>                 
+                    <%= f.input :bond, collection: PeopleAssociated::BOND, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                </div>
+            </div>
+            
+           
+
+            <div class="col-sm-5">
+                <div id="start_registration" class="form-group fg-line" style="display:<%=@people_associated.situation == 3 ? 'block' : 'none' %>;">     
+                    <%= f.label :start_registration, class: "fg-label m-b-1" %>
+                    <input type='text' class="form-control mask-date start_registration" name="people_associated[start_registration]" value="<%=@people_associated.start_registration ? I18n.l(@people_associated.start_registration) : ''%>">
+                </div>
+            </div> 
+
+            <div class="col-sm-2">
+                <div id="parading_date" class="form-group fg-line" style="display:<%=@people_associated.situation == 2 ? 'block' : 'none' %>;">     
+                    <%= f.label :parading_date, class: "fg-label m-b-1" %>
+                    <input type='text' class="form-control mask-date parading_date" name="people_associated[parading_date]" value="<%=@people_associated.parading_date ? I18n.l(@people_associated.parading_date) : ''%>">
+                </div>
+            </div>
+
+
+            <div class="col-sm-4">
+                <div class="form-group fg-line">     
+                    <%= f.label :blood_type, class: "fg-label" %>                   
+                    <%= f.input :blood_type, collection: PeopleAssociated::BLOOD_TYPE, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+                </div>
+            </div> 
+
+              
+            <div class="col-sm-4 m-b-20">
+                <div class="toggle-switch toggle-switch-demo">
+                    <label for="people_associateds_is_allergic" class="ts-label"><%= PeopleAssociated.human_attribute_name :is_allergic %>  </label>
+                    <%= f.check_box :is_allergic %>                
+                    <label for="people_associateds_is_allergic" class="ts-helper"></label>
+                </div>            
+            </div>
+
+            
+            <div class="col-sm-4 m-b-20">
+                <div class="toggle-switch toggle-switch-demo">
+                    <label for="people_associateds_take_controlled_medicine" class="ts-label"><%= PeopleAssociated.human_attribute_name :take_controlled_medicine %>  </label>
+                    <%= f.check_box :take_controlled_medicine %>                
+                    <label for="people_associateds_take_controlled_medicine" class="ts-helper"></label>
+                </div>            
+            </div>
+
+
+            <div class="col-sm-4">
+                <div class="form-group fg-line take_controlled_medicine_description" style="display:<%= f.object.take_controlled_medicine ? 'block' : 'none' %>;">     
+                    <%= f.label :take_controlled_medicine_description, class: "fg-label" %>                   
+                    <%= f.input :take_controlled_medicine_description, as: :string, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card" style="border: 1px solid blue;">
+            <div class="card-header">
+                <h2><i class="zmdi zmdi-collection-text"></i> Arquivo(s) Filiado</h2>
+            </div>
+
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="information" style="border: 2px solid red;
+                                            padding: 5px;    
+                                            font-size: 12px;
+                                            font-style: italic;">
+                        <strong>§ 1º Arquivo(s) Necessário(s): </strong><br>
+                        <strong>a)</strong>  Cópia CPF; <br>
+                        <strong>b)</strong>  Cópia RG; <br>
+                        <strong>c)</strong>  Cópia Certidão de Casamento / Certidão de Nascimento (se solteiro);<br>
+                        <strong>d)</strong>  Cópia do Holerite;<br>
+                        <strong>e)</strong>  Foto digital/celular; <br>
+                        <strong>f)</strong>  Cópia RG e CPF dos dependentes / certidão de nascimento;<br>
+                    </div>
+
+                    <div class="col-sm-12 m-b-20">
+                      <%= f.simple_fields_for :system_attachments do |system_attachment| %>
+                        <%= render 'system_attachment_fields', f: system_attachment %>
+                      <% end %>
+                    </div>
+                    
+                    <div class="col-sm-12 m-b-20" id="system_attachment_add">
+                      <%= link_to_add_association '<i class="zmdi zmdi-plus"></i> Novo Arquivo'.html_safe, f, :system_attachments, class: 'btn bgm-cyan waves-effect m-l-25 m-t-10' %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+
+    
+    <div class="card" style="border: 1px solid green;">
+        <div class="card-header">
+            <h2><i class="zmdi zmdi-accounts-alt"></i> Dependentes</h2>
+        </div>
+
+
+        <div class="card-body card-padding">
+
+            <div class="information" style="border: 2px solid red;
+                                            padding: 5px;    
+                                            font-size: 12px;
+                                            font-style: italic;">
+                <strong>§ 1º São dependentes: </strong><br>
+                <strong>a)</strong>  Cônjuge; <br>
+                <strong>b)</strong>  Filhos(as) de até 21 anos; <br>
+                <strong>c)</strong>  Companheira ou companheiro que comprove união estável como entidade familiar, conforme Lei Civil e sem concorrência do cônjuge;<br>
+                <strong>d)</strong>  Filhos adotivos e, ou, sob tutela e, ou curatela, até 21 anos; <br> <!-- ou até 24 anos, quando estudante; -->
+                <strong>e)</strong>  Enteados de até 21 anos; <br>
+                <strong>f)</strong>  Filho(a) Portador de Necessidades Especiais;<br>
+            </div>
+
+            <div class="row">
+                    <div class="col-sm-12 m-b-20 card-dependents">
+                      <%= f.simple_fields_for :dependents do |dependent| %>
+                            <%= render 'dependent_fields', f: dependent %>
+                        <% end %>
+                    </div>
+                    
+                    <div class="col-sm-12 m-b-20" id="dependent_add">
+                      <%= link_to_add_association '<i class="zmdi zmdi-plus"></i> Novo dependente'.html_safe, f, :dependents, class: 'btn bgm-cyan waves-effect m-l-25 m-t-10' %>
+                    </div>
+                </div>           
+        </div>
+    </div>
+
+    
+     <div class="col-sm-4">
+        <div class="checkbox m-b-15">
+            <label>
+                <%= f.check_box :term_of_consent %>
+                <i class="input-helper"></i> 
+                <%= link_to 'javascript:;',  "data-toggle" => "modal", 'data-target' => '#lgpdModal'  do %>
+                    Aceitar o <%=  PeopleAssociated.human_attribute_name :term_of_consent %>                            
+                <% end %>
+
+                <div class="modal modal-fullscreen fade" id="lgpdModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Termo de Consentimento</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body"  style="width: 100%; height: 80%">
+                                <embed  
+                                    src="/TermodeconsentimentoLGPDSINDICATO.pdf"
+                                    width="100%"
+                                    height="100%">      
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+            </label>
+        </div>          
+      </div>
+</div>   
+
+
+<div class="card-body card-padding">
+    <%= f.button :submit, "Salvar", disabled: f.object.term_of_consent ? false : true, id: "create_inscription", class: "btn bgm-green waves-effect" %>
+</div>        
+</div>           
+<% end %>    
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        loadSelectPicker();
+
+     
+        $("#people_associated_take_controlled_medicine").on('change', function() {
+            if( $(this).is(":checked")) {
+                $('.take_controlled_medicine_description').show();
+            } else {
+                $('.take_controlled_medicine_description').hide();
+                $('.take_controlled_medicine_description').val('');
+            }
+        })
+
+        $("#people_associated_term_of_consent").on('click', function() {
+            if ( $(this).is(':checked') ) {
+                console.log("salvar")
+                $("#create_inscription").attr('disabled', false)
+            } else {
+                console.log("bloquear")
+                $("#create_inscription").attr('disabled', 'disabled')
+            }
+        })
+
+        $("#people_associated_situation").on('change', function() {
+            if( parseInt($(this).find(":selected").val()) == 3 ) {
+                $("#start_registration").show();
+                $("#parading_date").hide();
+                $(".parading_date").val('');
+            } else if( parseInt($(this).find(":selected").val()) == 2 ) {
+                $("#parading_date").show();
+                $("#start_registration").hide();
+                $(".start_registration").val('');
+            } else {
+                $("#start_registration").hide();
+                $("#parading_date").hide();
+                $(".start_registration").val('');
+                $(".parading_date").val('');
+            }
+        });    
+
+        $('#dependent_add').bind('cocoon:after-insert', function(e, added_item) {           
+            var new_id = new Date().getTime();
+            var othermanual = added_item.find(".othermanual");
+            var element = othermanual.find(".form-group");
+            element.attr("id", "other_manual_"+new_id);
+
+            var degreeofkinship = added_item.find(".degreeofkinship");
+            var element = degreeofkinship.find(".selectpicker");
+            element.attr("data-name", "other_manual_"+new_id);
+
+            var max_year = added_item.find('.max_year');
+            max_year.attr("data-token", new_id);
+
+            var birthdate = added_item.find('.birthdate');
+            birthdate.addClass("birthdate_"+new_id); 
+
+            var benefit_until = added_item.find('.benefit_until');
+            benefit_until.addClass("benefit_until_"+new_id);
+
+            var divStudent = added_item.find('.divStudent');
+            var is_student = divStudent.find('.is_student');
+            is_student.addClass("is_student_"+new_id);
+            is_student.attr("data-name", "institution_name_"+new_id);
+
+            var institutionname = added_item.find('.institutionname');
+            var element = institutionname.find(".form-group");
+            element.attr("id", "institution_name_"+new_id);
+
+            loadMaxYearBlur();
+        });  
+
+        loadMaxYearBlur();
+        function loadMaxYearBlur() {
+	    	$('input.max_year').blur(function() {
+	    		var key = $(this).attr('data-token');
+				var _birthdate = $('.birthdate_'+key).val();
+				var _max_year = $(this).val();
+
+				if (_max_year.length > 0 && _birthdate.length > 0 ) {
+		  			var validate_year = moment(_birthdate, "DD-MM-YYYY").add(parseInt(_max_year), 'years')
+		  			$('.benefit_until_'+key).val(moment(validate_year).format('DD/MM/YYYY'));
+				}
+			});
+		}
+
+            
+    });
+
+    $(function() {
+        var hash = window.location.hash;
+        if ( hash ) 
+            hash && $('ul.tab-nav a[href="' + hash + '"]').tab('show');
+    });
+</script>

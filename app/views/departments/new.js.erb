@@ -1,0 +1,8 @@
+<% js = escape_javascript(
+render(partial: 'departments/remote_form')
+) %>
+
+$("#department_content").html("<%= js %>");
+$("#card_header_department").html("<h2><i class='zmdi zmdi-account-box-o'></i> Novo <%= Department.model_name.human %></h2>")
+
+hiddenPreLoader(); 

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subcategory: one
+  type: 1
+  name: MyString
+  status: false
+
+two:
+  subcategory: two
+  type: 1
+  name: MyString
+  status: false

@@ -1,0 +1,4 @@
+<% js = escape_javascript(render(partial: 'bills_pays/form') ) %>
+$("#dinamic_form").html("<%= js %>");
+hiddenPreLoader(); 
+hiddenFullLoader();

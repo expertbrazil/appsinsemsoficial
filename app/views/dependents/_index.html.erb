@@ -1,0 +1,82 @@
+<div class="custom-form">
+  <%= form_for_filterrific @filterrific, url: people_associated_dependents_url(@people_associated), html: { class: "", role: "form" }, remote: true do |f| %>
+
+  <div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-4">
+      <div class="form-group fg-line">   
+        <%= f.hidden_field(:with_people_associated_id, value: @people_associated.id ) %>
+      </div>
+    </div>
+    <% if false %>
+    <div class="col-md-4 col-sm-4 col-xs-4">
+      <div class="form-group fg-line">     
+        <%= f.label Dependent.human_attribute_name(:name), class: "fg-label" %>   
+        <%= f.text_field(:search_query, class: 'filterrific-periodically-observed form-control clearable') %>
+      </div>
+    </div>
+
+
+    <div class="col-md-2 col-sm-2 col-xs-2">
+      <div class="form-group fg-line">  
+        <%= f.submit 'Filtrar', class: "btn bgm-green waves-effect" %>                
+        <%= link_to('Resetar Filtros', reset_filterrific_url, class: "btn bgm-red waves-effect", remote: true) if false%>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="input-group">
+      <%= f.text_field(:search_query, class: 'filterrific-periodically-observed form-control clearable', placeholder: "Buscar dependentes de #{@people_associated.name}") %>
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-default" onClick=""><i class="fa fa-search"></i></button>
+      </span>
+    </div>
+  </div>
+  <%= render_filterrific_spinner %>      
+  <% end %>
+</div>
+
+<div class="card">
+  <div class="card-header ch-alt m-b-20">                                    
+    <%= link_to new_people_associated_dependent_path(@people_associated), remote: true, onclick: "showPreLoader();", class: 'btn bgm-green btn-float waves-effect' do %>
+    <i class="zmdi zmdi-plus"></i>
+    <% end %>
+
+    <h2><i class="zmdi zmdi-account-box-o"></i> <%= Dependent.model_name.human.pluralize %> - <%= @people_associated.name %></h2>
+  </div>
+
+  <div class="card-body"> 
+    <div class="table-responsive">
+      <%= render( partial: 'dependents/list', locals: { dependents: @dependents } ) %>
+    </div>                       
+  </div>
+</div>
+<script>
+
+  function submitFormFilter() {
+    $("#filterrific_filter").submit():
+  }
+  $(document).ready(function() {    
+    var form = $("#filterrific_filter");
+    var input = $("#filterrific_search_query");
+    //var f = $("");
+
+    input.change()
+
+  })
+  jQuery(function($) {
+    // /////
+    // CLEARABLE INPUT
+    function tog(v){return v?'addClass':'removeClass';} 
+    $(document).on('input', '.clearable', function(){
+      $(this)[tog(this.value)]('x');
+    }).on('mousemove', '.x', function( e ){
+      $(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');   
+    }).on('touchstart click', '.onX', function( ev ){
+      ev.preventDefault();
+      $(this).removeClass('x onX').val('').change();
+    });
+
+
+  });
+</script>

@@ -1,0 +1,1 @@
+json.array! @people_associateds, partial: 'people_associateds/people_associated', as: :people_associated

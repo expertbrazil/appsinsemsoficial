@@ -1,0 +1,3 @@
+<% options = Category.select_options_grouped_by_dedit_categories.map { |g| [g[0], g[1], {'data-type' => g[2]}] } %>
+<%= select_tag "bills_pay[category_id]", 
+grouped_options_for_select(options, {selected: @bills_pay.category_id}), { class: "selectpicker", "data-live-search": true } %>

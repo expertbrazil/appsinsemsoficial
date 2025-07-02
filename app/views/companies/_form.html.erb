@@ -1,0 +1,185 @@
+<% @allowed_create_segment = current_user.allowed_to?({:controller => "segments", :action => "create"}, :global => true)  %>
+
+<div class="card">  
+  <%= simple_form_for(@company, html: { class: "", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <div class="card-header">
+    <h2><i class="zmdi zmdi-store"></i> Dados <%= Company.model_name.human %></h2>
+  </div>
+
+  <div class="card-body card-padding">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group fg-line m-b-5">   
+          <%= f.label :agreement_at, class: "fg-label  m-b-1" %>
+          <input type='text' class="form-control mask-date" name="company[agreement_at]" value="<%=I18n.l(@company.agreement_at ? @company.agreement_at : DateTime.current, format: :custom)%>">
+        </div>
+      </div>
+      
+      <div class="col-sm-4">   
+        <div class="input-group">
+          <%= f.label :segment, class: "fg-label" %>
+
+          <% if @allowed_create_segment %>
+          <%= link_to "javascript::", class: "input-group-addon last create_segment" do %>
+          <i class="zmdi zmdi-plus"></i>
+          <% end %>                                
+          <% end %>                                
+        </div>
+        
+        <div class="form-group fg-line ">
+          <%= f.association :segment, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      
+      <div class="col-sm-4">    
+        <div class="form-group fg-line ">
+          <%= f.label :name, class: "fg-label" %>
+          <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+        </div>
+      </div>
+
+      <div class="col-sm-4">    
+        <div class="form-group fg-line ">
+          <%= f.label :email, class: "fg-label" %>
+          <%= f.input :email, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+        </div>
+      </div>
+
+      <div class="col-sm-2">    
+        <div class="form-group fg-line ">
+          <%= f.label :phone, class: "fg-label" %>
+          <%= f.input :phone, input_html: {class: "input-sm form-control fg-input mask-phone-fixo", "data-mask": "(00) 000-0000"}, label: false %>
+        </div>
+      </div>          
+
+      <div class="col-sm-2">    
+        <div class="form-group fg-line ">
+          <%= f.label :cell_phone, class: "fg-label" %>
+          <%= f.input :cell_phone, input_html: {class: "input-sm form-control fg-input mask-phone", "data-mask": "(00) 0000-0000"}, label: false %>
+        </div>
+      </div>         
+      
+    </div>
+  </div>
+
+
+
+  <div class="card-header">
+    <h2><i class="zmdi zmdi-pin"></i> Endereço</h2>
+  </div>
+
+  <div class="card-body card-padding">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="form-group fg-line">
+          <%= f.label :address, class: "fg-label" %>
+          <%= f.input :address, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+        </div>
+      </div>
+
+      <div class="col-sm-5">
+        <div class="form-group fg-line">    
+          <%= f.label :complement, class: "fg-label" %>   
+          <%= f.input :complement, input_html: {class: "input-sm form-control fg-input"}, label: false  %>                                         
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group fg-line">    
+          <%= f.label :number, class: "fg-label" %> 
+          <%= f.input :number, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group fg-line">   
+          <%= f.label :zipcode, class: "fg-label" %>                     
+          <%= f.input :zipcode, input_html: {class: 'input-sm form-control fg-input mask-cep', "data-mask": "00000-000"}, label: false %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group fg-line"> 
+          <%= f.label :burgh, class: "fg-label" %>
+          <%= f.input :burgh, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group fg-line">                        
+          <%= f.label :city, class: "fg-label" %>
+          <%= f.input :city, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group fg-line">     
+          <%= f.label :state, class: "fg-label" %>                   
+          <%= f.input :state, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+        </div>
+      </div>
+    </div>                        
+  </div>
+
+  <div class="card-header">
+    <h2><i class="zmdi zmdi-collection-text"></i> Outras informações</h2>
+  </div>
+
+
+  <div class="card-body card-padding">
+    <div class="row">
+      <div class="col-sm-12">   
+        <div class="form-group fg-line">     
+          <%= f.label :benefit, class: "fg-label" %>                   
+          <%= f.input :benefit, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+        </div>
+      </div>
+    </div>
+  </div>            
+  
+
+  <div class="card-body card-padding">
+    <%= submit_tag 'Criar e adicionar', class: "btn bgm-teal waves-effect", name: 'create_and_add' if !edit_mode? %>
+    <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+    <%= link_to "Cancelar", companies_path, class: "btn bgm-red waves-effect" %>
+  </div>    
+
+  <% end %>    
+</div>
+
+
+
+<% if @allowed_create_segment %>
+<%= render 'segments/modal_segment' %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.create_segment').on("click", function(e){
+      $('#modal_new_segment').modal('show');          
+      e.stopImmediatePropagation();            
+
+      $.ajax({
+        url: "<%=new_segment_path%>",
+        type: 'get',
+        dataType: 'script',
+        beforeSend: function(xhr) {                     
+          xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+          showPreLoader();
+        },
+        success: function() { 
+          hiddenPreLoader();            
+        }
+      });   
+    });
+
+    $('.close-modal-segment').on("click", function(e){
+      $('#modal_new_segment').modal('hide');
+    });
+  });
+</script>
+<% end %>

@@ -1,0 +1,51 @@
+<div class="card">
+  <div class="card-header ch-alt m-b-20">                                    
+    <%= link_to new_professional_path, class: 'btn bgm-green btn-float waves-effect' do %>
+    <i class="zmdi zmdi-plus"></i>
+    <% end %>
+
+    <h2><i class="fa fa-user-md"></i> <%=  Professional.model_name.human(:count => 2) %></h2>
+  </div>
+
+  <div class="card-body card-padding">       
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Nome</th>
+            <th>Area de Atuação</th>
+            <th></th>       
+          </tr>
+        </thead>
+
+        <tbody>
+          <%= content_tag_for(:tr, @professionals) do |professional| %>
+          <td><label class='label label-<%= professional.active ? 'success' : 'primary' %>'>
+            <%= best_in_place professional, :active, :as => :select, collection: {false: "INATIVO", true: "ATIVO"}, inner_class: "bestinplace-title-black"  %></label></td>
+          <td><%= professional.name %></td>           
+          <td><%= professional.function_name %></td>           
+          <td style="width: 200px;">
+            <%= link_to professional_appointment_books_path(professional), class: "btn bgm-lightgreen waves-effect show_dependent", title: AppointmentBook.model_name.human.pluralize do %>
+            <%= content_tag(:i, nil, class: "zmdi zmdi-calendar-note") %>
+            <% end if professional.appointment_book %>
+
+            <%= link_to professional, class: "btn bgm-orange waves-effect" do %>
+            <%= content_tag(:i, nil, class: "zmdi zmdi-eye") %>
+            <% end %>
+            
+            <%= link_to edit_professional_path(professional), class: "btn btn-info waves-effect" do %>
+            <%= content_tag(:i, nil, class: "zmdi zmdi-edit") %>
+            <% end %>
+
+            <%= link_to professional, method: :delete, data: { confirm: I18n.t('default_messages.confirm')  } , class: "btn btn-danger waves-effect" do %>
+            <%= content_tag(:i, nil, class: "zmdi zmdi-delete") %>
+            <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>    
+
+      <%= will_paginate @professionals, renderer: BootstrapPagination::Rails %>                                        
+    </div>
+  </div>

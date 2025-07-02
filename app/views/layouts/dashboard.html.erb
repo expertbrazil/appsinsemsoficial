@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title><%= APP_CONFIG['site']['title'] %></title>
+
+	<!-- Vendor CSS -->
+
+	<%= stylesheet_link_tag "template/vendors/fullcalendar/dist/fullcalendar.min.css", "template/vendors/animate.css/animate.min.css", "template/vendors/sweetalert/dist/sweetalert.css", "template/vendors/material-design-iconic-font/dist/css/material-design-iconic-font.min.css", "template/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css", "template/vendors/chosen/chosen.css", "template/vendors/bootstrap-select/dist/bootstrap-select.css", "template/vendors/select2.css", "template/vendors/select2-bootstrap.css", "template/vendors/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.css", "font-awesome.min.css", "template/vendors/modal-fullscreen.css", "easy-autocomplete.min", "easy-autocomplete.themes.min", "template/vendors/summernote/dist/summernote.css",  "template/jstree/style.min","template/jstree/treeview.scss", "template/daterangepicker.css", "template/comboTreePlugin.css" %> 
+
+	<!-- CSS -->
+	<%= stylesheet_link_tag "template/app_1.min.css", "template/app_2.min.css", "custom" %>
+
+    <!-- CSS para impressão -->
+    <%= stylesheet_link_tag "print", media: "print"%>
+
+    <%= javascript_include_tag "template/jquery.min.js", "template/jquery_ujs.js", "template/jquery.flot.js", "template/jquery.flot.resize.js", "template/curvedLines.js", "template/jquery.sparkline.min.js", "template/jquery.easypiechart.min.js", "template/moment.min.js", "template/waves.min.js", "template/bootstrap.min.js", "template/fullcalendar.min.js", "template/fullcalendar_pt-br", "template/jquery.simpleWeather.min.js", "template/bootstrap-growl.min.js", "template/sweetalert.min.js", "template/jquery.mCustomScrollbar.concat.min.js", "template/bootstrap-select.js", "template/bootstrap-select-pt_BR.js", "template/bootstrap-datetimepicker.min.js", "template/datepicker-pt-BR.js", "template/chosen.jquery.js", "template/mediaelement-and-player.min.js", "jquery.maskedinput.min.js", "template/cocoon.js", "webcam", "template/select2.js", "template/select2_locale_pt-BR.js", 'jquery.bootstrap.wizard.min.js', "filterrific/filterrific-jquery.js", "highcharts.js", "chartkick.js", "jquery.easy-autocomplete.min", "template/fileinput.min.js", "best_in_place.js", "jquery.maskMoney.min.js", "summernote-updated.min", "template/daterangepicker.min.js", "template/comboTreePlugin.js" %>
+    <%= csrf_meta_tags %>
+</head>
+<body>
+	<%= render 'shared/header' %>
+    <%= render 'shared/top_reports' %>
+
+    <section id="main">
+      <%= render 'shared/menu' %>
+      
+
+      <section id="content">
+         <div class="container">
+            <% controllers = ['financials', 'monthly_payments'] %>
+            <%= render 'financials/header' if controllers.include?(controller_name) %>       
+
+            <%= flash_messages %>
+            <% flash.clear %>
+            
+            <%= yield %>            
+        </div>
+    </section>
+</section>
+
+
+<%= render 'shared/footer' %>
+<% render 'shared/loader' %>
+
+<!-- Older IE warning message -->
+        <!--[if lt IE 9]>
+            <div class="ie-warning">
+                <h1 class="c-white">Warning!!</h1>
+                <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+                <div class="iew-container">
+                    <ul class="iew-download">
+                        <li>
+                            <a href="http://www.google.com/chrome/">
+                                <img src="/assets/template/browsers/chrome.png" alt="">
+                                <div>Chrome</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.mozilla.org/en-US/firefox/new/">
+                                <img src="/assets/template/browsers/firefox.png" alt="">
+                                <div>Firefox</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.opera.com">
+                                <img src="/assets/template/browsers/opera.png" alt="">
+                                <div>Opera</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.apple.com/safari/">
+                                <img src="/assets/template/browsers/safari.png" alt="">
+                                <div>Safari</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                                <img src="/assets/template/browsers/ie.png" alt="">
+                                <div>IE (New)</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <p>Sorry for the inconvenience!</p>
+            </div>
+            <![endif]-->
+
+
+            <!-- Placeholder for IE9 -->
+        <!--[if IE 9 ]>
+             <%= javascript_include_tag "template/jquery.placeholder.min.js"%>
+             <![endif]-->
+
+             <%= javascript_include_tag "template/app.min.js", "sinsems.js" %>
+         </body>
+         </html>

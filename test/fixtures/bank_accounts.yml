@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  agency: MyString
+  account_number: MyString
+  cedente: MyString
+  cedente_doc: MyString
+  cedente_address: MyString
+  variacao: MyString
+  aceite: MyString
+  carteira: MyString
+  convenio: MyString
+  instrucao_juros: MyString
+  default_bank: false
+  layout: 1
+
+two:
+  name: MyString
+  agency: MyString
+  account_number: MyString
+  cedente: MyString
+  cedente_doc: MyString
+  cedente_address: MyString
+  variacao: MyString
+  aceite: MyString
+  carteira: MyString
+  convenio: MyString
+  instrucao_juros: MyString
+  default_bank: false
+  layout: 1

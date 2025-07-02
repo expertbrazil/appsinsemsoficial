@@ -1,0 +1,74 @@
+
+<div id="header">
+    <div style="display: table; font-family: Arial;"> 
+		<span style="width: 100px; height: 110px; padding: 10px;"><!-- margin-right: 20px; --> </span>
+		<div style="display: table-cell;vertical-align: top;width: 100%; padding-right: 20px;">
+			<h2 style="font-size: 17px;">SINDICATO DOS SERVIDORES PÚBLICOS MUNICIPAIS DE SORRISO</h2>
+			<div style="border-bottom: 1px solid #000;"><!--height: 75px;-->
+				<img src="/assets/logo_in_dash.jpeg" style="width: 50px;float: left;">
+				<div style="display: table; font-size: 13px;">
+					<div style="display: table-cell; padding: 0 15px; ">
+						<span style="display: block;"><b>Endereço:</b> AVENIDA RIO GRANDE DO SUL, 259</span>
+						<span style="display: block;"><b>Cidade:</b> SORRISO</span>
+						<span style="display: block;"><b>CNPJ:</b> 00.904.255/0001-89</span>
+						<span style="display: block;"><b>Telefone:</b> (66) 3544-6575</span>
+					</div>
+					<div style="display: table-cell;">
+						<span style="display: block;"><b>Bairro:</b> BEIJAMIM RAISER</span>
+						<span style="display: block;"><b>UF:</b> MT</span>
+						<span style="display: block;"><b>Data de Fundação:</b> 23/09/1995</span>
+						<span style="display: block;"><b>Celular:</b> (66) 9 9985-6840</span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+
+<div id="outer">
+    <div id="content">
+    	<div class="inner"> 
+			<h2 style='text-align: center;'> DECLARAÇÃO PARA FINS DE COMPROVAÇÃO DE UNIÃO ESTÁVEL </h2>
+
+			<p style="text-align: justify; font-size: 16px;">Eu, <%= @p.name.upcase %>, brasileiro(a), maior, portador(a) do RG nº <%= @p.rg %>  <%= @p.dispatcher_organ %>, Servidor(a) Público(a) Municipal, efetivo no cargo de <%= @p.office.name if @p.office.present? %>, com matrícula nº <%= @p.hollering_registration %>, admissão em <%=l @p.admission_date if @p.admission_date.present? %>, lotado(a) na <%= @p.department.name if @p.department.present? %>, com exercicio na(o) <%= @p.workplace.name if @p.workplace.present? %>, residente e domiciliado(a) na <%= @p.full_address %>, DECLARO que mantenho União Estável com <%= @p.degree_of_kinship_married.name if @p.degree_of_kinship_married.present? %>, para fins do que dispõe o Artigo 1º do Regimento Interno do Sindicato dos Servidores Públicos Municipais.</p>
+
+
+			<p style="text-align: justify; font-size: 16px;">Assim, o que neste instrumento se declara é a mais pura expressão da verdade, o que assinamos para que surtam seus efeitos legais.</p>
+
+
+			<br>
+			<br>
+			<div style="margin-rigth: 0px; float: right;">
+				<p style='font-size: 16px;'><span >Sorriso/MT, <%=l Date.today, format: :long %>. </span></p>
+			</div>	
+			<br>
+			<br>
+
+		</div>			
+	</div>			
+</div>			
+
+
+<div id="footer">	
+		<p style='text-align: center;'>
+			________________________________________<br>
+			<%= @p.name.titleize.upcase %>
+		</p>
+		<% if @p.degree_of_kinship_married.present? %>
+			<p style='text-align: center; margin-top: 40px;'>
+				________________________________________<br>
+				<%= @p.degree_of_kinship_married.name.upcase %>
+			</p>
+		<% end %>	
+</div>
+
+
+
+<% if false %>
+<p style="text-align: justify;">Eu, <%= @p.name.upcase %>, brasileiro(a), maior, portador(a) do RG nº <%= @p.rg %>  <%= @p.dispatcher_organ %>, Servidor(a) Público(a) Municipal, efetivo no cargo de <%= @p.office.name if @p.office.present? %>, com matrícula nº <%= @p.hollering_registration %>, admissão em <%=l @p.admission_date if @p.admission_date.present? %>, lotado(a) na <%= @p.department.name if @p.department.present? %>, com efetivo exercício no Departamento de <%= @p.workplace.name if @p.workplace.present? %>, residente e domiciliado(a) na <%= @p.full_address %>, DECLARO que mantenho União Estável com <%= @p.degree_of_kinship_married.name if @p.degree_of_kinship_married.present? %>, portador(a) do RG nº <%= @p.degree_of_kinship_married.rg if @p.degree_of_kinship_married.present? %> <%= @p.degree_of_kinship_married.dispatcher_organ if @p.degree_of_kinship_married.present? %>  e inscrito(a) no CPF <%= @p.degree_of_kinship_married.cpf if @p.degree_of_kinship_married.present? %>, para fins do que dispõe o Artigo 1º do Regimento Interno do Sindicato dos Servidores Públicos Municipais.</p>
+<% end %>
+
+<%= render "people_associateds/css_docs" %>

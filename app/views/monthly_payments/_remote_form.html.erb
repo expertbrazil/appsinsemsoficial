@@ -1,0 +1,41 @@
+<div class="card">
+  
+    <%= simple_form_for(@monthly_payment, url: monthly_payment_pay_path(@monthly_payment), html: { class: "", role: "form" }, remote: true) do |f| %>
+  
+    <%= f.error_notification %>
+    <div class="card-body card-padding">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group fg-line m-b-5">   
+              <%= f.label :pay_day, class: "fg-label  m-b-1" %>
+              <input type='text' class="form-control mask-date" name="monthly_payment[pay_day]" value="<%=I18n.l(@monthly_payment.pay_day ? @monthly_payment.pay_day : DateTime.current, format: :custom_date)%>" >
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group fg-line m-b-5">   
+            <%= f.label :amount_paid, class: "fg-label" %>
+            <%= f.input :amount_paid, input_html: { value: @monthly_payment.amount, class: "input-sm form-control fg-input", disabled: true}, label: false  %>
+          </div>
+        </div>
+     
+        <div class="col-sm-12">
+          <div class="form-group fg-line">
+            <%= f.label :observation, class: "fg-label" %>
+            <%= f.input :observation, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+          </div>
+        </div>     
+      </div>     
+    </div>     
+
+    <div class="card-body card-padding">
+      <%= f.button :submit, "Confirmar", class: "btn bgm-green waves-effect" %>
+      <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal" aria-label="Close"> Cancelar
+      </button>  
+    </div>  
+  <% end %>    
+</div>
+
+<script type="text/javascript">
+    loadSelectPicker();
+</script>

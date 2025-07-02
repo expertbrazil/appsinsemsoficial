@@ -1,0 +1,1 @@
+json.partial! "appointment_books/appointment_book", appointment_book: @appointment_book

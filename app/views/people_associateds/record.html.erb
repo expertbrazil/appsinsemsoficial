@@ -1,0 +1,230 @@
+<style>
+
+	body {
+	 margin: 12px;
+	}
+	
+	@page {
+		size: A4;
+		margin: 0;
+	}
+	@media print{    
+		html, body {
+		    width: 210mm;
+		    height: 297mm;
+		}
+	    .no-print, .no-print *
+	    {
+	        display: none !important;
+	    }
+	}
+</style>
+<button class="btn btn-success no-print" onclick="window.print();">Imprimir</button>
+<hr>
+<div style="border: 3px solid #000; width: 690px;">
+	<!--TOPO-->
+	<div style="display: table; font-family: Arial;"> 
+		<img src="<%= @p.photo.present? ? @p.photo.url(:thumb_3x4) : '/assets/user.png' %>" style="width: 100px; height: 110px; padding: 10px;"><!-- margin-right: 20px; -->
+		<div style="display: table-cell; vertical-align: top;">
+			<h2 style="font-size: 17px;">SINDICATO DOS SERVIDORES PÚBLICOS MUNICIPAIS DE SORRISO</h2>
+			<div style="border-bottom: 1px solid #000; height: 75px;">
+				<img src="/assets/logo_in_dash.jpeg" style="width: 50px;float: left;">
+				<div style="display: table; font-size: 13px;">
+					<div style="display: table-cell; padding: 0 15px; ">
+						<span style="display: block;"><b>Endereço:</b> AVENIDA RIO GRANDE DO SUL, 259</span>
+						<span style="display: block;"><b>Cidade:</b> SORRISO</span>
+						<span style="display: block;"><b>CNPJ:</b> 00.904.255/0001-89</span>
+						<span style="display: block;"><b>Telefone:</b> (66) 3544-6575</span>
+					</div>
+					<div style="display: table-cell;">
+						<span style="display: block;"><b>Bairro:</b> BEIJAMIM RAISER</span>
+						<span style="display: block;"><b>UF:</b> MT</span>
+						<span style="display: block;"><b>Data de Fundação:</b> 23/07/1995</span>
+						<span style="display: block;"><b>Celular:</b> (66) 9 9985-6840</span>
+					</div>
+				</div>
+			</div>
+			<div style="display: table; font-size: 14px; width: 100%; padding-top: 10px">
+				<span style="display: table-cell;"><b>Data de Filiação:</b> <%= @p.affiliate_date ? @p.affiliate_date.strftime("%d/%m/%Y") : "Não informado" %></span>
+				<span style="display: table-cell; text-align: right;"><b>Insc. Sindicato:</b> <%= @p.number_registration %></span>
+			</div>
+		</div>
+	</div>
+	<!--FIM TOPO-->
+	<!--CORPO-->
+	<h2 style="text-align: center; margin: 10px 0px;">FICHA DE INSCRIÇÃO DO ASSOCIADO</h2>
+	<!--Dados pessoais-->
+	<div style="border: 1px solid #000; margin: 10px;">
+		<div style="width: 100%;background: #000;color: #FFF;padding: 3px;box-sizing: border-box;">DADOS PESSOAIS</div>
+		<div style="margin:5px;">
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 70%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:hollering_registration) %>:</b> <%= @p.hollering_registration %></span>	
+
+				<span style="display: table-cell; width: 30%; text-align: left;"><b><%= "Ult. Atualização" %>:</b> <%= @p.updated_at.strftime("%d/%m/%Y") %></span>	
+			</div>	
+
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 60%;"><b><%= PeopleAssociated.human_attribute_name(:name) %>:</b> <%= @p.name %></span>
+				<span style="display: table-cell; width:40%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:email) %>:</b> <%= @p.email %></span>
+			</div>
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 33.33%;"><b><%= PeopleAssociated.human_attribute_name(:cpf) %>:</b> <%= @p.cpf %></span>
+				<span style="display: table-cell; width: 33.33%; text-align: center;"><b><%= PeopleAssociated.human_attribute_name(:rg) %>:</b> <%= @p.rg %> <%= @p.dispatcher_organ %></span>
+				<span style="display: table-cell; width: 33.33%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:phone) %>:</b> <%= @p.cell_phone1 %></span>
+			</div>
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 17.5%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:gender) %>:</b> <%= @p.gender %></span>
+				
+				<% if false %>
+					<span style="display: table-cell; width: 17.5%; text-align: center;"><b><%= PeopleAssociated.human_attribute_name(:breed) %>:</b> <%= @p.breed_name if !@p.breed.blank?%></span>
+				<% end %>
+
+				<span style="display: table-cell; width: 35%; text-align: center;"><b><%= PeopleAssociated.human_attribute_name(:marital_status) %>:</b> <%= @p.marital_status %></span>
+				<span style="display: table-cell; width: 30%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:scholarity) %>:</b> <%= @p.scholarity_name if @p.scholarity%></span>				
+			</div>
+			<div style="display: block; width: 100%; margin-bottom: 5px;">
+				<span style="text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:mother) %>:</b> <%= @p.mother %></span>
+			</div>
+			<div style="display: block; width: 100%; margin-bottom: 5px;">
+				<span style="text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:father) %>:</b> <%= @p.father %></span>
+			</div>
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 25%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:place_birth) %>:</b> <%= @p.place_birth %></span>
+				<span style="display: table-cell; width: 25%; text-align: center;"><b><%= PeopleAssociated.human_attribute_name(:birthdate) %>:</b> <%= I18n.l @p.birthdate if @p.birthdate %></span>
+
+				<% if @p.office %>	
+					<span style="display: table-cell; width: 25%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:office_id) %>:</b> <%= @p.office.name %></span>				
+				<% end %>	
+			</div>
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<% if @p.occupation %>
+					<span style="display: table-cell; width: 50%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:occupation_id) %>:</b> <%= @p.occupation.name %></span>
+				<% end %>	
+
+				<% if false %>
+				<span style="display: table-cell; width: 50%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:profession) %>:</b> <%= @p.profession %></span>			
+				<% end %>
+			</div>
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 50%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:workplace) %>:</b> <%= @p.workplace.name if @p.workplace.present? %></span>					
+
+				<span style="display: table-cell; width: 50%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:admission_date) %>:</b> <%= I18n.l @p.admission_date if @p.admission_date %></span>				
+			</div>
+
+		</div>
+	</div>
+	<!--Fim dados pessoais-->
+	<!--Endereço-->
+	<div style="border: 1px solid #000; margin: 10px;">
+		<div style="width: 100%;background: #000;color: #FFF;padding: 3px;box-sizing: border-box;">ENDEREÇO</div>
+		<div style="margin:5px;">
+			<div style="display: block; width: 100%; margin-bottom: 5px;">
+				<span style="text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:address) %>:</b> <%= @p.address %></span>
+			</div>
+			<div style="display: block; width: 100%; margin-bottom: 5px;">
+				<span style="text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:complement) %>:</b> <%= @p.complement %></span>
+			</div>
+			
+			
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 25%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:number) %>:</b> <%= @p.number %></span>
+				<span style="display: table-cell; width: 25%; text-align: center;"><b><%= PeopleAssociated.human_attribute_name(:zipcode) %>:</b> <%= @p.zipcode %></span>	
+				<span style="display: table-cell; width: 25%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:burgh) %>:</b> <%= @p.burgh %></span>				
+			</div>
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 50%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:city) %>:</b> <%= @p.city %></span>
+				<span style="display: table-cell; width: 50%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:state) %>:</b> <%= @p.state %></span>			
+			</div>
+		</div>
+	</div>
+	<!--Fim endereço-->
+
+	<!--OUTRAS INFORMAÇÕES-->
+	<div style="border: 1px solid #000; margin: 10px;">
+		<div style="width: 100%;background: #000;color: #FFF;padding: 3px;box-sizing: border-box;">OUTRAS INFORMAÇÕES</div>
+		<div style="margin:5px;">			
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 25%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:title_voter) %>:</b> <%= @p.title_voter %></span>
+				<span style="display: table-cell; width: 25%; text-align: center;"><b><%= PeopleAssociated.human_attribute_name(:zone_voter) %>:</b> <%= @p.zone_voter %></span>	
+				<span style="display: table-cell; width: 25%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:section_voter) %>:</b> <%= @p.section_voter %></span>				
+			</div>
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 25%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:bond) %>:</b> <%= @p.bond_name if @p.bond %></span>	
+				<span style="display: table-cell; width: 25%; text-align: center;"><b><%= PeopleAssociated.human_attribute_name(:situation) %>:</b> <%= @p.situation_name if @p.situation.present? %></span>
+				<span style="display: table-cell; width: 50%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:validity_card) %>:</b> <%=  @p.validity_card ? @p.validity_card.strftime("%d/%m/%Y") : "Não informado" %></span>				
+			</div>
+			<div style="display: table; width: 100%; margin-bottom: 5px;">
+				<span style="display: table-cell; width: 50%; text-align: left;"><b><%= PeopleAssociated.human_attribute_name(:father_mother) %>:</b> <%= @p.father_mother ? "Sim" : "Não" %></span>
+				<span style="display: table-cell; width: 50%; text-align: right;"><b><%= PeopleAssociated.human_attribute_name(:partner) %>:</b> <%= @p.partner ? "Sim" : "Não" %></span>			
+			</div>
+			
+
+		</div>
+	</div>
+	<!--Fim OUTRAS INFORMAÇÕES-->
+
+	<!--DEPENDENTES-->
+	<div style="border: 1px solid #000; margin: 10px;">
+		<div style="width: 100%;background: #000;color: #FFF;padding: 3px;box-sizing: border-box;">DEPENDENTES</div>
+		<div style="margin:5px;">			
+			<div style="width: 100%; font-size: 12px; margin-top: 10px;">
+				<% @p.dependents.actives.each do |dependent| %>
+					<span style="display:block;"><%= dependent.name.upcase %> - <%= dependent.degree_of_kinship_name %></span>
+				<% end %>  
+			</div>
+		</div>
+	</div>
+	<!--Fim DEPENDENTES-->
+
+	<!--ASSINATURA-->
+	<div style="margin: 10px;">
+		<div style="width: 100%; font-size: 14px; margin-top: 40px;">
+			<div style="text-align: center; font-size: 14px; margin-top: 40px;">
+				<hr style="width: 50%;">
+				<%= @p.name %>
+			</div>				
+		</div>
+	</div>
+	<!--Fim ASSINATURA-->
+	<!--FIM CORPO-->
+</div>
+
+
+<% if false %>
+
+
+
+<span><%= PeopleAssociated.human_attribute_name(:cpf) %>: <%= @p.cpf %></span>
+<span><%= PeopleAssociated.human_attribute_name(:rg) %>: <%= @p.rg %></span>
+
+<%= @p.situation_name %>
+<%= @p.phone %>
+<%= @p.email %>
+<%= @p.address %>
+<%= @p.number %>
+<%= @p.city %>
+<%= @p.state %>
+
+
+<hr>
+
+<p><b>DEPENDENTES:</b></p>
+<table class="table table-bordered table-hover" style="width: 100%;">
+	<thead>
+		<tr>
+			<th style="width: 100px; text-align:left;"><%= Dependent.human_attribute_name(:name) %></th>
+			<th style="width: 100px; text-align:left;"><%= Dependent.human_attribute_name(:birthdate) %></th>
+			<th style="width: 100px; text-align:left;"><%= Dependent.human_attribute_name(:degree_of_kinship) %></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @p.dependents.each do |dependent| %>
+		<tr>
+			<td><%= dependent.name %></td>
+			<td><%= I18n.l dependent.birthdate %></td>
+			<td><%= dependent.degree_of_kinship_name %></td>
+		</tr>
+		<% end %> 
+	</tbody>
+</table>
+<% end %>

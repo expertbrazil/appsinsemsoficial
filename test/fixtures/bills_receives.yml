@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  people_associated: one
+  category: one
+  billing_agency: 1
+  due_date: 2022-05-09
+  description: MyText
+  amount: 9.99
+  n_doc: MyString
+  competence: MyString
+  form_payment: 1
+  attachment: MyString
+  ocorrence: 1
+  deadline: 2022-05-09
+  expiration_day: MyString
+  work_days_onluy: false
+
+two:
+  people_associated: two
+  category: two
+  billing_agency: 1
+  due_date: 2022-05-09
+  description: MyText
+  amount: 9.99
+  n_doc: MyString
+  competence: MyString
+  form_payment: 1
+  attachment: MyString
+  ocorrence: 1
+  deadline: 2022-05-09
+  expiration_day: MyString
+  work_days_onluy: false

@@ -1,0 +1,6 @@
+<% js = escape_javascript(
+  render(partial: 'people_associateds/my_dependents_checkbox')
+) %>
+
+$("#my_dependents_check").html("<%= js %>");
+hiddenPreLoader(); 

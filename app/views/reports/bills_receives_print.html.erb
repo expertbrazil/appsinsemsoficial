@@ -1,0 +1,23 @@
+<% @customer_configuration = CustomerConfiguration.current %>
+
+
+
+<div class="card">
+  <div class="action-header clearfix">        
+    <div class="ah-label hidden-xs"><h1> <%= "" %> </h1></div>   
+    
+  </div>
+
+
+  <div class="card-body"> 
+    <div class="table-responsive">
+      <% if @bills_receives %>
+        <%= render( partial: 'reports/list_bills_receives_print', locals: { bills_receives: @bills_receives } )  %>
+      <% else %>  
+        <p> Sem resultados </p>
+      <% end %>
+    </div>                       
+  </div>
+</div>
+
+

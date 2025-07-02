@@ -1,0 +1,107 @@
+<%= stylesheet_link_tag "print", media: :print %> 
+<div class="card no-print">
+  <div class="card-header ch-alt m-b-20">   
+    <i class="zmdi zmdi-filter-list"></i> Filtros
+  </div>  
+  <div class="card-body card-padding"> 
+    <%= form_for_filterrific @filterrific, html: { class: "", role: "form" } do |f| %>
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group fg-line">
+          Por segmento:
+          <%= f.select(
+            :with_segment_ids,
+            Segment.all.collect {|s| [ s.name, s.id ] },
+            { include_blank: '- Nenhum -' }, class: 'selectpicker'
+            ) %>
+          </div>                
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+         Ordenar por:
+         <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], {}, {class: 'selectpicker'} ) %>
+       </div>
+     </div>
+
+     <div class="row">
+       <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group fg-line">
+          Por nome/email:
+          <%= f.text_field(
+            :search_query,
+            class: 'filterrific-periodically-observed form-control'
+              ) %>
+            </div>                
+          </div>
+
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="form-group fg-line">
+              Por cidade:
+              <%= f.text_field(
+                :search_city,
+                class: 'filterrific-periodically-observed form-control'
+                  ) %>
+                </div>                
+              </div>
+
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <div class="form-group fg-line">
+                  Por estado:
+                  <%= f.text_field(
+                    :search_state,
+                    class: 'filterrific-periodically-observed form-control'
+                      ) %>
+                    </div>                
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="form-group fg-line">  
+                      <%= f.submit 'Filtrar', class: "btn bgm-green waves-effect" %>                
+                      <%= link_to('Resetar Filtros', reset_filterrific_url, class: "btn bgm-red waves-effect")%>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <%= render_filterrific_spinner %>      
+              <% end %>
+
+            </div>
+
+            <div class="card">
+               <div class="action-header clearfix">                                       
+                <div class="ah-label hidden-xs"><i class="zmdi zmdi-city-alt"></i> <%= Company.model_name.human.pluralize %> </div>
+
+                <% if @business %>
+                  <ul class="actions no-print">
+                    <li>
+                      <%= link_to 'javascript:;', onclick: "javascript:print();" do %>
+                        <i class='zmdi zmdi-print'></i> 
+                      <% end %>
+                    </li>                     
+                  </ul>
+                <% end %>                                 
+              </div>
+
+              <div class="card-body"> 
+                <div class="table-responsive">
+                  <% if @business %>
+                    <%= render( partial: 'reports/list_business', locals: { business: @business } )  %>
+                  <% else %>  
+                    <p> Sem resultados </p>
+                  <% end %>
+                </div>                       
+              </div>
+            </div>
+
+            <script type="text/javascript">
+              $(document).ready(function(){
+                loadSelectPicker();        
+              });
+            </script>
+
+
+

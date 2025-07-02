@@ -1,0 +1,8 @@
+<% js = escape_javascript(
+	render(partial: 'occupations/remote_form')
+	) %>
+
+	$("#occupation_content").html("<%= js %>");
+	$("#card_header_occupation").html("<h2><i class='zmdi zmdi-account-box-o'></i> Nova <%= Occupation.model_name.human %></h2>")
+
+	hiddenPreLoader(); 

@@ -1,0 +1,8 @@
+hiddenPreLoader();
+<% js = escape_javascript(
+	render(partial: 'dependents/index')
+	) %>
+
+	$("#dependent_content").html("<%= js %>");
+	
+	

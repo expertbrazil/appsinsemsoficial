@@ -1,0 +1,120 @@
+<div id="filterrific_results">
+	<% if @grouped.nil? %>
+
+	<table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Fornecedor</th>
+            <th>Situação</th>
+            <th>Vencimento</th>
+            <th>Descrição</th>
+            <th>Valor</th>            
+          </tr>
+        </thead>
+
+        <tbody>
+          <%= content_tag_for(:tr, @bills_pays) do |bills_pay| %>
+          <td><%= bills_pay.supplier.name  %></td>           
+          <td>
+            <% state = bills_pay.state_name %>  
+            <span class="label label-<%=state[1][:color]%>">
+              
+              <%= best_in_place bills_pay, :state_assm, :as => :select, collection: BillsPay::STATES.collect { |br| [br[1], br[0].upcase] }, inner_class: "bestinplace-title-black" %>
+            </span>
+          </td>           
+          <td><%=l bills_pay.due_date %></td>  
+          <td><%= bills_pay.description %></td>           
+          <td><%= number_to_currency bills_pay.amount %></td>           
+                   
+          
+           <% end %>
+         </tbody>
+    </table>
+
+
+		<%= will_paginate @bills_pays, renderer: BootstrapPagination::Rails %>
+	<% else %>
+		<% @soma_total = 0 %>
+		<% @grouped.each do |category, bills_pays| %> 
+			<div class="card-body card-padding nested-fields">
+				
+				<div class="card p-10">
+					<div class="card-header ch-alt m-t-0">
+				    	<h2>
+				    		<%= 
+				    			if params[:filterrific].present?  && !params[:filterrific][:grouped_by].blank?        
+						        	if params[:filterrific][:grouped_by] === 'category_id'
+						          		bills_pays.first.category.name.mb_chars.upcase
+						        	elsif params[:filterrific][:grouped_by] === 'supplier_id'
+						          		bills_pays.first.supplier.name.mb_chars.upcase
+						        	end
+						        else
+						        	bills_pays.first.category.name.mb_chars.upcase
+						      	end
+						      %>				    		
+				    	</h2>
+					</div>
+
+					<div class="card-content ch-alt m-t-0">
+						<table class="table table-striped table-bordered">
+						    <thead>
+						      <tr>
+						        <th>Fornecedor</th>
+					            <th>Situação</th>
+					            <th>Vencimento</th>
+					            <th>Descrição</th>
+					            <th>Valor</th>
+						      </tr>
+						    </thead>
+
+						    <tbody>			
+						    	<% @soma = 0 %>		    	
+								<%= content_tag_for(:tr, bills_pays) do |bills_pay| %>
+						        	<td><%= bills_pay.supplier.name  %></td>           
+						          	<td>
+						            	<% state = bills_pay.state_name %>  
+						            	<span class="label label-<%=state[1][:color]%>">
+						              
+						              	<%= best_in_place bills_pay, :state_assm, :as => :select, collection: BillsPay::STATES.collect { |br| [br[1], br[0].upcase] }, inner_class: "bestinplace-title-black" %>
+						            	</span>
+						          	</td>           
+						          	<td><%=l bills_pay.due_date %></td>  
+						          	<td><%= bills_pay.description %></td>           
+						          	<td>
+						          		<%= number_to_currency bills_pay.amount %>
+						          		<% @soma += bills_pay.amount %>
+						          	</td> 
+						      	<% end %>
+					      	 	<tr>
+						      		<td></td>
+						      		<td></td>
+						      		<td></td>
+						      		<td style="float: right;"><strong>TOTAL</strong></td>
+						      		<td><strong><%= number_to_currency @soma %></strong></td>
+						      		
+						      	</tr>
+						      	<% @soma_total += @soma %>
+						      
+						    </tbody>
+					  	</table>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	  	<table class="table table-striped table-bordered">
+			<tbody>	
+				<tr>
+			  		<td></td>
+			  		<td></td>
+			  		<td></td>
+			  		<td></td>
+			  		<td></td>
+			  		<td></td>
+			  		<td style="font-size: 20px; text-align: right;"><strong>TOTAL</strong></td>
+			  		<td style="font-size: 20px; text-align: left;"><strong><%= number_to_currency @soma_total %></strong></td>			  		
+		  		</tr>
+		  	</tbody>	
+	  	</table>
+
+	<% end %>
+</div>

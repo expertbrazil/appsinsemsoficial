@@ -1,0 +1,15 @@
+<li>
+  <%
+    @params = { } 
+    @params.merge!({ filterrific: @filterrific.to_hash }) if params[:filterrific].present?
+  %>
+  <%= link_to voters_print_path({filterrific: @filterrific.to_hash }), target: :blank, title: "Imprimir" do %>
+    <i class='zmdi zmdi-print'></i> 
+  <% end %>
+</li>   
+
+<li>
+ <%= link_to voters_to_xls_path({format: :xls, filterrific: @filterrific.to_hash }), target: :blank, title: "Exportar Excel" do %>
+  <i class="fa fa-file-excel-o"></i>                        
+  <% end %>
+</li>             

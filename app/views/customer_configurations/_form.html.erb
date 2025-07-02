@@ -1,0 +1,155 @@
+<div class="card">  
+    <%= simple_form_for(@customer_configuration, html: { class: "", role: "form" }) do |f| %>
+     <%= errors @customer_configuration if @customer_configuration.errors.any? %> 
+
+      <div class="card-body card-padding">
+        <div class="row">
+          <div class="col-sm-2">    
+            <div class="fg-line form-group ">
+              <%= f.label :date_fundation, class: "fg-label" %>
+
+
+              <div class="input-group form-group">
+                  <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                  <div class="dtp-container">
+                    <%= f.input :date_fundation, as: :string, input_html: {class: "form-control date-picker", placeholder: "Clique aqui..." , value: @customer_configuration.date_fundation ? I18n.l(@customer_configuration.date_fundation) : '', autocomplete: false }, label: false %>                    
+                  </div>
+                  <span class="input-group-addon"><i class="zmdi zmdi-calendar-close clear_field" title='Limpar campo'></i></span>
+              </div>
+            </div>
+          </div>
+
+           <div class="col-sm-3">    
+            <div class="fg-line ">
+              <%= f.label :president, class: "fg-label" %>
+              <%= f.input :president, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>
+      </div>
+      <div class="row">        
+          
+          <div class="col-sm-2">    
+            <div class="fg-line form-group ">
+              <%= f.label :name, class: "fg-label" %>
+              <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>
+
+
+          <div class="col-sm-3">    
+            <div class="fg-line form-group ">
+              <%= f.label :address, class: "fg-label" %>
+              <%= f.input :address, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>
+
+          <div class="col-sm-2">    
+            <div class="fg-line form-group ">
+              <%= f.label :street, class: "fg-label" %>
+              <%= f.input :street, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>
+
+          <div class="col-sm-2">    
+            <div class="fg-line form-group ">
+              <%= f.label :city, class: "fg-label" %>
+              <%= f.input :city, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>  
+
+
+          <div class="col-sm-2">    
+            <div class="fg-line form-group ">
+              <%= f.label :state, class: "fg-label" %>
+              <%= f.input :state, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>      
+
+
+          <div class="col-sm-4">    
+            <div class="fg-line form-group ">
+              <%= f.label :cnpj, class: "fg-label" %>
+              <%= f.input :cnpj, input_html: {class: "form-control input-sm fg-input mask-cnpj", "data-mask": "99.999.999/9999-99"}, label: false %>
+            </div>
+          </div>
+
+          <div class="col-sm-4">    
+            <div class="fg-line form-group ">
+              <%= f.label :phone, class: "fg-label" %>
+              <%= f.input :phone, input_html: {class: "form-control input-sm fg-input mask-phone-fixo", "data-mask": "(00) 0000-0000"}, label: false %>  
+            </div>
+          </div>
+
+          <div class="col-sm-4">    
+            <div class="fg-line form-group ">
+              <%= f.label :cell_phone, class: "fg-label" %>
+              <%= f.input :cell_phone, input_html: {class: "input-sm form-control fg-input mask-phone", "data-mask": "(00) 0000-0000"}, label: false %> 
+            </div>
+          </div>
+
+          
+
+
+          <div class="col-sm-2">    
+            <div class="fg-line form-group ">
+              <%= f.label :menu_people_associateds, class: "fg-label" %>
+              <%= f.input :menu_people_associateds, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>
+      
+          <div class="col-sm-3">
+              <div class="form-group fg-line">
+                  <%= f.label :total_maximum_salary, class: "fg-label" %>
+                  <%= f.input :total_maximum_salary, as: :string, input_html: {class: "input-sm form-control fg-input money", value: (number_with_precision(f.object.total_maximum_salary, precision: 2, separator: '.', delimiter: '') || 0)}, label: false  %>
+              </div>
+          </div>
+      
+          <div class="col-sm-2">    
+            <div class="fg-line form-group ">
+              <%= f.label :discount_percentage, class: "fg-label" %>
+              <%= f.input :discount_percentage, input_html: {class: "input-sm form-control fg-input" }, label: false %>
+            </div>
+          </div>      
+
+          <div class="col-sm-2">    
+            <div class="fg-line form-group ">
+              <%= f.label :idade_limite_estudante, class: "fg-label" %>
+              <%= f.input :idade_limite_estudante, input_html: {class: "input-sm form-control fg-input" }, label: false %>
+            </div>
+          </div>
+
+          <div class="col-sm-4">    
+            <div class="fg-line form-group ">
+              <%= f.label :logo, class: "fg-label" %>
+              <%= f.input :logo, as: :file, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+              <%= image_tag(f.object.logo.url(:record)) unless f.object.logo.blank? %>
+            </div>
+          </div>    
+          <div class="col-sm-4">    
+            <div class="fg-line form-group ">
+              <%= f.label :signature, class: "fg-label" %>
+              <%= f.input :signature, as: :file, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+              <%= image_tag(f.object.signature.url(:record)) unless f.object.signature.blank? %>
+            </div>
+          </div>            
+
+          <div class="col-sm-12">    
+            <br>
+            <div class="fg-line form-group ">
+              <%= f.label :ficha, class: "fg-label" %>
+              <%= f.input :ficha, input_html: {class: "input-sm form-control fg-input html-editor", rows: 10}, label: false %>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      
+      <div class="card-body card-padding">
+        <%= submit_tag 'Criar e adicionar', class: "btn bgm-teal waves-effect", name: 'create_and_add' if !edit_mode? %>
+        <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+        <%= link_to "Cancelar", customer_configurations_path, class: "btn bgm-red waves-effect" %>
+      </div>  
+      <% end %>    
+    </div>
+

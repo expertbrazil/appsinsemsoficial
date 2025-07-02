@@ -1,0 +1,10 @@
+<% if @saved %>
+	window.location.href = "<%= bills_pays_url %>"
+<% else %>	
+	$("#bills_receife_error").html("<%= escape_javascript errors(@bills_receife) %>")
+<% end %>	
+
+mascaras();
+loadDateField();
+hiddenPreLoader();
+hiddenFullLoader();

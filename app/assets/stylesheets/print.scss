@@ -1,0 +1,60 @@
+/*CSS para impressão*/
+@media print {
+	@page {
+		size: landscape;
+		//-webkit-transform: rotate(-90deg); 
+     //-moz-transform:rotate(-90deg);
+     //filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	}
+
+
+    body { 
+        //writing-mode: tb-rl;
+    }
+
+
+	.no-print{
+		display: none;
+	}
+	.yes-print{
+		display: block;
+	}
+	.card{
+		.action-header{
+			.ah-label{
+				font-weight: bold;
+				margin-bottom: 10px;
+				&:before{
+					content: "Relatório de ";
+					
+				}
+			}
+		}
+	}
+
+	#filterrific_results{
+		.table{
+		    border-collapse:collapse;
+		    font-family: Times New Roman;
+			text-transform: uppercase;
+			font-size: 10px;
+			width: 100%;
+			thead{
+				margin-bottom: 15px;
+				th{
+					text-align: left;
+					font-weight: bold;
+				}
+			}
+			tbody{
+
+
+			}
+
+			th, td {
+				border: 1px solid #000;
+			}
+
+		}
+	}
+}

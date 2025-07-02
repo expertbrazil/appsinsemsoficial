@@ -1,0 +1,21 @@
+<% if @saved %>
+	<% @appointment_book_peoples = @professional.appointment_book.appointbook_peopleassoci if @professional %>
+	$('#calendar').fullCalendar('removeEvents');
+	$('#calendar').fullCalendar('addEventSource', <%= raw @appointment_book_peoples.collect { |p| p.to_jq_upload({ is_patient: false }) }.to_json %>);         
+	$('#calendar').fullCalendar('rerenderEvents' );
+	$('#calendar').fullCalendar('unselect');
+
+	$("#appointment_books_form").html("<%= escape_javascript render :partial => "appointment_books/form" %>");
+
+	notify("Agendado com sucesso", "success")
+<% else %>
+	<% 
+		@output = ""
+		@appointment_book.errors.full_messages.each do |msg| 
+        	@output << "#{msg} <br>"
+      	end 
+     %>
+
+	notify("<%=raw @output %>", "danger");	
+<% end %>
+hiddenPreLoader(); 

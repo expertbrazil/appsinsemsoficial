@@ -1,0 +1,14 @@
+<% if @saved %>
+	$('#company_segment_id').append($('<option>', {
+	    value: "<%=@segment.id%>",
+	    text: "<%=@segment.name%>"
+	}));
+
+	
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_segment').modal('hide');
+<% else %>	
+	$("#segment_error").html("<%= escape_javascript errors(@segment) %>")
+<% end %>	
+
+hiddenPreLoader(); 

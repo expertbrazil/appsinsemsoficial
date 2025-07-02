@@ -1,0 +1,110 @@
+<%= stylesheet_link_tag "print", media: :print %> 
+<div class="card no-print">
+  <div class="card-header ch-alt m-b-20">   
+    <i class="zmdi zmdi-filter-list"></i> Filtros
+  </div>  
+  <div class="card-body card-padding"> 
+    <%= form_for_filterrific @filterrific, html: { class: "", role: "form" } do |f| %>
+    <div class="row">
+
+
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group fg-line">
+          Por nome:
+          <%= f.text_field(
+            :search_query,
+            class: 'filterrific-periodically-observed form-control'
+              ) %>
+            </div>                
+          </div>  
+          <div class="col-md-6 col-sm-6 col-xs-12">
+           <div class="form-group fg-line">
+             <label>Ordenar por:</label>
+             <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], {}, {class: 'selectpicker'} ) %>
+           </div>
+         </div>  
+
+         <div class="col-xs-12">
+          <div class="form-group fg-line">            
+            Por situação:
+            <div class="row m-t-10">
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <%= f.radio_button(:with_active_flag, "") %> 
+                <%= f.label :with_active_flag, "Todos", value: "" %>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <%= f.radio_button(:with_active_flag, 1) %> 
+                <%= f.label :with_active_flag, "Ativos", value: 1 %>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <%= f.radio_button(:with_active_flag, 0) %> 
+                <%= f.label :with_active_flag, "Inativos", value: 0 %>
+              </div> 
+            </div>           
+          </ul>
+        </div>                
+      </div>    
+    </div>   
+
+    <div class="row">
+
+
+
+      <div class="col-md-8 col-sm-2 col-xs-2">
+        <div class="form-group fg-line">  
+          <%= f.submit 'Filtrar', class: "btn bgm-green waves-effect" %>                
+          <%= link_to('Resetar Filtros', reset_filterrific_url, class: "btn bgm-red waves-effect")%>
+        </div>
+      </div>
+    </div>
+
+    <%= render_filterrific_spinner %>      
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="action-header clearfix">                                       
+    <div class="ah-label hidden-xs"><i class="zmdi zmdi-assignment"></i> <%= Dependent.model_name.human.pluralize %> </div>
+
+    <% if @people_associateds %>
+    <ul class="actions no-print">
+      <li>
+        <% if false %>
+          <%= link_to 'javascript:;', onclick: "javascript:print();" do %>
+          <i class='zmdi zmdi-print'></i> 
+          <% end %>
+        <% end %>
+
+        <%
+            @params = { } 
+            @params.merge!({ filterrific: @filterrific_params }) if params[:filterrific].present?
+          %>
+
+         <%= link_to print_dependents_path(@params), target: :blank, title: "Imprimir" do %>
+          <i class="zmdi zmdi-print"></i>                        
+          <% end %>
+      </li>                     
+    </ul>
+    <% end %>                                          
+  </div>
+
+  <div class="card-body card-padding"> 
+    <div class="table-responsive">
+      <% if @people_associateds %>
+      <%= render( partial: 'reports/list_dependents', locals: { people_associateds: @people_associateds } )  %>
+      <% else %>  
+      <p> Sem resultados </p>
+      <% end %>
+    </div>                       
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    loadSelectPicker();        
+  });
+</script>
+
+
+

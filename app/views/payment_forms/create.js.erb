@@ -1,0 +1,15 @@
+<% if @saved %>
+	
+
+	$('#bills_receife_payment_form_id').append($('<option>', {
+	    value: "<%=@payment_form.id%>",
+	    text: "<%=@payment_form.name%>"
+	}));
+
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_payment_form').modal('hide');
+<% else %>	
+	$("#payment_form_error").html("<%= escape_javascript errors(@payment_form) %>")
+<% end %>	
+
+hiddenPreLoader(); 

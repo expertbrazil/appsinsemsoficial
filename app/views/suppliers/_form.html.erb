@@ -1,0 +1,288 @@
+<div class="card">
+  <%= simple_form_for(@supplier, html: { class: "", role: "form" }) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="card-header">
+      <h2><i class="zmdi zmdi-assignment"></i> Dados</h2>
+    </div>
+
+    <div class="card-body card-padding">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= f.label :entity_type, class: "fg-label" %>     
+
+          <% Supplier::TYPES.each do |t| %>
+            <div class="radio radio-inline radio_e_t">
+              <label>                                                        
+                <%= f.radio_button :entity_type, t[1], checked: f.object.entity_type == t[1], class: 'multiple_classes' %>
+                <i class="input-helper"></i><%= t[0] %>
+              </label>
+            </div>
+          <% end %>  
+        </div><br><br>
+
+        <div class="col-sm-5"> 
+          <div class="form-group fg-float">                   
+              <div class="fg-line">                   
+                  <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %> 
+                  <%= f.label :name, class: "fg-label" %>              
+              </div>
+          </div>
+        </div>
+
+        <div class="col-sm-5 juridica" style="display: <%= f.object.fisica? ? 'none' : 'block' %>;"> 
+          <div class="form-group fg-float">
+            <div class="fg-line">  
+              <%= f.input :razao_social, input_html: {class: 'input-sm form-control fg-input'}, label: false  %>
+              <%= f.label :razao_social, class: "fg-label" %>  
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2 juridica" style="display: <%= f.object.fisica? ? 'none' : 'block' %>;"> 
+            <div class="form-group fg-float">
+              <div class="fg-line">  
+                <%= f.input :cnpj, input_html: {class: 'input-sm form-control fg-input mask-cnpj', "data-mask": "00.000.000/0000-00" , "data-id": @supplier.id  }, label: false  %>
+                <%= f.label :cnpj, class: "fg-label" %>  
+              </div>
+            </div>
+          </div>
+      
+      </div> <!-- end row -->
+
+      <div class="row">
+        <div class="col-sm-2 fisica" style="display: <%= f.object.fisica? ? 'block' : 'none' %>;"> 
+            <div class="form-group fg-float">
+              <div class="fg-line">  
+                 <%= f.input :cpf, input_html: {class: 'input-sm form-control fg-input input-mask mask-cpf', "data-mask": "000.000.000-00" , "data-id": @supplier.id }, label: false %>   
+                <%= f.label :cpf, class: "fg-label" %>                
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-2 fisica" style="display: <%= f.object.fisica? ? 'block' : 'none' %>;"> 
+            <div class="form-group fg-float">
+              <div class="fg-line">  
+                <%= f.input :rg, input_html: {class: 'input-sm form-control fg-input'}, label: false  %>
+                <%= f.label :rg, class: "fg-label" %>  
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-2 fisica" style="display: <%= f.object.fisica? ? 'block' : 'none' %>;"> 
+            <div class="form-group fg-float">
+              <div class="fg-line">  
+                <%= f.input :emitter, input_html: {class: 'input-sm form-control fg-input'}, label: false  %>
+                <%= f.label :emitter, class: "fg-label" %>  
+              </div>
+            </div>
+          </div> 
+
+
+          <div class="col-sm-2 fisica" style="display: <%= f.object.fisica? ? 'block' : 'none' %>;"> 
+            <div class="form-group fg-float">
+              <div class="fg-line">  
+                <%= f.input :uf, input_html: {class: 'input-sm form-control fg-input'}, label: false  %>
+                <%= f.label :uf, class: "fg-label" %>  
+              </div>
+            </div>
+          </div>    
+      </div> <!-- end row -->
+      
+      <div class="row">   
+        <div class="col-sm-3"> 
+        <div class="form-group fg-float">
+          <div class="fg-line">              
+            <%= f.input :phone, input_html: {class: "input-sm form-control fg-input mask-phone", "data-mask": "(00) 0000-0000"}, label: false %> 
+            <%= f.label :phone, class: "fg-label" %>  
+          </div>
+        </div>
+      </div>    
+
+      <div class="col-sm-3"> 
+        <div class="form-group fg-float">
+          <div class="fg-line">              
+            <%= f.input :cell_phone, input_html: {class: "input-sm form-control fg-input mask-phone", "data-mask": "(00) 0000-0000"}, label: false %> 
+            <%= f.label :cell_phone, class: "fg-label" %>  
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-6"> 
+        <div class="form-group fg-float">
+          <div class="fg-line">              
+            <%= f.input :email, input_html: {class: "input-sm form-control fg-input"}, label: false %> 
+            <%= f.label :email, class: "fg-label" %>  
+          </div>
+        </div>
+      </div>
+      </div> <!-- end row -->
+
+    </div>
+
+
+    <div class="card-header">
+        <h2><i class="zmdi zmdi-pin"></i> Endereço</h2>
+    </div>
+
+
+    <div class="card-body card-padding">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group fg-float">
+                    <div class="fg-line">   
+                      <%= f.label :address, class: "fg-label" %>
+                      <%= f.input :address, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-5">
+                <div class="form-group fg-float">    
+                  <div class="fg-line">   
+                    <%= f.label :complement, class: "fg-label" %>   
+                    <%= f.input :complement, input_html: {class: "input-sm form-control fg-input"}, label: false  %>                                         
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group fg-float">    
+                  <div class="fg-line">   
+                    <%= f.label :number, class: "fg-label" %> 
+                    <%= f.input :number, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group fg-float">   
+                  <div class="fg-line">   
+                    <%= f.label :zipcode, class: "fg-label" %>                     
+                    <%= f.input :zipcode, input_html: {class: 'input-sm form-control fg-input mask-cep', "data-mask": "00000-000"}, label: false %>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group fg-float"> 
+                  <div class="fg-line">   
+                    <%= f.label :burgh, class: "fg-label" %>
+                    <%= f.input :burgh, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group fg-float">                        
+                  <div class="fg-line">   
+                    <%= f.label :city, class: "fg-label" %>
+                    <%= f.input :city, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group fg-float">     
+                  <div class="fg-line">   
+                    <%= f.label :state, class: "fg-label" %>                   
+                    <%= f.input :state, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                  </div>
+                </div>
+            </div> 
+
+
+
+            <div class="col-sm-12">
+                <div class="form-group fg-float">     
+                  <div class="fg-line">   
+                    <%= f.label :obs, class: "fg-label" %>                   
+                    <%= f.input :obs, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                  </div>
+                </div>
+            </div>
+        </div>   
+
+    <div class="card-header">
+        <h2><i class="zmdi zmdi-collection-text"></i> Outras informações</h2>
+    </div>
+
+
+      <div class="card-body card-padding">        
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="checkbox m-b-15">
+                <label>
+                    <%= f.check_box :status %>
+                    <i class="input-helper"></i> 
+                    <%= "Ativo?" %>                            
+                </label>
+            </div>
+          </div>                        
+        </div>                        
+      </div>                        
+  </div>
+
+
+
+    <div class="card-body card-padding">
+      <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+      <%= link_to "Cancelar", suppliers_path, class: "btn bgm-red waves-effect" %>
+    </div> 
+  <% end %>    
+  
+</div>
+
+
+
+
+  <script type="text/javascript">
+
+    $(document).on('turbolinks:load', function () {
+      var type_p = $('.radio_e_t input').val();
+      change_type(type_p)
+    });
+
+    $('.radio_e_t input').change(function(){
+      var type_p = $(this).val();
+      change_type(type_p)
+    });
+
+    function change_type(type_p) {
+      if(type_p == 1){
+        hide_company();
+        change_label($(".supplier_razao_social label"), "Nome")
+        change_label($(".supplier_name label"), "Apelido")
+      }else{
+        hide_person();
+        change_label($(".supplier_razao_social label"), "Razão Social")
+        change_label($(".supplier_name label"), "Fantasia")
+      }
+    }
+
+    function change_label(label, text) {
+      $(label).html(text)
+    }
+
+    function hide_person() {
+      $(".fisica").hide();
+      clear_fields(".fisica");
+      $(".juridica").show();
+    }
+
+    function hide_company() {
+      $(".fisica").show();
+      $(".juridica").hide();
+      clear_fields(".juridica");
+    }
+
+    function clear_fields(element) {
+      $(element).each(function(i, obj) {
+        $(this).find('input').val('');
+      });
+    }
+
+  </script>
+

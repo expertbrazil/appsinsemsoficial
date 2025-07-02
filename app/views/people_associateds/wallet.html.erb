@@ -1,0 +1,191 @@
+<style>
+/*	@page {
+		size: landscape;
+		margin: 0;
+		-webkit-transform: rotate(-90deg); 
+	    -moz-transform:rotate(-90deg);
+	    filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	}*/
+	body {
+	 margin: 12px;
+	 background-color: #ccc;
+	 font-family: Arial;
+	}
+	
+	@media print{    
+	    .no-print, .no-print *
+	    {
+	        display: none !important;
+	    }
+	}
+
+	div.vertical
+	{
+		margin-left: 267px;
+		position: absolute;
+		width: 215px;
+		margin-top: 86px;
+		font-size: 7px;
+		color: #424231;
+	 	transform: rotate(-90deg);
+	 	-webkit-transform: rotate(-90deg); /* Safari/Chrome */
+	 	-moz-transform: rotate(-90deg); /* Firefox */
+	 	-o-transform: rotate(-90deg); /* Opera */
+	 	-ms-transform: rotate(-90deg); /* IE 9 */
+	}
+</style>
+<button class="btn btn-success no-print" onclick="window.print();">Imprimir</button>
+<hr>
+<div style="position: relative; display: inline-block;width:406px; height:208px; background-color: #fff;">
+	<div style="position: absolute;top: 0px;padding: 15px;width:406px;height:208px;box-sizing: border-box;border: 1px solid #000;
+  border-right: 1px solid #000;">
+		<div style="display: table;">
+			<%= image_tag("logo_in_dash.jpeg", style: "width: 90px;display: table-cell; ") %>
+
+			<div style="display: table-cell;vertical-align: top; text-align: center;">
+				<b style="font-size: 14px"> <span style="color: red;">SINSEMS</span> - SINDICATO DOS SERVIDORES
+PÚBLICOS MUNICIPAIS DE SORRISO/MT </b>
+				<hr style="color: red; width: 50%;">
+				<b style="margin: 0 57px; font-size: 12px;">(66) 3544-6575 | 99955-2895</b>
+			</div>
+		</div>
+		
+		<div style="display:block; position: relative; left: 100px; top: 10px; line-height: 16px;">
+			<p style="font-weight: bold; font-size: 12px; margin: 0; width: 223px; color: #740000;"><%= @p.number_registration %> - <%= @p.name %></p>
+			<p style="font-size: 12px; margin: 0; color: #424231;">	<b>CPF:</b> <%= @p.cpf %> | <b>RG:</b>  <%= @p.rg %> <%= @p.dispatcher_organ %> </p>
+		
+			<p style="font-size: 12px; margin: 0;">	Validade: <b style="color: red;"><%= @p.validity_card ? @p.validity_card.strftime("%d/%m/%Y") : "Não informado" %></b></p>
+		</div>
+		<div style="position: absolute; bottom: 10px; text-align: center; right:  28px;">
+			
+				<% if @customer_configuration.present? %>
+					<% if @customer_configuration.signature.blank? %>
+						<b style="font-size: 12px;margin: 0;"><%= @customer_configuration.president.upcase %></b>	
+					<% else %>
+						<%= image_tag @customer_configuration.signature.url(:sig) %>
+					
+					<% end %>
+				<% else %>
+					<b style="font-size: 12px;margin: 0;">LEOCIR JOSÉ FACCIO</b>
+				<% end %>
+			
+			<p style="font-size: 12px;margin: 0;">Presidente</p>
+		</div>
+		<img src="<%= @p.photo.present? ? @p.photo.url(:thumb_3x4) : '/assets/user.png' %>" style="position: absolute; bottom: 11px; width: 85px; height: 110px; border: 1px solid #ccc;">
+	</div>
+</div>
+<br><br>
+
+<div style="position: relative; display: block;width:406px; height:208px; background-color: #fff;">
+	<div style="position: absolute;top: 0px;padding:0 10px;width:406px;height:208px;box-sizing: border-box; border: 1px solid #000;
+  border-right: 1px solid #000;">
+		<div class="vertical">*DEVOLUÇÃO OBRIGATÓRIA NO ATO DE DESFILIAÇÃO*</div>
+
+		<div style="width: 100%; font-size: 12px; margin-top: 10px; color: #424231;">
+			<b style="display:block;">CARGO: <%= @p.hollering_registration %> - <%= @p.office.present? ? @p.office.name : '' %></b><br>
+		</div>
+		<b style="display:block;font-size:12px; color: #424231;">DEPENDENTES:</b>
+		<div style="width: 100%; font-size: 12px; margin-top: 10px;">
+			<ul>
+				<% @p.dependents.actives.each do |dependent| %>
+					<li style="margin-left: -20px;"><span style="display:block; color: #424231;"><%= dependent.name.upcase %></span></li>
+				<% end %>  
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+<% if false %>
+
+<style>
+/*	@page {
+		size: landscape;
+		margin: 0;
+		-webkit-transform: rotate(-90deg); 
+	    -moz-transform:rotate(-90deg);
+	    filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	}*/
+	body {
+	 margin: 12px;
+	}
+	
+	@media print{    
+	    .no-print, .no-print *
+	    {
+	        display: none !important;
+	    }
+	}
+
+	div.vertical
+	{
+		margin-left: 207px;
+		position: absolute;
+		width: 215px;
+		margin-top: 67px;
+		font-size: 10px;
+		color: red;
+	 	transform: rotate(-90deg);
+	 	-webkit-transform: rotate(-90deg); /* Safari/Chrome */
+	 	-moz-transform: rotate(-90deg); /* Firefox */
+	 	-o-transform: rotate(-90deg); /* Opera */
+	 	-ms-transform: rotate(-90deg); /* IE 9 */
+	}
+</style>
+<button class="btn btn-success no-print" onclick="window.print();">Imprimir</button>
+<hr>
+<div style="position: relative; display: inline-block;width:344px; height:208px; ">
+	<img src="/assets/card.jpg" style="width:344px; height:208px; border: 0; padding: 0">
+	<div style="position: absolute;top: 0px;padding: 15px;width:344px;height:208px;box-sizing: border-box;">
+		<div style="display: table;">
+			<img src="/assets/logo_in_dash.jpeg" style="border: 1px solid #000;width: 60px;display: table-cell; border-radius: 10px;">
+			<div style="display: table-cell;vertical-align: top;">
+				<b style="margin: 0 5px; text-decoration: underline; font-size: 15px;"><span style="color: red;">SINSEMS</span> - Sindicato dos Servidores</b>
+				<b style="margin: 0 5px; text-decoration: underline; font-size: 15px;">Públicos Municipais de Sorriso/MT</b>
+				<b style="margin: 0 5px; text-decoration: underline; font-size: 15px;">Telefones: 3544-6575/9 9985-6840</b>
+			</div>
+		</div>
+		
+		<div style="display:block; position: relative; left: 100px; top: 10px">
+			<p style="font-weight: bold; font-size: 12px; margin: 0; width: 223px;"><%= @p.number_registration %> - <%= @p.name %></p>
+			<p style="font-size: 13px; margin: 0;">	<b>CPF:</b> <%= @p.cpf %> </p>
+			<p style="font-size: 13px; margin: 0;">	<b>RG:</b>  <%= @p.rg %> <%= @p.dispatcher_organ %> </p>
+			<p style="font-size: 13px; margin: 0;">	<b>Validade:</b> <b><%= @p.validity_card ? @p.validity_card.strftime("%d/%m/%Y") : "Não informado" %></b></p>
+		</div>
+		<div style="position: absolute; bottom: 10px; width: 195px; text-align: center; left: 113px;">
+			
+				<% if @customer_configuration.present? %>
+					<% if @customer_configuration.signature.blank? %>
+						<b style="font-size: 12px;margin: 0;"><%= @customer_configuration.president.upcase %></b>	
+					<% else %>
+						<%= image_tag @customer_configuration.signature.url(:sig) %>
+					
+					<% end %>
+				<% else %>
+					<b style="font-size: 12px;margin: 0;">LEOCIR JOSÉ FACCIO</b>
+				<% end %>
+			
+			<p style="font-size: 12px;margin: 0;">Presidente</p>
+		</div>
+		<img src="<%= @p.photo.present? ? @p.photo.url(:thumb_3x4) : '/assets/user.png' %>" style="position: absolute; bottom: 11px; left: 9px; width: 100px; height: 110px; border: 1px solid #000;">
+	</div>
+</div>
+
+
+<div style="position: relative; display: inline-block;width:344px; height:208px; left: -4px;">
+	<img src="/assets/card.jpg" style="width:344px; height:208px; border: 0; padding: 0">
+	<div style="position: absolute;top: 0px;padding: 15px;width:344px;height:208px;box-sizing: border-box;">
+		<div class="vertical">*Devolução obrigatória no ato de desfiliação*</div>
+
+		<div style="width: 100%; font-size: 12px; margin-top: 10px;">
+			<span style="display:block;">CARGO: <%= @p.hollering_registration %> - <%= @p.office.present? ? @p.office.name : '' %></span><br>
+		</div>
+		<b style="display:block;font-size:12;">Dependentes:</b>
+		<div style="width: 100%; font-size: 12px; margin-top: 10px;">
+			<% @p.dependents.actives.each do |dependent| %>
+			<span style="display:block;"><%= dependent.name.upcase %></span>
+			<% end %>  
+		</div>
+	</div>
+</div>
+<% end %>

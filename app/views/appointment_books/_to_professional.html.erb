@@ -1,0 +1,107 @@
+<% 
+	@canceled = @appointment_book_people.canceled 
+	@started = @appointment_book_people.start_attendance 
+	@stoped = @appointment_book_people.stop_attendance 
+%> 
+
+
+<div class="block-header">
+    <h2>Atendimento</h2>
+
+</div>
+
+<div class="card">
+  <div class="card-header ch-alt m-b-20">                                    
+    <h2><%= @appointment_book_people.people_associated ? @appointment_book_people.people_associated.name : ( @appointment_book_people.dependent ?  @appointment_book_people.dependent.name : '')  %></h2>
+
+    <%= l @appointment_book_people.start_datetime %>
+
+    <%= content_tag(:label, "Em Atendimento", class: "label label-#{@started ? 'success' : ''}") if @started && !@stoped %>
+    <%= content_tag(:label, "Atendimento Finalizado", class: "label label-#{@started ? 'info' : ''}") if @stoped %> 
+  </div>
+
+    <div class="card-body card-padding">      
+
+		<% if @started || @finalized %>
+			<div class="row">
+	        	<div class="col-md-9">
+				    <%= simple_form_for(@appointment_book_people, url: update_appointbook_peopleassoci_path(@appointment_book_people), html: { class: "", id: "form_bills_receife", role: "form" }, remote: true, multipart: true) do |f| %>
+					    <div id="appointment_book_people_error"></div>
+					     
+					    <div class="card-body card-padding">
+					    	<div class="row">
+					        	<div class="col-sm-12">    
+					            	<div class="form-group fg-line ">
+					                	<%= f.label :description, class: "fg-label" %>
+					                	<%= f.input :description, input_html: {class: "input-sm form-control fg-input html-editor", rows: 10}, label: false %>
+					            	</div>
+					        	</div>
+					        </div>
+					    </div>
+
+				      <div class="card-body card-padding">
+					    <%= f.button :submit, "Salvar", class: "btn bgm-green waves-effect" if  !@canceled && !@stoped && @started %>	
+					    <%= link_to professional_appointment_book_finalizar_atendimento_path(@professional, @appointment_book_people.appointment_book_id, { id: @appointment_book_people}), title: "Finalizar Atendimento", remote: true, class: "btn btn-warning waves-effect"  do %>
+						  <%= content_tag(:i, nil, class: "zmdi zmdi-check") %>
+						  Finalizar Atendimento
+						<% end if !@canceled && !@stoped && @started %>   				    
+					  </div> 
+
+					<% end %>
+	    		</div>
+
+	    		<div class="col-md-3">
+	    			Atendimentos <%= @all_attendances.count %>
+
+	    			<div class="accordion" id="accordionExample">
+					  <% @all_attendances.each do |attendance| %>	    					
+					  <div class="card">
+					    <div class="card-header" id="heading<%=attendance.id%>">
+					      <h2 class="mb-0">
+					        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse<%=attendance.id%>" aria-expanded="true" aria-controls="collapse<%=attendance.id%>">
+					          <%=l attendance.start_datetime %>
+					        </button>
+					      </h2>
+					    </div>
+
+					    <div id="collapse<%=attendance.id%>" class="collapse" aria-labelledby="heading<%=attendance.id%>" data-parent="#accordionExample">
+					      <div class="card-body">
+					       	<%= raw attendance.description %>
+					      </div>
+					    </div>
+					  </div>
+					  <% end %>
+					</div>
+	    		</div>
+	    	</div>
+	    <% end %>
+
+		<%= link_to professional_appointment_book_iniciar_atendimento_path(@professional, @appointment_book_people.appointment_book_id, { id: @appointment_book_people}), title: "Iniciar Atendimento", remote: true, class: "btn btn-info waves-effect"  do %>
+		  <%= content_tag(:i, nil, class: "zmdi zmdi-thumb-up") %>
+		  Iniciar Atendimento
+		<% end if !@canceled && !@started && @appointment_book_people.showed %>  
+    </div>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {    
+
+   if ($('.html-editor')[0]) {
+     $('.html-editor').summernote({
+            height: 300,
+            toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['', '', '']],
+          ['view', ['fullscreen', '', '']]
+        ]
+        });
+    }
+
+});
+
+    </script>

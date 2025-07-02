@@ -1,0 +1,159 @@
+<div class='row'>
+            <div class="col-sm-6 col-md-3">
+                <div class="mini-charts-item bgm-red">
+                    <div class="clearfix totals_system">
+                        <div class="chart"><i class="zmdi zmdi-minus-circle"></i></div>
+                        <div class="count">
+                            <small>Vencidas</small>
+                            <h2><%= MonthlyPayment.expireds.size %></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <div class="mini-charts-item bgm-green">
+                    <div class="clearfix totals_system">
+                        <div class="chart"><i class="zmdi zmdi-check-circle"></i></div>
+                        <div class="count">
+                            <small>Vencendo Hoje</small>
+                            <h2><%= MonthlyPayment.today.size %></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <div class="mini-charts-item bgm-orange">
+                    <div class="clearfix totals_system">
+                        <div class="chart"><i class="zmdi zmdi-star-circle"></i></div>
+                        <div class="count">
+                            <small>Futuras</small>
+                            <h2><%= MonthlyPayment.future.size %></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <div class="mini-charts-item bgm-blue">
+                    <div class="clearfix totals_system">
+                        <div class="chart"><i class="zmdi zmdi-plus-circle"></i></div>
+                        <div class="count">
+                            <small>Futuras R$</small>
+                            <h2><%= number_to_currency(MonthlyPayment.future.sum(:amount)) %></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2><%= CustomerConfiguration.current.menu_people_associateds.titleize %> inadimplentes <small>5 <%= CustomerConfiguration.current.menu_people_associateds.downcase %> com mais inadimplências.</small></h2>
+                </div>
+                <div class="card-body m-t-0">
+                    <table class="table table-inner table-vmiddle">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Telefone</th>
+                                <th style="width: 60px">Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% MonthlyPayment.top_five_expired.each do |monthly_payment| %>
+                                <tr>
+                                    <td>
+                                        <div class="pull-left">
+                                            <%= image_tag monthly_payment.people_associated.photo_url, class: 'lgi-img' if monthly_payment.people_associated.photo? %>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="lgi-heading">
+                                                <%= monthly_payment.people_associated.name %>
+                                            </div>                                                            
+                                        </div>    
+                                    </td>
+                                    <td><%= monthly_payment.people_associated.cell_phone1 %></td>
+                                    <td class="f-500 c-cyan"><%= monthly_payment.quantidade %></td>
+                                </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>  
+    </div>  
+
+
+<div class="card">
+    <div class="card-header ch-alt">
+        <h2>Mensalidades<small></small></h2>            
+    </div>
+
+    <div class="card-body card-padding">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="mini-charts-item">
+                    <%= column_chart MonthlyPayment.limit(30).group_by_month(:due_date, format: :custom_date_m_y, range: (Time.now - 11.months).beginning_of_month..Time.now.end_of_month).order('due_date DESC').sum("amount"), 
+                        discrete: true,
+                        library: {
+                            title: { 
+                                text: 'Últimos 12 meses', x: -20
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'R$'
+                                }
+                            },
+                            tooltip: {
+                                pointFormat: 'total: <b>R${point.y}</b>'
+                            },
+                            plotOptions: {
+                                column: {
+                                    grouping: false,
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: 'R$ {point.y}',
+                                        rotation: -1
+                                    }
+                                }
+                            }
+                        } 
+                        %>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12">
+                <div class="mini-charts-item">
+                     <%= area_chart MonthlyPayment.limit(30).not_paids.group_by_day(:due_date, format: :custom, range: 4.weeks.ago.midnight..Time.now).order('due_date DESC').count("id"), 
+                        discrete: true,
+                        library: {
+                            title: { 
+                                text: 'Não pagas últimos 30 dias', x: -20
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Quantidade'
+                                }
+                            },
+                            tooltip: {
+                                pointFormat: '<b>{point.y} Mensalidade(s)</b>'
+                            },plotOptions: {
+                                area: {
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: 'R$ {point.y}',
+                                        rotation: -1
+                                    }
+                                }
+                            }
+                        } 
+                        %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    

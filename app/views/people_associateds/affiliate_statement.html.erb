@@ -1,0 +1,59 @@
+<% @customer_configuration = CustomerConfiguration.current %>
+<div id="header">
+    <div style="display: table; font-family: Arial;"> 
+		<span style="width: 100px; height: 110px; padding: 10px;"><!-- margin-right: 20px; --> </span>
+		<div style="display: table-cell;vertical-align: top;width: 100%; padding-right: 20px;">
+			<h2 style="font-size: 17px;"><%= @customer_configuration.name %></h2>
+			<div style="border-bottom: 1px solid #000;"><!--height: 75px;-->
+				<img src="/assets/logo_in_dash.jpeg" style="width: 50px;float: left;">
+				<div style="display: table; font-size: 13px;">
+					<div style="display: table-cell; padding: 0 15px; ">
+						<span style="display: block;"><b>Endereço:</b> <%= @customer_configuration.address %></span>
+						<span style="display: block;"><b>Cidade:</b> <%= @customer_configuration.city %></span>
+						<span style="display: block;"><b>CNPJ:</b> <%= @customer_configuration.cnpj %></span>
+						<span style="display: block;"><b>Telefone:</b> <%= @customer_configuration.phone %></span>
+					</div>
+					<div style="display: table-cell;">
+						<span style="display: block;"><b>Bairro:</b> <%= @customer_configuration.street %></span>
+						<span style="display: block;"><b>UF:</b> <%= @customer_configuration.state %></span>
+						<span style="display: block;"><b>Data de Fundação:</b> <%=l @customer_configuration.date_fundation %></span>
+						<span style="display: block;"><b>Celular:</b> <%= @customer_configuration.cell_phone %></span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+<div id="outer">
+    <div id="content">
+    	<div class="inner">        	
+    		<h3 style="text-align: center;">DECLARAÇÃO</h3>
+			<div style="margin: 10px;">
+	            <p style="text-align: justify;">O SINSEMS – SINDICATO DOS SERVIDORES PÚBLICOS MUNICIPAIS DE SORRISO, vem a público DECLARAR que <%= @p.name.upcase %>, portadora do RG nº <%= @p.rg %> <%= @p.dispatcher_organ %> e CPF nº <%= @p.cpf %>, Servidor (a) Público (a) Municipal, faz parte do nosso quadro de <%= CustomerConfiguration.current.menu_people_associateds.downcase%> contribuindo mensalmente, dentro dos regulamentos da Entidade.</p>
+
+				<br><br>
+				<p><span style="margin-rigth: 0px; float: right;">Sorriso/MT, <%=l Date.today, format: :long %>. </span></p>
+				<br><br>
+	        </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="footer">
+    <div style="">
+		<div style="">
+			<div style="text-align: center;">
+				<hr style="width: 50%;">
+				<b style="font-size: 12px;margin: 0; font-size: 16px;"><%= @customer_configuration.president.upcase %></b>
+				<p style="font-size: 12px;margin: 0; font-size: 16px;">Presidente</p>
+			</div>				
+		</div>
+	</div>
+</div>
+
+
+<%= render "people_associateds/css_docs" %>

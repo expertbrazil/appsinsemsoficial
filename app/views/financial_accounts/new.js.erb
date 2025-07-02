@@ -1,0 +1,4 @@
+<% js = escape_javascript(render(partial: 'financial_accounts/remote_form') ) %>
+$("#financial_account_content").html("<%= js %>");
+$("#card_header_financial_account").html("<h2><i class='zmdi zmdi-account-box-o'></i> Nova <%= FinancialAccount.model_name.human %></h2>");
+hiddenPreLoader(); 

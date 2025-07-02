@@ -1,0 +1,53 @@
+<div class="four-zero">
+    <div class="fz-block">
+        <h2>Bem Vindo!</h2>
+        <small>Seu formulário foi enviado para análise.</small>
+
+        <div class="fzb-links">
+            <a href="<%= site_inscription_path %>" title="Ficha de Filiação"><i class="zmdi zmdi-arrow-back"></i></a>
+            <!-- <a href="index.html"><i class="zmdi zmdi-home"></i></a> -->
+        </div>
+
+        <% if @people_associated.present? %>
+            <br>
+            <%= link_to "javascript:;", title: 'Abrir Documento', class: "btn btn-primary open_pdf" do %>
+                <span class='fa fa-file'> </span> Abrir Documento
+            <% end %>
+
+            <%= render 'site/modal_pdf' %>
+            <script type="text/javascript">
+                $(window).on('load', function() {
+                    $('#modal_pdf_auto').modal('show');
+                });
+
+                $(document).ready(function() {    
+                    $('.open_pdf').on('click', function(){
+                        $('#modal_pdf_auto').modal('show');
+                    });
+                });
+            </script>
+        <% end %>
+    </div>
+</div>
+
+
+
+<style type="text/css">
+.four-zero, .fz-block {
+    background: #edecec;
+    color: #557382;
+}
+
+.four-zero {
+    height: auto;
+}
+
+.fz-block {
+    width: auto;
+}
+
+.fz-block h2 {
+    font-size: 80px;
+    color: #557382;
+}
+</style>

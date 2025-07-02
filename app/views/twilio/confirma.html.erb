@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title><%= APP_CONFIG['site']['title'] %></title>
+
+	<!-- Vendor CSS -->
+
+	<%= stylesheet_link_tag "font-awesome.min.css" %> 
+
+	<!-- CSS -->
+	<%= stylesheet_link_tag "template/app_1.min.css", "template/app_2.min.css" %>
+    
+    <%= csrf_meta_tags %>
+</head>
+<body>
+    <section id="main">      
+        <div class="container center">		           
+			<% if @token_present && @appointmentPeople %>
+				<span class="fa fa-check-square text-success"></span>
+				<h4><%= @appointmentPeople.people_associated.present? ? @appointmentPeople.people_associated.name : @appointmentPeople.dependent.present? ? @appointmentPeople.dependent.name : 'Associado' %></h4>
+				<h5>Seu agendamento foi confirmado!</h5>
+				
+			<% else %>
+				<span class="fa fa-exclamation-triangle text-danger"></span>
+				<h4>Paramêtros inválidos!</h4>
+			<% end %>
+    		<br><br>
+    		<small>SINSEMS - Sindicato dos Servidores Públicos Municipais de Sorriso - MT</small>
+    	</div>    
+	</section>
+
+
+<%= render 'shared/footer' %>
+
+<style type="text/css">
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
+
+.center span {
+	font-size: 100px;
+}
+
+#footer {
+	padding-left: 0;
+}
+</style>
+   </body>
+</html>

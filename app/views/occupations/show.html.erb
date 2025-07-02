@@ -1,0 +1,17 @@
+<div class="page-header">
+  <%= link_to occupations_path, class: 'btn btn-default waves-effect' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_occupation_path(@occupation), class: 'btn btn-primary waves-effect' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show occupation</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Name:</dt>
+  <dd><%= @occupation.name %></dd>
+
+</dl>

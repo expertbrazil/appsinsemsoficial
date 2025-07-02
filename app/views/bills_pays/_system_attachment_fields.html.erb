@@ -1,0 +1,23 @@
+<div class="card-body card-padding nested-fields">
+	
+	<div class="card p-10">
+		<div class="card-header ch-alt m-t-0">
+	    	<h2><i class="zmdi zmdi-file"></i> Arquivo - <%= link_to_remove_association "Remover", f, class: 'btn bgm-red waves-effect' %></h2>
+		</div>
+
+		<div class="custom-dependent-add-form row">	
+			<div class="col-sm-3 content-dep">
+				<div class="form-group fg-line">     
+					<%= f.label "Nome", class: "fg-label" %>                   
+					<%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+				</div>
+			</div>
+
+			<div class="col-sm-3 content-dep">
+				<div class="form-group fg-line">     
+					<%= f.label "Arquivo", class: "fg-label" %>                   
+					<%= f.input :archive, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+				</div>
+			</div>
+	</div>
+</div>

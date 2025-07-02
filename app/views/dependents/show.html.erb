@@ -1,0 +1,26 @@
+<div class="page-header">
+  <%= link_to dependents_path, class: 'btn btn-default waves-effect' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_dependent_path(@dependent), class: 'btn btn-primary waves-effect' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show dependent</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>People associateds:</dt>
+  <dd><%= @dependent.people_associateds %></dd>
+
+  <dt>Name:</dt>
+  <dd><%= @dependent.name %></dd>
+
+  <dt>Birthdate:</dt>
+  <dd><%= @dependent.birthdate %></dd>
+
+  <dt>Degree of kinship:</dt>
+  <dd><%= @dependent.degree_of_kinship %></dd>
+
+</dl>

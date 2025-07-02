@@ -1,0 +1,20 @@
+<%= simple_form_for(@office, html: { class: "form-horizontal", role: "form" }, remote: true) do |f| %>
+<%= f.error_notification %>
+<div id='office_error'></div>
+<div class="card-body">
+  <div class="row">
+
+    <div class="col-sm-12">    
+      <div class="fg-line ">
+        <%= f.label :name, class: "fg-label" %>
+        <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <%= f.button :submit, onclick: "showPreLoader()", class: "btn bgm-green waves-effect" %>     
+  <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+</div>  
+<% end %>

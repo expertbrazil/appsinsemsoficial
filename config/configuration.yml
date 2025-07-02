@@ -1,0 +1,13 @@
+default: &DEFAULT
+  site:
+    title: "SINSEMS"
+    url: "http://sistema.sinsemsmt.com.br"
+
+development:
+  <<: *DEFAULT
+
+test:
+<<: *DEFAULT
+
+production:
+  <<: *DEFAULT

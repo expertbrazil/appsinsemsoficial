@@ -1,0 +1,60 @@
+<!-- Login -->
+<div class="lc-block toggled" id="l-login">
+	<%= render "devise/msgs" %>
+	<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+	<div class="lcb-form">
+		<div class="input-group m-b-20">
+			<span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+			<div class="fg-line">
+				<%= f.input :login, required: false, autofocus: true, input_html: { class: "form-control" }, placeholder: "CPF/Nome de usuário", label: false %>
+			</div>
+		</div>
+
+		<div class="input-group m-b-20">
+			<span class="input-group-addon"><i class="zmdi zmdi-male"></i></span>
+			<div class="fg-line">
+				<%= f.input :password, required: false,input_html: { class: "form-control" }, placeholder: "Senha",  label: false %>
+			</div>
+		</div>
+
+		<div class="checkbox">
+			<label>
+				<%= f.check_box :remember_me, label: false,as: :boolean if devise_mapping.rememberable? %>
+				<i class="input-helper"></i>
+				Mantenha-me conectado
+			</label>
+		</div>
+
+		<%= button_tag class: "btn btn-login btn-success btn-float", data: { disable_with: "<i class='zmdi zmdi-rotate-right zmdi-hc-spin'></i>"}  do %>
+  			<i class="zmdi zmdi-arrow-forward"></i>
+		<% end %>
+	</div>
+
+	<div class="lcb-navigation">
+		<%= render "people_associateds/shared/links" %>
+	</div>
+
+	<% end %>
+</div>
+
+<script type="text/javascript">
+$("#people_associated_login").on('focusin',function(){
+    var target = $(this);
+    var val = target.val();
+    target.unmask();
+
+    target.val(val);
+});
+
+$("#people_associated_login").on('focusout',function(){
+    var target = $(this);
+    var val = target.val();
+    
+    if (val.length==11) {
+        target.mask("999.999.999-99");    
+    } else {        
+    	target.val(val);     
+    }
+});
+</script>

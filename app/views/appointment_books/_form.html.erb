@@ -1,0 +1,97 @@
+<% @appointment_book_people = @appointment_book_people ? @appointment_book_people : @professional.appointment_book.appointbook_peopleassoci.new %>
+
+<%= simple_form_for(@appointment_book_people, url: professional_appointment_books_path(@professional), html: { class: "" }, remote: true) do |f| %>
+<%= f.error_notification %>
+<div class="card ">
+
+  <div class="card-body card-padding">
+      <div class="row">
+        <div class="col-md-2">
+          <div class='input-group' id='start_datetime'>
+              <%= f.label :start_datetime, class: "fg-label" %>
+              <%= f.text_field :start_datetime, class: "form-control",  "data-format" => "dd/MM/yyyy hh:mm:ss", label: false %>
+              <span class="input-group-addon add-on">
+                  <span class="fa fa-calendar"></span>
+              </span>
+          </div>
+        </div>       
+
+        <div class="col-md-4">
+          <div class='input-group'>
+            <%= f.label :people_associated_id, class: "fg-label" %>
+            <%= f.input :people_id, label: false, input_html: { class: "selectpicker", placeholder: "Selecione o associado" } %>
+          </div>
+        </div>  
+        
+        <div class="col-md-4">
+          <div class='input-group'>
+            <%= f.input :people_type, as: :hidden, label: false %>
+          </div>
+        </div>  
+        <% if @professional.lawyer? %>
+          <div class="col-sm-4">
+            <div class="form-group"> 
+              <div class="fg-line">    
+                <%= f.label :situation, class: "fg-label" %> 
+                  <%= f.input :situation, input_html: {class: "form-control"}, label: false %>
+              </div>
+            </div>
+          </div>          
+        <% end %>
+     
+
+      <div class="col-md-12 m-t-20">
+        <div class='input-group'>
+          <%= f.button :submit, "Agendar", class: "btn bgm-green waves-effect" %>
+        </div>
+      </div>        
+    </div>
+  </div>    
+</div>
+
+<% end %>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      $( "#appointbook_peopleassoci_people_id" ).select2({
+          theme: "bootstrap",
+          minimumInputLength: 3,
+          ajax: {
+            url: "<%= autocomplete_people_associateds_path %>",
+            dataType: 'json',
+            data: function (term, page) {
+              return {
+                q: term, // search term
+                page: page
+              };
+            },
+            results: function(data, params) {
+              params.page = params.page || 1;
+              return {
+                results: data
+              };
+            }
+          },
+          escapeMarkup: function (markup) { return markup; },
+          formatResult: formatResult,
+          formatSelection: formatSelection
+        }); 
+    
+
+    $('#start_datetime').datetimepicker({
+        locale: 'pt-br'         
+      });      
+  });
+
+  function formatResult(people_associated) {
+    return "<div class='select2-result clearfix'>" + people_associated.name + '</div>';
+  };
+
+    function formatSelection(data) {
+      $('#appointbook_peopleassoci_people_type').val(data.type);
+      return data.name;
+    };
+
+</script>

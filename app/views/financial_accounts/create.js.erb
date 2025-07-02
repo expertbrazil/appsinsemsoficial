@@ -1,0 +1,15 @@
+<% if @saved %>
+	
+
+	$('#bills_receife_financial_account_id').append($('<option>', {
+	    value: "<%=@financial_account.id%>",
+	    text: "<%=@financial_account.name%>"
+	}));
+
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_financial_account').modal('hide');
+<% else %>	
+	$("#financial_account_error").html("<%= escape_javascript errors(@financial_account) %>")
+<% end %>	
+
+hiddenPreLoader(); 

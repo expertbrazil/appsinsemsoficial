@@ -1,0 +1,10 @@
+<ul>
+  <% children.order(reduced_code: :asc).each do |children| %>
+    <li data-jstree='{"opened":true}'>
+      <%= children.reduced_code %> - <%= children.name %>
+
+      <%= render 'categories/links', category: children  %>
+      <%= render 'categories/tree_children', children: children.children if children.children.any? %>
+    </li>
+  <% end %>
+</ul>

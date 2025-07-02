@@ -1,0 +1,37 @@
+<div id="filterrific_results">
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+		  <tr>
+		    <th><%= Dependent.human_attribute_name(:name) %></th>
+		    <th><%= Dependent.human_attribute_name(:birthdate) %></th>
+		    <th><%= Dependent.human_attribute_name(:degree_of_kinship) %></th>
+		    <th><%= Dependent.human_attribute_name(:active) %></th>
+		    <th><%= Dependent.human_attribute_name(:with_special_needs) %></th>
+		    <th><%= Dependent.human_attribute_name(:validate_statement) %></th>
+		    <th></th>         
+		  </tr>
+		</thead>
+
+		<tbody>
+		  <%= content_tag_for(:tr, @dependents) do |dependent| %>
+		    <td><%= dependent.name %></td>
+		    <td><%=I18n.l dependent.birthdate if dependent.birthdate.present? %></td>
+		    <td><%= dependent.degree_of_kinship_name %></td>
+		    <td><%= dependent.active ? "Sim" : "Não"  %></td>
+		    <td><%= dependent.with_special_needs ? "Sim" : "Não"  %></td>
+		    <td><%= dependent.validate_statement %></td>
+		    <td>
+		      <%= link_to edit_people_associated_dependent_path(@people_associated, dependent), class: "btn btn-info waves-effect", remote: true, onclick: "showPreLoader();" do %>
+		        <%= content_tag(:i, nil, class: "zmdi zmdi-edit") %>
+		      <% end %>
+
+		      <%= link_to people_associated_dependent_path(@people_associated, dependent), method: :delete, data: { confirm:  I18n.t('default_messages.confirm')  }, remote: true, class: "btn btn-danger waves-effect" do %>
+		        <%= content_tag(:i, nil, class: "zmdi zmdi-delete") %>
+		      <% end %>
+		    </td>  
+		  <% end %>
+		</tbody>
+	</table>
+
+	<%= will_paginate @dependents, renderer: BootstrapPagination::Rails %>
+</div>

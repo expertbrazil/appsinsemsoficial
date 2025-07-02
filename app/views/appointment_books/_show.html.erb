@@ -1,0 +1,5 @@
+<% if current_user == @professional.user %>
+  <%= render "appointment_books/to_professional" %>
+<% else %>
+  <%= render "appointment_books/to_secretary" %>
+<% end %>

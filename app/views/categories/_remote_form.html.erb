@@ -1,0 +1,75 @@
+<%= simple_form_for(@category, html: { class: "", role: "form" }, remote: true) do |f| %>
+    <%= f.error_notification %>
+   <div id='category_error'></div>
+
+    <div class="card-body card-padding">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="input-group">
+            <%= f.label :subcategory_id, class: "fg-label" %>
+
+            
+            <%= link_to "javascript::", class: "input-group-addon last create_subcategory" do %>
+              <i class="zmdi zmdi-plus"></i>              
+            <% end %>                                
+          </div>
+
+      
+
+            <div id="categories_select_subcategory">
+              <%= render "select_subcategories" %>
+            </div>  
+        </div>
+        
+        <div class="col-sm-4">  
+          <div class="form-group fg-line">
+            <div class="fg-line">              
+              <%= f.label :name, class: "fg-label" %>  
+              <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %>               
+              <input class="string optional input-sm form-control fg-input" type="hidden" name="category[to]" id="category_to" value="<%= @to %>">  
+              <input class="string optional input-sm form-control fg-input" type="hidden" name="category[bills_pay]" id="category_bills_pay" value="<%= @bills_pay %>">            
+              <input class="string optional input-sm form-control fg-input" type="hidden" name="category[bills_receive]" id="category_bills_receive" value="<%= @bills_receive %>">            
+            </div>
+          </div>
+        </div>             
+      </div>  
+
+    </div>
+
+
+  <div class="modal-footer">
+    <%= f.button :submit, onclick: "showPreLoader()", class: "btn bgm-green waves-effect" %>     
+    <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+  </div>   
+
+<% end %>    
+
+<%= render 'subcategories/modal_subcategories' %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      loadSelectPicker();
+
+        $('.create_subcategory').on("click", function(e){
+          $('#modal_new_subcategory').modal('show');          
+            e.stopImmediatePropagation();
+            
+            
+            $.ajax({
+              url: "<%=new_subcategory_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+          });      
+        });
+
+
+    });
+</script>
+

@@ -1,0 +1,18 @@
+<% if @saved %>
+	$('#patrimony_supplier_id').append($('<option>', {
+	    value: "<%=@supplier.id%>",
+	    text: "<%=@supplier.name%>"
+	}));
+
+	$('#bills_pay_supplier_id').append($('<option>', {
+	    value: "<%=@supplier.id%>",
+	    text: "<%=@supplier.name%>"
+	}));
+
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_supplier').modal('hide');
+<% else %>	
+	$("#supplier_error").html("<%= escape_javascript errors(@supplier) %>")
+<% end %>	
+
+hiddenPreLoader(); 

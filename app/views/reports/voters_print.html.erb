@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="action-header clearfix">
+    <div class="ah-label hidden-xs">  <h1> Relatório de <%= "Votantes" %> </h1> </div>            
+</div>
+
+
+  <div class="card-body"> 
+    <div class="table-responsive">
+      <% if @birthdays %>
+        <%= render( partial: 'reports/list_voters', locals: { birthdays: @birthdays }  )  %>
+      <% else %>  
+        <p> Sem resultados </p>
+      <% end %>
+    </div>                       
+  </div>
+</div>
+
+

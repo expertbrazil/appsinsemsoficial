@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>
+    IMPRESSÃO:: 
+    <%= @p.name if @p.present? %>
+    <%= "Recebimentos" if controller_name === 'reports' && action_name === 'bills_receives_print' %>
+  </title> 
+	<%= stylesheet_link_tag "print" %>
+
+
+
+    <style type="text/css">
+
+      @media print {
+        a {
+          text-decoration: none;
+        }
+
+        .no-print {
+	    	display: none;
+	    }
+      }
+
+      body {
+        font-size: 8pt;
+      }
+      table {
+        width: 100%;
+      }
+
+      th {
+        text-align: left;
+        padding: 5px;
+        border-bottom: 1px dashed #ccc;
+      }
+
+      td {
+        padding: 5px;
+        border-bottom: 1px dashed #ccc;
+      }
+      
+      .line {
+        border-left: 1px dashed #ccc;
+        border-right: 1px dashed #ccc;
+      }
+
+
+    </style>
+</head>
+<body onload="window.print();">
+	 <!-- <button class="btn btn-success no-print" onclick="window.print();">Imprimir</button> -->
+
+	<%= yield %>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<% if @saved %>
+	$('#patrimony_effort_id').append($('<option>', {
+	    value: "<%=@effort.id%>",
+	    text: "<%=@effort.name%>"
+	}).attr("data-describe", "<%=@effort.to_describe ? 1 : 0%>"));
+
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_effort').modal('hide');
+<% else %>	
+	$("#effort_error").html("<%= escape_javascript errors(@effort) %>")
+<% end %>	
+
+hiddenPreLoader(); 

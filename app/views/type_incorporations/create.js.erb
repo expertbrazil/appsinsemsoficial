@@ -1,0 +1,13 @@
+<% if @saved %>
+	$('#patrimony_type_incorporation_id').append($('<option>', {
+	    value: "<%=@type_incorporation.id%>",
+	    text: "<%=@type_incorporation.name%>"
+	}).data("describe", "<%=@type_incorporation.to_describe ? 1 : 0%>"));
+
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_type_incorporation').modal('hide');
+<% else %>	
+	$("#occupation_error").html("<%= escape_javascript errors(@type_incorporation) %>")
+<% end %>	
+
+hiddenPreLoader(); 

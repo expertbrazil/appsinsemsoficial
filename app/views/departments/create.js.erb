@@ -1,0 +1,14 @@
+<% if @saved %>
+	$('#people_associated_department_id').append($('<option>', {
+	    value: "<%=@department.id%>",
+	    text: "<%=@department.name%>"
+	}));
+
+	
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_department').modal('hide');
+<% else %>	
+	$("#department_error").html("<%= escape_javascript errors(@department) %>")
+<% end %>	
+
+hiddenPreLoader(); 

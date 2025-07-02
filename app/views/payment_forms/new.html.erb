@@ -1,0 +1,11 @@
+
+<div class="card">
+	<div class="card-header ch-alt">  
+		<%= link_to payment_forms_path, "data-toggle": "tooltip", "data-placement":"bottom", "title": "Voltar", class: 'btn bgm-deeporange btn-float waves-effect' do %>
+		<i class="zmdi zmdi-arrow-left"></i>
+		<% end  if false%>
+		<h2><i class="zmdi zmdi-label-alt-outline"></i> <%= "Nova forma de pagamento" %> <i class="c-gray"></i></h2>
+	</div>
+
+	<%= render 'form' %>
+</div>

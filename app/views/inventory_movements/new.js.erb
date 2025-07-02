@@ -1,0 +1,6 @@
+<% js = escape_javascript(
+	render(partial: 'inventory_movements/form')
+	) %>
+
+	$("#inventory_movements_content").html("<%= js %>");
+	$("#card_header_dependent").html("<i class='zmdi zmdi-library'></i> Novo <%= InventoryMovement.model_name.human %>")

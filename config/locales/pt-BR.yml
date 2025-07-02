@@ -1,0 +1,833 @@
+---
+pt-BR:
+  default_messages:
+    created: foi criado com sucesso.
+    updated: foi atualizado com sucesso.
+    destroyed: foi destruído com sucesso.
+    confirm: Você tem certeza?
+  will_paginate:
+    previous_label: "&#8592;"
+    next_label: "&#8594;"
+    page_gap: "&hellip;"
+  simple_form:
+      error_notification:
+        people_associated: "Por favor, revise os problemas abaixo:"
+        dependent: "Por favor, revise os problemas abaixo:"
+        company: "Por favor, revise os problemas abaixo:"
+        inventory: "Por favor, revise os problemas abaixo:"
+        inventory_movement: "Por favor, revise os problemas abaixo:"
+        professional: "Por favor, revise os problemas abaixo:"
+        role: "Por favor, revise os problemas abaixo:"
+        user: "Por favor, revise os problemas abaixo:"
+        patrimony: "Por favor, revise os problemas abaixo:"
+        department: "Por favor, revise os problemas abaixo:"
+        office: "Por favor, revise os problemas abaixo:"
+        occupation: "Por favor, revise os problemas abaixo:"
+        segment: "Por favor, revise os problemas abaixo:"
+        monthly_payment: "Por favor, revise os problemas abaixo:"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'A validação falhou: %{errors}'
+        restrict_dependent_destroy:
+          has_one: Não é possível excluir o registro pois existe um %{record} dependente
+          has_many: Não é possível excluir o registro pois existem %{record} dependentes
+    models:
+      system_attachment:
+        one: Arquivo
+        other: Arquivos
+      customer_configuration:
+        one: Configuração
+        other: Configurações      
+      payment_form:
+        one: Forma de Pagamento
+        other: Formas de Pagamento      
+      financial_account:
+        one: Conta contábil
+        other: Contas contábeis
+      bills_receife:
+        one: Conta a receber
+        other: Contas a receber 
+      bills_pay:
+        one: Conta a pagar
+        other: Contas a pagar
+      bank_account:
+        one: Conta Bancária
+        other: Contas Bancárias
+      category:
+        one: Plano de Conta
+        other: Plano de Contas
+      subcategory:
+        one: Subcategoria
+        other: Subcategorias
+      monthly_payment:
+        one: Mensalidade
+        other: Mensalidades
+      workplace:
+        one: Local de Trabalho
+        other: Locais de Trabalho
+      people_associated:
+        one: Filiado
+        other: Filiados
+      dependent:
+        one: Dependente
+        other: Dependentes
+      company:
+        one: Convênio
+        other: Convênios
+      inventory:
+        one: Inventário
+        other: Inventários  
+      inventory_movement:   
+        one: Inventário
+        other: Inventários   
+      professional:   
+        one: Profissional
+        other: Profissionais  
+      role:     
+        one: Regra de acesso
+        other: Regras de acesso  
+      user:
+        one: Usuário do sistema
+        other: Usuários do sistema  
+      patrimony:
+        one: Patrimônio
+        other: Patrimônios
+      department:
+        one: Secretaria
+        other: Secretarias
+      office:
+        one: Cargo
+        other: Cargo
+      occupation:
+        one: Função
+        other: Funções
+      segment:
+        one: Segmento
+        other: Segmentos      
+      heritage_group:
+        one: Grupo do Patrimônio
+        other: Grupos dos Patrimônios
+      room:
+        one: Sala
+        other: Salas
+      supplier:
+        one: Fornecedor
+        other: Fornecedores      
+      type_incorporation:
+        one: Tipo de Incorporação
+        other: Tipo de Incorporações
+      effort:
+        one: Autorização/Empenho
+        other: Autorizações/Empenhos
+    attributes:
+      system_attachments:
+        name: Nome
+        archive: Arquivo
+      customer_configuration:
+        total_maximum_salary: Valor máximo para desconto em %
+        discount_percentage: Percentual de desconto padrão
+        name: Nome
+        address: Endereço
+        street: Bairro
+        city: Cidade
+        state: Estado
+        cnpj: CNPJ
+        phone: Telefone
+        cell_phone: Celular
+        date_fundation: Data Fundação
+        menu_people_associateds: Desc. campos/menus dos filiados
+        president: Presidente
+        logo: Imagem
+        signature: Assinatura
+        ficha: Ficha
+        idade_limite_estudante: Idade máxima do estudante como dependente
+      payment_form:
+        name: Nome
+        status: Situação
+      financial_account:
+        name: Nome
+        status: Situação
+      bills_receife:
+        people_associated_id: Filiado
+        people_associated: Filiado
+        state: Situação
+        category: Plano de Conta
+        financial_account: Orgão que deverá ser cobrado
+        due_date: Vencimento
+        description: Descrição
+        amount: Valor
+        n_doc: Número Documento
+        competence_date: Data Competência
+        payment_form: Forma de Pgto
+        attachment: Anexos
+        ocorrence: Ocorrência
+        deadline: Data Limite
+        expiration_day: Dia do vencimento
+        work_days_only: Considerar apenas dias úteis 
+        stop_recurrence: Cancelar recorrência
+        bank_account: Banco
+      bills_pay:
+        supplier: Fornecedor
+        people_associated: Filiado
+        category: Plano de Conta
+        due_date: Vencimento
+        description: Descrição
+        amount: Valor
+        n_doc: Número Documento
+        competence_date: Data Competência
+        payment_form: Forma de Pgto
+        attachment: Anexos
+        ocorrence: Ocorrência
+        deadline: Data Limite
+        expiration_day: Dia do vencimento
+        work_days_only: Considerar apenas dias úteis 
+        stop_recurrence: Cancelar recorrência
+        payroll_discount: Desconto em folha do Filiado?
+        bank_account: Banco
+      bank_account:
+        name: Nome
+        agency: Agência
+        account_number: Número da conta
+        cedente: Cedente
+        cedente_doc: N° Documento Cedente
+        cedente_address: Endereço Cedente
+        variacao: Variação
+        aceite: Aceite
+        carteira: Carteira
+        convenio: Convênio
+        instrucao_juros: Instrução de Juros
+        default_bank: Default
+        layout: Layout
+      category:
+        subcategory_id: Subcategoria        
+        type_subcategory: Tipo
+        name: Nome
+        status: Situação
+        parent_id: Plano de Conta Pai
+        reduced_code: Código
+      subcategory:
+        name: Nome
+        type_subcategory: Tipo
+        status: Situação
+        reduced_code: Código
+        category_id: Categoria
+      monthly_payment:
+        people_associated_id: Filiado
+        people_associated: Filiado
+        amount: Valor  
+        amount_paid: Valor    
+        due_date: Data de Vencimento
+        pay_day: Data de Pagamento
+        paid: Pago
+        observation: Observação
+        portion: Parcela
+        status: Status
+        expired: Vencidas
+      workplace:
+        name: Nome
+      people_associated:
+        term_of_consent: Termo de Consentimento
+        number_registration: Matrícula
+        name: Nome
+        birthdate: Data de Nasc.
+        gender: Sexo
+        email: E-mail
+        phone: Telefone
+        address: Logradouro
+        number: Número
+        complement: Complemento
+        zipcode: CEP
+        burgh: Bairro
+        city: Cidade
+        state: Estado
+        cpf: CPF
+        rg: RG
+        marital_status: Estado Civil
+        place_birth: Naturalidade
+        scholarity: Escolaridade
+        profession: Profissão
+        photo: Foto
+        situation: Situação
+        bond: Vínculo
+        mother: Nome da mãe
+        father: Nome do pai
+        breed: Raça
+        title_voter: Título Eleitor
+        zone_voter: Zona
+        section_voter: Seção
+        workplace: Local de Trabalho
+        admission_date: Data de Admissão
+        validity_card: Validade da carteirinha
+        partner: Sócio associação
+        dispatcher_organ: Orgão Expedidor
+        father_mother: Pai/Mãe
+        start_registration: Data de ínicio
+        created_at: Data do Cadastro
+        office_id: Cargo
+        occupation_id: Função
+        department: Secretaria
+        spouse: Nome Esposo(a)
+        observation: Observação
+        cell_phone1: Celular 1
+        cell_phone2: Celular 2 
+        hollering_registration: Matrícula 
+        affiliate_date: Data de filiação
+        parading_date: Data de desfiliação
+        username: Usuário
+        password: Senha
+        password_confirmation: Confirmar Senha
+        discount_percentage: Percentual de desconto
+        fixed_value: Valor Fixo a ser descontado
+        gross_salary: Salário Bruto
+        in_analysis: Em Análise
+        blood_type: Tipo Sanguíneo
+        is_allergic: É Alérgico
+        take_controlled_medicine: Toma remédio controlado
+        take_controlled_medicine_description: Qual?
+      dependent:
+        name: Nome
+        birthdate: Data de Nasc.
+        degree_of_kinship: Grau de Parentesco
+        with_special_needs: Com necessidades especiais
+        validate_statement: Validar declaração
+        active: Ativo
+        other_manual: Descreva o grau 
+        benefit_until: Benefício até 
+        people_associated: Filiado
+        username: Usuário
+        password: Senha
+        password_confirmation: Confirmar Senha
+        phone: Telefone
+        cell_phone: Celular
+        cpf: CPF
+        rg: RG
+        dispatcher_organ: Orgão Expedidor
+        is_student: É estudante
+        institution_name: Nome da Instituição
+      company:
+        name: Nome completo
+        email: E-mail
+        phone: Telefone
+        cell_phone: Celular
+        address: Logradouro
+        number: Número
+        complement: Complemento
+        zipcode: CEP
+        burgh: Bairro
+        city: Cidade
+        state: Estado
+        benefit: Serviço/Benefício contratado
+        segment: Segmento
+        agreement_at: Data do contrato
+      inventory:
+        description: Descrição
+        unit: Unidade
+        minimum_balance: Saldo mínimo  
+        opening_balance: Saldo inicial  
+        created_at: Data movimento
+      inventory_movement:
+        type_balance: Tipo
+        balance: Quantidade
+        amount: Valor
+        created_at: Data movimento
+      professional:
+        name: Nome
+        rg: RG
+        cpf: CPF
+        advice: Conselho
+        type_function: Area de atuação
+      appointbook_peopleassoci:
+        appointment_book_id: Agenda
+        people_associated_id: Filiado
+        people_id: Filiado
+        start_datetime: Data/Hora inicial
+        end_datetime: Data/Hora final
+        situation: Situação
+        confirmed: Confirmado
+        showed: Compareceu 
+        description: Descrição
+      role:
+        name: Nome
+        permissions: Permissões
+      user:
+        name: Nome
+        username: Nome de usuário
+        email: E-mail
+        created_at:  Data de Criação
+        last_sign_in_at: Último acesso
+        professional_id: Profissional
+        roles: Regras de acesso
+        password: Senha
+        password_confirmation: Confirmar senha
+      patrimony:
+        name: Nome
+        description: Descrição
+        quantity: Quantidade
+        date_of_acquisition: Data da Nota
+        amount: Valor pago
+        patrimony_number: Número do Patrimônio
+        created_at: Data de Criação
+        active: Ativo
+        car: É veículo?
+        type_car: Modelo
+        year_car: Ano
+        current_amount: Valor Atual
+        date_of_incorporation: Data da Incorporação
+        request_of: Pedido
+        entry_note: Nota de Entrada
+        type_incorporation_describe: Descrição do Tipo de Incorporação
+        effort_describe: Descrição Autorização/Empenho
+        inactive_describe: Descrição Inativo
+        heritage_group_id: Grupo do Patrimônio
+        room_id: Sala
+        supplier_id: Fornecedor
+        type_incorporation_id: Tipo de Incorporação
+        effort_id: Autorização/Empenho
+      heritage_group:
+        name: Nome
+      room:
+        name: Nome
+      supplier: 
+        name: Nome
+        phone: Telefone
+        email: E-mail      
+        cnpj: CNPJ
+        cpf: CPF
+        razao_social: Razão Social
+        rg: RG
+        emitter: Orgão Emissor
+        uf: UF
+        cell_phone: WhatsApp
+        obs: Observações
+        entity_type: Tipo
+        status: Situação
+        address: Logradouro
+        number: Número
+        complement: Complemento
+        zipcode: CEP
+        burgh: Bairro
+        city: Cidade
+        state: Estado        
+      type_incorporation: 
+        name: Nome
+        to_describe: Descrever
+      effort: 
+        name: Nome
+        to_describe: Descrever
+      department:
+        name: Nome
+        description: Descrição
+        created_at: Data de Criação
+      office:
+        name: Nome
+        created_at: Data de Criação
+      occupation:  
+        name: Nome
+        created_at: Data de Criação
+      segment:
+        name: Nome
+        created_at: Data de Criação
+  date:
+    abbr_day_names:
+    - Dom
+    - Seg
+    - Ter
+    - Qua
+    - Qui
+    - Sex
+    - Sáb
+    abbr_month_names:
+    -
+    - Jan
+    - Fev
+    - Mar
+    - Abr
+    - Mai
+    - Jun
+    - Jul
+    - Ago
+    - Set
+    - Out
+    - Nov
+    - Dez
+    day_names:
+    - Domingo
+    - Segunda-feira
+    - Terça-feira
+    - Quarta-feira
+    - Quinta-feira
+    - Sexta-feira
+    - Sábado
+    formats:
+      default: "%d/%m/%Y"
+      long: "%d de %B de %Y"
+      short: "%d de %B"
+      custom_short: "%d/%m"
+      custom: "%d-%m-%Y"
+    month_names:
+    -
+    - Janeiro
+    - Fevereiro
+    - Março
+    - Abril
+    - Maio
+    - Junho
+    - Julho
+    - Agosto
+    - Setembro
+    - Outubro
+    - Novembro
+    - Dezembro
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: aproximadamente 1 hora
+        other: aproximadamente %{count} horas
+      about_x_months:
+        one: aproximadamente 1 mês
+        other: aproximadamente %{count} meses
+      about_x_years:
+        one: aproximadamente 1 ano
+        other: aproximadamente %{count} anos
+      almost_x_years:
+        one: quase 1 ano
+        other: quase %{count} anos
+      half_a_minute: meio minuto
+      less_than_x_minutes:
+        one: menos de um minuto
+        other: menos de %{count} minutos
+      less_than_x_seconds:
+        one: menos de 1 segundo
+        other: menos de %{count} segundos
+      over_x_years:
+        one: mais de 1 ano
+        other: mais de %{count} anos
+      x_days:
+        one: 1 dia
+        other: "%{count} dias"
+      x_minutes:
+        one: 1 minuto
+        other: "%{count} minutos"
+      x_months:
+        one: 1 mês
+        other: "%{count} meses"
+      x_seconds:
+        one: 1 segundo
+        other: "%{count} segundos"
+    prompts:
+      day: Dia
+      hour: Hora
+      minute: Minuto
+      month: Mês
+      second: Segundo
+      year: Ano
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: deve ser aceito
+      blank: não pode ficar em branco
+      present: deve ficar em branco
+      confirmation: não é igual a %{attribute}
+      empty: não pode ficar vazio
+      equal_to: deve ser igual a %{count}
+      even: deve ser par
+      exclusion: não está disponível
+      greater_than: deve ser maior que %{count}
+      greater_than_or_equal_to: deve ser maior ou igual a %{count}
+      inclusion: não está incluído na lista
+      invalid: não é válido
+      less_than: deve ser menor que %{count}
+      less_than_or_equal_to: deve ser menor ou igual a %{count}
+      model_invalid: 'A validação falhou: %{errors}'
+      not_a_number: não é um número
+      not_an_integer: não é um número inteiro
+      odd: deve ser ímpar
+      required: deve existir
+      taken: já está em uso
+      too_long:
+        one: 'é muito longo (máximo: 1 caracter)'
+        other: 'é muito longo (máximo: %{count} caracteres)'
+      too_short:
+        one: 'é muito curto (mínimo: 1 caracter)'
+        other: 'é muito curto (mínimo: %{count} caracteres)'
+      wrong_length:
+        one: não possui o tamanho esperado (1 caracter)
+        other: não possui o tamanho esperado (%{count} caracteres)
+      other_than: deve ser diferente de %{count}
+    template:
+      body: 'Por favor, verifique o(s) seguinte(s) campo(s):'
+      header:
+        one: 'Não foi possível gravar %{model}: 1 erro'
+        other: 'Não foi possível gravar %{model}: %{count} erros'
+  helpers:
+    select:
+      prompt: Por favor selecione
+    submit:
+      create: Salvar %{model}
+      submit: Salvar %{model}
+      update: Atualizar %{model}
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%u %n"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: R$
+    format:
+      delimiter: "."
+      precision: 3
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion:
+            one: bilhão
+            other: bilhões
+          million:
+            one: milhão
+            other: milhões
+          quadrillion:
+            one: quatrilhão
+            other: quatrilhões
+          thousand: mil
+          trillion:
+            one: trilhão
+            other: trilhões
+          unit: ''
+      format:
+        delimiter: "."
+        precision: 2
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: "."
+        format: "%n%"
+    precision:
+      format:
+        delimiter: "."
+  support:
+    array:
+      last_word_connector: " e "
+      two_words_connector: " e "
+      words_connector: ", "
+  time:
+    am: ''
+    formats:
+      default: "%a, %d de %B de %Y, %H:%M:%S"
+      report: "%d de %B de %Y"
+      long: "%d de %B de %Y, %H:%M"
+      short: "%d de %B, %H:%M"
+      only_day: "%d"
+      custom: "%d-%m-%Y"
+      custom_with_time: "%d-%m-%Y às %H:%M"
+      custom_date: "%d/%m/%Y"
+      custom_date_m_y: "%m/%Y"
+      time: "%H:%M"
+    pm: ''
+  modules: Módulos  
+  users: Módulo Usuários
+  dependents: Módulo Dependentes
+  companies: Módulo Convênios
+  roles: Módulo Regras de Acesso
+  appointment_books: Módulo Agenda
+  inventories: Módulo Estoque
+  inventory_movements: Módulo Movimento de Estoque
+  people_associateds: Módulo Filiados
+  professionals: Módulo Profissionais
+  departments: Módulo Secretarias
+  patrimonies: Módulo Patrimônios
+  offices: Módulo Cargos
+  occupations: Módulo Funções
+  birthdays: Relatório Aniversariantes
+  voters: Relatório Votantes
+  associateds: Relatório Associados
+  business: Relatório Convênios
+  stocks: Relatório Inventários
+  heritages: Relatório Patrimônios
+  calls: Relatório Atendimentos
+  monthly_payments: Relatório Mensalidades
+  bills_receives: Relatório Contas a Receber
+  bills_pays: Relatório Contas a Pagar
+  reports: Módulo Relatórios
+  segments: Módulo Segmentos
+  module_users: Módulo Usuários
+  workplaces: Módulo Local de Trabalho
+  module_dependents: Módulo Dependentes
+  module_companies: Módulo Convênios
+  module_roles: Módulo Regras de Acesso
+  module_appointment_books: Módulo Agenda
+  module_inventories: Módulo Estoque
+  module_inventory_movements: Módulo Movimento de Estoque
+  module_people_associateds: Módulo Filiados
+  module_professionals: Módulo Profissionais
+  module_departments: Módulo Secretarias
+  module_patrimonies: Módulo Patrimônios
+  module_offices: Módulo Cargos
+  module_occupation: Módulo Funções
+  module_reports: Módulo Relatórios
+  module_segments: Módulo Segmentos
+  module_bank_accounts: Módulo Bancos
+  bank_accounts: Módulo Bancos
+  module_categories: Módulo Categorias
+  categories: Módulo Categorias
+  module_subcategories: Módulo Subcategorias
+  subcategories: Módulo Subcategorias
+#workplaces
+  manager_workplaces: Liberar acesso a tudo
+  create_workplaces: Apenas Inserir
+  edit_workplaces: Apenas Editar
+  destroy_workplaces: Apenas Excluir
+  list_workplaces: Apenas Listagem
+  show_workplaces: Apenas Visualizar
+#roles
+  manager_roles: Liberar acesso a tudo
+  create_roles: Apenas Inserir
+  edit_roles: Apenas Editar
+  destroy_roles: Apenas Excluir
+  list_roles: Apenas Listagem
+  show_roles: Apenas Visualizar
+#companies
+  manager_companies: Liberar acesso a tudo
+  create_companies: Apenas Inserir
+  edit_companies: Apenas Editar
+  destroy_companies: Apenas Excluir
+  list_companies: Apenas Listagem
+  show_companies: Apenas Visualizar
+#users
+  manager_users: Liberar acesso a tudo
+  create_users: Apenas Inserir
+  edit_users: Apenas Editar
+  destroy_users: Apenas Excluir
+  list_users: Apenas Listagem
+  show_users: Apenas Visualizar
+#dependents
+  manager_dependents: Liberar acesso a tudo
+  create_dependents: Apenas Inserir
+  edit_dependents: Apenas Editar
+  destroy_dependents: Apenas Excluir
+  list_dependents: Apenas Listagem  
+  show_dependents: Apenas Visualizar
+#appointment_books
+  manager_appointment_books: Liberar acesso a tudo
+  create_appointment_books: Apenas Inserir
+  edit_appointment_books: Apenas Editar
+  destroy_appointment_books: Apenas Excluir
+  list_appointment_books: Apenas Listagem  
+  show_appointment_books: Apenas Visualizar
+#inventories
+  manager_inventories: Liberar acesso a tudo
+  create_inventories: Apenas Inserir
+  edit_inventories: Apenas Editar
+  destroy_inventories: Apenas Excluir
+  list_inventories: Apenas Listagem
+  show_inventories: Apenas Visualizar
+#people_associateds
+  manager_people_associateds: Liberar acesso a tudo
+  create_people_associateds: Apenas Inserir
+  edit_people_associateds: Apenas Editar
+  destroy_people_associateds: Apenas Excluir
+  list_people_associateds: Apenas Listagem
+  show_people_associateds: Apenas Visualizar
+#professionals  
+  manager_professionals: Liberar acesso a tudo
+  create_professionals: Apenas Inserir
+  edit_professionals: Apenas Editar
+  destroy_professionals: Apenas Excluir
+  list_professionals: Apenas Listagem
+  show_professionals: Apenas Visualizar
+#inventory_movements
+  manager_inventory_movements: Liberar acesso a tudo
+  create_inventory_movements: Apenas Inserir
+  edit_inventory_movements: Apenas Editar
+  destroy_inventory_movements: Apenas Excluir
+  list_inventory_movements: Apenas Listagem
+  show_inventory_movements: Apenas Visualizar
+#patrimonies
+  manager_patrimonies: Liberar acesso a tudo
+  create_patrimonies: Apenas Inserir
+  edit_patrimonies: Apenas Editar
+  destroy_patrimonies: Apenas Excluir
+  list_patrimonies: Apenas Listagem
+  show_patrimonies: Apenas Visualizar
+#departments
+  manager_departments: Liberar acesso a tudo
+  create_departments: Apenas Inserir
+  edit_departments: Apenas Editar
+  destroy_departments: Apenas Excluir
+  list_departments: Apenas Listagem
+  show_departments: Apenas Visualizar
+#offices  
+  manager_offices: Liberar acesso a tudo
+  create_offices: Apenas Inserir
+  edit_offices: Apenas Editar
+  destroy_offices: Apenas Excluir
+  list_offices: Apenas Listagem
+  show_offices: Apenas Visualizar
+#occupations  
+  manager_occupations: Liberar acesso a tudo
+  create_occupations: Apenas Inserir
+  edit_occupations: Apenas Editar
+  destroy_occupations: Apenas Excluir
+  list_occupations: Apenas Listagem
+  show_occupations: Apenas Visualizar
+#segments
+  manager_segments: Liberar acesso a tudo
+  create_segments: Apenas Inserir
+  edit_segments: Apenas Editar
+  destroy_segments: Apenas Excluir
+  list_segments: Apenas Listagem
+  show_segments: Apenas Visualizar
+# Financeiro
+  financials: Módulo Financeiro
+  manager_financials: Acesso ao Financeiro
+#Bancos - bank_account
+  manager_bank_accounts: Acesso aos Bancos
+  create_bank_accounts: Apenas Inserir
+  edit_bank_accounts: Apenas Editar
+  destroy_bank_accounts: Apenas Excluir
+  list_bank_accounts: Apenas Listagem
+  show_bank_accounts: Apenas Visualizar
+# categorias  
+  manager_categories: Acesso as Categorias
+  create_categories: Apenas Inserir
+  edit_categories: Apenas Editar
+  destroy_categories: Apenas Excluir
+  list_categories: Apenas Listagem
+# subcategorias  
+  manager_subcategories: Acesso as Subcategorias
+  create_subcategories: Apenas Inserir
+  edit_subcategories: Apenas Editar
+  destroy_subcategories: Apenas Excluir
+  list_subcategories: Apenas Listagem
+
+
+
+
+
+
+
+
+
+

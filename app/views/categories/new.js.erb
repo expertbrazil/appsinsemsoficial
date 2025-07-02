@@ -1,0 +1,4 @@
+<% js = escape_javascript(render(partial: 'categories/remote_form') ) %>
+$("#category_content").html("<%= js %>");
+$("#card_header_category").html("<h2><i class='zmdi zmdi-account-box-o'></i> Nova <%= Category.model_name.human %></h2>");
+hiddenPreLoader(); 

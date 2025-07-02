@@ -1,0 +1,1 @@
+json.partial! "people_associateds/people_associated", people_associated: @people_associated

@@ -1,0 +1,130 @@
+<div id="search_chart_of_account" class="modal fade modal-fullscreen" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Plano de Contas</h4>
+      </div>
+
+      <div class="modal-body">
+          <div class="card">
+            <div class="card-header">
+            <ul class="tab-nav float-xs-left" role="tablist">
+              <% 
+              	@chart_of_accounts =  if f.object.class == BillsReceife
+              							Category.where.not(parent_id: nil).credit_subcategories.order(name: :asc, reduced_code: :asc).group_by{|ca| ca.name[0]}
+              						  elsif f.object.class == BillsPay
+              						  	Category.where.not(parent_id: nil).debit_subcategories.order(name: :asc, reduced_code: :asc).group_by{|ca| ca.name[0]}
+              						  else
+              						  	Category.where.not(parent_id: nil).order(name: :asc, reduced_code: :asc).group_by{|ca| ca.name[0]} 
+              						  end
+
+                  @first = ""          
+              %>
+              <% @chart_of_accounts.each do |key, value| %>
+                <li class="nav-item <%= @first.blank? ? 'active' : ''%>">
+                  <a class="nav-link" href="#coa_<%= key %>" role="tab" data-toggle="tab">
+                    <b><%= key %></b>
+                  </a>
+                </li>
+                <% @first = key if @first.blank? %>
+              <% end %>
+            </ul>
+          </div>
+
+            <div class="card-block">
+              <div class="tab-content" style="padding: 10px;">
+                <% @chart_of_accounts.each do |key, values| %>
+                  <div role="tabpanel" class="tab-pane <%= key == @first ? 'active' : ''%> in" id="coa_<%=key%>">
+                    <div class="form-inputs row">
+                      <div class="col-sm-3">
+                        <input type="text" data-table="table_<%=key%>" name="" value="" class="string form-control search" placeholder="Buscar em <%=key%>" autofocus>
+                    </div>
+                  </div> <br>
+
+                    <table class="table table-striped table-bordered" id="table_<%=key%>">
+                      <tbody>
+                        <%= content_tag_for(:tr, values) do |coa| %>
+                          <% if !coa.root? %>	
+	                          <td style="width: 350px;">
+	                            <strong><%= coa.reduced_code %> <%= coa.name.humanize.upcase %></strong><br>
+	                            <small><%= coa.ancestry_path.join(" - ").mb_chars.downcase %></small>
+	                          </td>
+	                          <td>
+	                            
+	                              <button type="button" class="btn btn-<%= f.object.category_id == coa.id ? 'success' : 'info'%> btn-sm" title="<%= f.object.category_id == coa.id ? 'Item Selecionado' : 'Selecionar'%>" onclick="select_chart_of_account('<%= coa.id %>', '<%= coa.name %>')">
+	                                <i class="zmdi zmdi-<%= f.object.category_id == coa.id ? 'check-all' : 'check'%>" aria-hidden="true"></i>
+	                              </button>
+	                           
+	                          </td>
+                          <% end %>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+function removeHighlighting(highlightedElements){
+    highlightedElements.each(function(){
+        var element = $(this);
+        element.replaceWith(element.html());
+    })
+}
+
+function addHighlighting(element, textToHighlight){
+    var text = element.text();
+    var highlightedText = '<em>' + textToHighlight + '</em>';
+    var newText = text.replace(textToHighlight, highlightedText);
+
+    element.html(newText);
+}
+
+
+$(".search").on("keyup", function() {
+    var value = $(this).val().toUpperCase();
+
+    removeHighlighting($("#"+$(this).attr("data-table") + " tr em"));
+
+    $("#"+$(this).attr("data-table")+" tr").each(function(index) {
+        $row = $(this);
+
+        var $tdElement = $row.find("td:first:contains("+value+")");
+        var id = $tdElement.text();
+        var matchedIndex = id.indexOf(value);
+
+        if (matchedIndex < 0) {
+            $row.hide();
+        }
+        else {
+            addHighlighting($tdElement, value);
+            $row.show();
+        }
+    });
+});
+
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
+</script>
+
+<style media="screen">
+em{
+  background-color: yellow
+}
+</style>

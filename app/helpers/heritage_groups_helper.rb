@@ -1,0 +1,2 @@
+module HeritageGroupsHelper
+end

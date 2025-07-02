@@ -1,0 +1,10 @@
+<div class="card">
+	<div class="card-header ch-alt">  
+		<%= link_to monthly_payments_path, "data-toggle": "tooltip", "data-placement":"bottom", "title": "Voltar", class: 'btn bgm-deeporange btn-float waves-effect' do %>
+		<i class="zmdi zmdi-arrow-left"></i>
+		<% end  if false%>
+		<h2><i class="fa fa-calendar"></i> <%= "Nova mensalidade" %> <i class="c-gray"></i></h2>
+	</div>
+
+	<%= render 'form' %>
+</div>

@@ -1,0 +1,71 @@
+<div class="card">
+  <%= simple_form_for(@role) do |f| %>
+    <%= f.error_notification %>
+    <div class="card-header">
+      <h2><i class="fa fa-cog"></i> Dados regra de acesso</h2>
+    </div>
+
+    <div class="card-body card-padding">
+      <div class="row">      
+        <div class="col-sm-12">    
+          <div class="form-group fg-line ">
+            <%= f.label :name, class: "fg-label" %>
+            <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <% perms_by_module = @role.setable_permissions.group_by {|p| p.project_module.to_s} %>
+        <% perms_by_module.keys.each do |mod| %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= mod %>">
+                    <%=
+                      label = mod.blank? ? t(:label_project) : t(mod) 
+                      has_permission = perms_by_module[mod].collect { |permission| @role.permissions.include?(permission.name) }.include?(true)
+                      _class = has_permission ? "check checked" : "close unchecked"
+                      raw("#{label} #{content_tag(:i, nil, class: "zmdi zmdi-#{_class}")}")
+                    %> 
+
+                  </a>
+                </h4>
+            </div>
+
+            <div id="collapse<%= mod %>" class="panel-collapse collapse ">
+              <div class="panel-body">
+                <% perms_by_module[mod].each do |permission| %>
+                  <div class="checkbox m-b-15">
+                    <label>
+                      <%= check_box_tag 'role[permissions][]', permission.name, (@role.permissions.include? permission.name) %>
+                        <i class="input-helper"></i> 
+                        <%= t(permission.name, :prefix => 'permission_') %>                                         
+                    </label>
+                  </div>                          
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>        
+      </div>
+
+      <div class="card-body card-padding">
+        <%= submit_tag 'Criar e adicionar', class: "btn bgm-teal waves-effect", name: 'create_and_add' if !edit_mode? %>
+        <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+        <%= link_to "Cancelar", roles_path, class: "btn bgm-red waves-effect" %>
+      </div>       
+    </div>
+  <% end %>
+</div>
+
+
+<style type="text/css">
+  .checked {
+    color: #009688;
+  }
+
+  .unchecked {
+   color: #F44336; 
+  }
+</style>

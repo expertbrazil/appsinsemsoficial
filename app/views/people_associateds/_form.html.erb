@@ -1,0 +1,933 @@
+<%
+@allowed_create_office = current_user.allowed_to?({:controller => "offices", :action => "create"}, :global => true)
+@allowed_create_occupation = current_user.allowed_to?({:controller => "occupations", :action => "create"}, :global => true)
+@allowed_create_department = current_user.allowed_to?({:controller => "departments", :action => "create"}, :global => true)
+@allowed_create_workplace = current_user.allowed_to?({:controller => "workplaces", :action => "create"}, :global => true)
+
+@customer_configuration = CustomerConfiguration.current
+%>
+
+<div class="card">
+    <%= simple_form_for(@people_associated, html: { class: "", role: "form" }) do |f| %>
+    <%= errors @people_associated if @people_associated.errors.any? %> 
+
+    <div role="tabpanel">
+        <ul class="tab-nav" role="tablist">
+            <li class="active">
+                <a href="#personal" aria-controls="personal" role="tab" data-toggle="tab">Dados</a>
+            </li>
+            <li>
+                <a href="#people_associated_dependents" aria-controls="people_associated_dependents" role="tab" data-toggle="tab">Dependentes</a>
+            </li>
+
+            <% @manager_monthly_payments = current_user.allowed_to?(:manager_monthly_payments, :global => true)  %>
+            <% if @manager_monthly_payments %>
+            <li>
+                <a href="#people_associated_monthly_payments" aria-controls="people_associated_monthly_payments" role="tab" data-toggle="tab">Mensalidades</a>
+            </li>
+            <% end %>
+        </ul>
+
+        <div class="tab-content p-t-0 p-b-0">
+            <div role="tabpanel" class="tab-pane active" id="personal">
+                <div class="card-header">
+                    <h2><i class="zmdi zmdi-face"></i> Dados Pessoais</h2>
+                </div>
+
+                <div class="card-body card-padding">
+
+                    <%= f.hidden_field :number_registration %>
+                    <div class="row">
+                        <div class="col-sm-3" id="photo_cam" style="margin-bottom: 60px;">
+                            <div class="camera">                        
+                                <div class="fg-line col-sm-6">
+                                    <% if false %>
+                                        <div id="my_camera" class="<%= @people_associated.photo? ? 'hide' : '' %>"></div>
+                                    <% end %>
+                                    <% if @people_associated.photo?  %>                                    
+                                        <div id="preview_photo" class="fg-line">
+                                            <% @photo_path =  File.exist?("#{Rails.root.to_s}/public#{@people_associated.photo_url(:thumb_200X150)}") ? @people_associated.photo_url(:thumb_200X150) : @people_associated.photo_url %>
+                                            <%= image_tag @photo_path if @photo_path.present? %>
+                                        </div>                         
+                                    <% end %>
+
+                                    <%= f.input :photo, as: :hidden, input_html: { class: "fileinput" } %> 
+                                    <% if false %>
+                                        <div id="pre_take_buttons" class="content-actions" style="<%= @people_associated.photo? ? 'display: none' : '' %>">
+
+                                            <a href="javascript:void(take_snapshot())" class="btn bgm-blue btn-icon waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="bottom" title="Capturar"><i class="zmdi zmdi-camera"></i></a>
+
+                                        </div>
+
+                                        <div id="post_take_buttons" style="<%= !@people_associated.photo? ? 'display: none' : '' %>" class="content-actions">
+
+                                            <a href="javascript:void(cancel_preview())" class="btn btn-danger btn-icon waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="bottom" title="Voltar"><i class="zmdi zmdi-arrow-back"></i></a>
+                                        </div>
+                                    <% end %>
+                                </div>  
+
+                                <div class="fg-line col-sm-6 p-t-20">                                               
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-preview thumbnail" data-trigger="fileinput">
+                                        </div>
+                                        <div>
+                                            <span class="btn btn-info btn-file">
+                                                <span class="fileinput-new">Arquivo</span>
+                                                <span class="fileinput-exists"></span>
+                                                <input type="file" name="...">
+                                            </span>
+                                            <a href="#" class="btn btn-danger fileinput-exists"
+                                           data-dismiss="fileinput">Cancelar</a>
+                                        </div>
+                                    </div>
+                                </div>                                                 
+                            </div>                    
+                        </div>
+
+                    <div class="col-sm-9">
+
+                           
+                        <% if false %>
+                            <div class="">
+                                <div class="col-sm-4">
+                                    <div class="form-group fg-line">     
+                                        <%= f.label :title_voter, class: "fg-label" %>                   
+                                        <%= f.input :title_voter, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group fg-line">     
+                                        <%= f.label :zone_voter, class: "fg-label" %>                   
+                                        <%= f.input :zone_voter, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group fg-line">     
+                                        <%= f.label :section_voter, class: "fg-label" %>                   
+                                        <%= f.input :section_voter, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                                    </div>
+                                </div>
+                            </div>
+                        <% end %>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group fg-line">     
+                                    <%= f.label :bond, class: "fg-label" %>                   
+                                    <%= f.input :bond, collection: PeopleAssociated::BOND, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group fg-line">     
+                                    <%= f.label :situation, class: "fg-label" %>                   
+                                    <%= f.input :situation, collection: PeopleAssociated::SITUATION, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-3">
+                                <div id="start_registration" class="form-group fg-line" style="display:<%=@people_associated.situation == 3 ? 'block' : 'none' %>;">     
+                                    <%= f.label :start_registration, class: "fg-label m-b-1" %>
+                                    <input type='text' class="form-control mask-date start_registration" name="people_associated[start_registration]" value="<%=@people_associated.start_registration ? I18n.l(@people_associated.start_registration) : ''%>">
+                                </div>
+                            </div> 
+
+                            <div class="col-sm-3">
+                                <div id="parading_date" class="form-group fg-line" style="display:<%=@people_associated.situation == 2 ? 'block' : 'none' %>;">     
+                                    <%= f.label :parading_date, class: "fg-label m-b-1" %>
+                                    <input type='text' class="form-control mask-date parading_date" name="people_associated[parading_date]" value="<%=@people_associated.parading_date ? I18n.l(@people_associated.parading_date) : ''%>">
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-3">
+                                <div class="form-group fg-line">
+                                    <%= f.label :validity_card, class: "fg-label m-b-1" %>
+                                    <input type='text' class="form-control mask-date" name="people_associated[validity_card]" value="<%=@people_associated.validity_card ? I18n.l(@people_associated.validity_card, format: :custom_date) : ''%>">
+
+                                </div>
+                            </div>
+
+<% if false %>
+                            <div class="col-sm-3">
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <%= f.check_box :father_mother %>
+                                        <i class="input-helper"></i> 
+                                        <%= PeopleAssociated.human_attribute_name :father_mother %>                            
+                                    </label>
+                                </div>
+                            </div>                        
+                        
+                            <div class="col-sm-3">
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <%= f.check_box :partner %>
+                                        <i class="input-helper"></i> 
+                                        <%= PeopleAssociated.human_attribute_name :partner %>                            
+                                    </label>
+                                </div>
+                            </div>
+                        <% end %>
+                            
+                    
+                    </div>
+
+                    <div class="col-9">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group fg-line m-b-5">   
+                                    <%= f.label :created_at, class: "fg-label  m-b-1" %>
+                                    <input type='text' class="form-control mask-date" name="people_associated[created_at]" value="<%=I18n.l(@people_associated.created_at ? @people_associated.created_at : DateTime.current, format: :custom)%>" >
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group fg-line">
+                                    <%= f.label :affiliate_date, class: "fg-label m-b-1" %>
+                                    <input type='text' class="form-control mask-date" name="people_associated[affiliate_date]" value="<%=@people_associated.affiliate_date ? I18n.l(@people_associated.affiliate_date) : '' %>">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group fg-line">   
+                                    <%= f.label :hollering_registration, class: "fg-label  m-b-1" %>
+                                    <%= f.input :hollering_registration, input_html: {class: 'form-control'}, label: false %>  
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">    
+                                <div class="form-group fg-line ">
+                                    <%= f.label :name, class: "fg-label" %>
+                                    <%= f.input :name, input_html: {class: "input-sm form-control fg-input", autocomplete: 'off'}, label: false %>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="cpf form-group fg-line">
+                                    <%= f.label :cpf, class: "fg-label" %>
+                                    <%= f.input :cpf, input_html: {class: 'input-sm form-control fg-input input-mask mask-cpf', "data-mask": "000.000.000-00" , "data-id": @people_associated.id }, label: false %>   
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group fg-line ">
+                                    <%= f.label :rg, class: "fg-label" %>
+                                    <%= f.input :rg, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group fg-line ">
+                                    <%= f.label :dispatcher_organ, class: "fg-label" %>
+                                    <%= f.input :dispatcher_organ, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-3">    
+                                <div class="form-group fg-line">
+                                    <%= f.label :email, class: "fg-label" %>
+                                    <%= f.input :email, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group fg-line">
+                                    <%= f.label :phone, class: "fg-label" %>
+                                    <%= f.input :phone, input_html: {class: "input-sm form-control fg-input mask-phone-fixo", "data-mask": "(00) 0000-0000"}, label: false %>                        
+                                </div>
+                            </div>
+
+                              <div class="col-sm-3">
+                                <div class="form-group fg-line">
+                                    <%= f.label :cell_phone1, class: "fg-label" %>
+                                    <%= f.input :cell_phone1, input_html: {class: "input-sm form-control fg-input mask-phone", "data-mask": "(00) 0000-0000"}, label: false %>                        
+                                </div>
+                            </div>
+
+                              <div class="col-sm-3">
+                                <div class="form-group fg-line">
+                                    <%= f.label :cell_phone2, class: "fg-label" %>
+                                    <%= f.input :cell_phone2, input_html: {class: "input-sm form-control fg-input mask-phone", "data-mask": "(00) 0000-0000"}, label: false %>                        
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>      
+                </div>      
+            </div>      
+
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group fg-line">
+                                <%= f.label :spouse, class: "fg-label" %>
+                                <%= f.input :spouse, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                            </div>
+                        </div> 
+<% if false %>
+                        <div class="col-sm-4">
+                            <div class="form-group fg-line">
+                                <%= f.label :mother, class: "fg-label" %>
+                                <%= f.input :mother, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                            </div>
+                        </div> 
+
+                        <div class="col-sm-4">
+                            <div class="form-group fg-line">
+                                <%= f.label :father, class: "fg-label" %>
+                                <%= f.input :father, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                            </div>
+                        </div> 
+<%e end %>
+                        <div class="col-sm-4">
+                            <div class="form-group fg-line">
+                                <%= f.label :place_birth, class: "fg-label" %>
+                                <%= f.input :place_birth, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group fg-line">
+                                <%= f.label :birthdate, class: "fg-label m-b-1" %>
+                                <input type='text' class="form-control mask-date" name="people_associated[birthdate]" value="<%=@people_associated.birthdate ? I18n.l(@people_associated.birthdate) : ''%>">
+                            </div>
+                        </div>
+                    </div>    
+
+                    <div class="row">
+                        
+
+                        <div class="col-sm-3">
+                            <div class="form-group fg-line">
+                                <%= f.label :gender, class: "fg-label" %>
+                                <%= f.input :gender, collection: PeopleAssociated::GENDERS, input_html: {class: "selectpicker"}, label: false %>
+                            </div>
+                        </div>
+
+                        <% if false %>
+                            <!-- solicitado a remocao do campo raca -->
+                            <div class="col-sm-3">
+                                <div class="form-group fg-line">
+                                    <%= f.label :breed, class: "fg-label" %>
+                                    <%= f.input :breed, collection: PeopleAssociated::BREED, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                                </div>
+                            </div> 
+                        <% end %>
+
+                        <div class="col-sm-3">
+                            <div class="form-group fg-line">
+                                <%= f.label :marital_status, class: "fg-label" %>
+                                <%= f.input :marital_status, collection: PeopleAssociated::MARITAL_STATUS, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-3">
+                            <div class="form-group fg-line">
+                                <%= f.label :scholarity, class: "fg-label m-b-4" %>
+                                <%= f.input :scholarity, collection: PeopleAssociated::SCHOLARITY, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                            </div>
+                        </div>   
+
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <%= f.label :office_id, class: "fg-label" %>
+
+                                <% if @allowed_create_office %>
+                                <%= link_to "javascript::", class: "input-group-addon last create_office" do %>
+                                <i class="zmdi zmdi-plus"></i>
+                                <% end %>                                
+                                <% end %>                                
+                            </div>
+
+                            <div class="form-group fg-line">                             
+                               <%= f.association :office, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+                           </div>
+                       </div>
+                    </div>
+                    <div class="row">
+
+                       <div class="col-sm-3">
+                        <div class="input-group">
+                            <%= f.label :occupation_id, class: "fg-label" %>
+                            <% if @allowed_create_occupation %>
+                            <%= link_to "javascript::", class: "input-group-addon last create_occupation" do %>
+                            <i class="zmdi zmdi-plus"></i>
+                            <% end %>                                
+                            <% end %>                                
+                        </div>                            
+
+                        <div class="form-group fg-line">
+                           <%= f.association :occupation, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+                       </div>
+                   </div>
+
+                   <div class="col-sm-3">   
+                    <div class="input-group">
+                        <%= f.label :department, class: "fg-label" %>
+
+                        <% if @allowed_create_department %>
+                        <%= link_to "javascript::", class: "input-group-addon last create_department" do %>
+                        <i class="zmdi zmdi-plus"></i>
+                        <% end %>                                
+                        <% end %>                                
+                    </div>
+                    
+                    <div class="form-group fg-line ">
+                      <%= f.association :department, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                  </div>
+              </div>                 
+          
+
+            <div class="col-sm-3">
+                <div class="form-group fg-line">
+                    <%= f.label :profession, class: "fg-label" %>
+                    <%= f.input :profession, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+
+
+            <div class="col-sm-3">   
+                    <div class="input-group">
+                        <%= f.label :workplace, class: "fg-label" %>
+
+                        <% if @allowed_create_workplace %>
+                        <%= link_to "javascript::", class: "input-group-addon last create_workplace" do %>
+                        <i class="zmdi zmdi-plus"></i>
+                        <% end %>                                
+                        <% end %>                                
+                    </div>
+                    
+                    <div class="form-group fg-line ">
+                      <%= f.association :workplace, input_html: {class: "selectpicker", "data-live-search": true}, label: false %>
+                  </div>
+              </div>        
+            </div>        
+            
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group fg-line">
+                        <%= f.label :admission_date, class: "fg-label m-b-1" %>
+                        <input type='text' class="form-control mask-date" name="people_associated[admission_date]" value="<%=@people_associated.admission_date ? I18n.l(@people_associated.admission_date) : '' %>">
+                    </div>
+                </div>
+            
+                <div class="col-sm-3">
+                    <div class="form-group fg-line">
+                        <%= f.label :gross_salary, class: "fg-label" %>
+                        <%= f.input :gross_salary, as: :string, input_html: {class: "input-sm form-control fg-input money", value: (number_with_precision(f.object.gross_salary, precision: 2, separator: '.', delimiter: '') || 0)}, label: false  %>
+                    </div>
+                </div> 
+
+                <div class="col-sm-2 por_desconto" style="display:<%=f.object.gross_salary.to_f <= @customer_configuration.total_maximum_salary ? 'block' : 'none'%>;">
+                    <div class="form-group fg-line">
+                        <%= f.label :discount_percentage, class: "fg-label" %>
+                        <%= f.input :discount_percentage, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+                        <small class="text text-danger">Sugestão de desconto: <strong><%=number_to_percentage @customer_configuration.discount_percentage, precision: 0%></strong></small>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-3 por_valor_fixo" style="display:<%=f.object.gross_salary.to_f > @customer_configuration.total_maximum_salary ? 'block' : 'none'%>;">
+                    <div class="form-group fg-line">
+                        <%= f.label :fixed_value, class: "fg-label" %>
+                        <%= f.input :fixed_value, as: :string, input_html: {class: "input-sm form-control fg-input money", value: (number_with_precision(f.object.fixed_value, precision: 2, separator: '.', delimiter: '') || 0)}, label: false  %>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+    <div class="card-header">
+        <h2><i class="zmdi zmdi-pin"></i> Endereço</h2>
+    </div>
+
+
+    <div class="card-body card-padding">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <%= f.label :zipcode, class: "fg-label" %> 
+
+                    <%= link_to "javascript::", class: "input-group-addon last search_cep" do %>
+                        <i class="zmdi zmdi-search"></i>
+                    <% end %>           
+                </div>
+
+                <div class="form-group fg-line">   
+                    <%= f.input :zipcode, input_html: {class: 'input-sm form-control fg-input mask-cep', "data-mask": "00000-000"}, label: false %>
+                </div>
+            </div>
+
+            <div class="col-sm-5">
+                <div class="form-group fg-line">
+                    <%= f.label :address, class: "fg-label" %>
+                    <%= f.input :address, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="form-group fg-line">    
+                    <%= f.label :complement, class: "fg-label" %>   
+                    <%= f.input :complement, input_html: {class: "input-sm form-control fg-input"}, label: false  %>                                         
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group fg-line">    
+                    <%= f.label :number, class: "fg-label" %> 
+                    <%= f.input :number, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">            
+            <div class="col-sm-3">
+                <div class="form-group fg-line"> 
+                    <%= f.label :burgh, class: "fg-label" %>
+                    <%= f.input :burgh, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group fg-line">                        
+                    <%= f.label :city, class: "fg-label" %>
+                    <%= f.input :city, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group fg-line">     
+                    <%= f.label :state, class: "fg-label" %>                   
+                    <%= f.input :state, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+        </div>                        
+    </div>
+
+
+  <!--   <div class="card-header">
+        <h2><i class="zmdi zmdi-collection-text"></i> Outras informações</h2>
+    </div>
+ -->
+
+    
+
+    <div class="card-header">
+        <h2><i class="zmdi zmdi-collection-text"></i> Dados de acesso</h2>
+    </div>
+
+
+    <div class="card-body card-padding">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group fg-line">     
+                    <%= f.label :username, class: "fg-label" %>                   
+                    <%= f.input :username, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-group fg-line">     
+                    <%= f.label :password, class: "fg-label" %>                   
+                    <%= f.input :password, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-group fg-line">     
+                    <%= f.label :password_confirmation, class: "fg-label" %>                   
+                    <%= f.input :password_confirmation, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="card-header">
+        <h2><i class="zmdi zmdi-collection-text"></i> Observação</h2>
+    </div>
+
+
+    <div class="card-body card-padding">
+        <div class="form-group fg-line">             
+            <%= f.input :observation, input_html: {class: "input-sm form-control fg-input", rows: 5}, label: false %>
+        </div>
+    </div> 
+
+    <div class="card-header">
+        <h2><i class="zmdi zmdi-collection-text"></i> Arquivo(s)</h2>
+    </div>
+
+    <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 m-b-20">
+                  <%= f.simple_fields_for :system_attachments do |system_attachment| %>
+                    <%= render 'system_attachment_fields', f: system_attachment %>
+                  <% end %>
+                </div>
+            
+                <div class="col-sm-12 m-b-20" id="system_attachment_add">
+                  <%= link_to_add_association '<i class="zmdi zmdi-plus"></i> Novo Arquivo'.html_safe, f, :system_attachments, class: 'btn bgm-cyan waves-effect m-l-25 m-t-10' %>
+                </div>
+            </div>
+            </div>
+    
+
+        
+</div>   
+
+<div role="tabpanel" class="tab-pane" id="people_associated_dependents">
+    <div id="dependents">  
+        <div class="card card-dependents">
+            <%= f.simple_fields_for :dependents do |dependent| %>
+                <%= render 'dependent_fields', f: dependent %>
+            <% end %>
+            <div id="dependent_add">
+                <%= link_to_add_association '<i class="zmdi zmdi-plus"></i> Novo dependente'.html_safe, f, :dependents, class: 'btn bgm-cyan waves-effect m-l-25 m-t-10' %>
+            </div>
+        </div>
+    </div>   
+</div>       
+
+<% if @manager_monthly_payments %>
+<div role="tabpanel" class="tab-pane" id="people_associated_monthly_payments">
+    <div id="monthly_payments">  
+        <div class="card card-dependents">
+           <div class="card-body card-padding">
+                <div class="form-wizard-basic fw-container">
+                    <% @montlhy_payments = @people_associated.monthly_payments.select("monthly_payments.*, year(due_date) year").order('year desc') %>
+                    <ul class="tab-nav text-center">
+                        <% @montlhy_payments.group_by(&:year).each do |year, mp| %>
+                            <li><a href="#<%= year %>" data-toggle="tab"><%= year %></a></li>
+                        <% end %>
+                    </ul>
+
+                    <div class="tab-content">
+                        <% @montlhy_payments.group_by(&:year).each do |year, mp| %>
+                            <div class="tab-pane fade" id="<%= year %>">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th>Valor</th>
+                                          <th>Vencimento</th>
+                                          <th>Pago</th>
+                                          <th>Observação</th>          
+                                          <th></th>       
+                                        </tr>
+                                      </thead>
+
+                                      <tbody>
+                                        <% mp.each do |monthly_payment| %>
+                                          <% expired = (!monthly_payment.paid && monthly_payment.expired?) %>
+                                          <tr class="<%= expired ? 'active' : '' %>" title="<%= 'Mensalidade em atraso.' if expired %>">
+                                            <td><%=number_to_currency(monthly_payment.amount) %></td>
+                                            <td><%= l monthly_payment.due_date %></td>
+                                            <td><span class="label label-<%= monthly_payment.paid ? 'success' : 'info' %> label-white middle"><%= monthly_payment.paid ? 'Pago' : 'A Receber' %></span></td>
+                                            <td><%= monthly_payment.observation %></td>            
+                                         </tr>
+                                        <% end %>      
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                            </div>
+                        <% end %>    
+                        
+                        <ul class="fw-footer pagination wizard">
+                            <li class="previous first"><a class="a-prevent" href=""><i
+                                    class="zmdi zmdi-more-horiz"></i></a></li>
+                            <li class="previous"><a class="a-prevent" href=""><i
+                                    class="zmdi zmdi-chevron-left"></i></a></li>
+                            <li class="next"><a class="a-prevent" href=""><i
+                                    class="zmdi zmdi-chevron-right"></i></a></li>
+                            <li class="next last"><a class="a-prevent" href=""><i
+                                    class="zmdi zmdi-more-horiz"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>       
+<% end %>
+
+<div class="card-body card-padding">
+    <%= submit_tag 'Criar e adicionar', class: "btn bgm-teal waves-effect", name: 'create_and_add' if !edit_mode? %>
+    <%= f.button :submit, "Salvar #{CustomerConfiguration.current.menu_people_associateds.titleize}", class: "btn bgm-green waves-effect" %>
+    <%= link_to "Cancelar", people_associateds_path, class: "btn bgm-red waves-effect" %>
+</div>        
+</div>           
+<% end %>    
+</div>
+
+<%= render 'people_associateds/modal_search_cep' %>
+
+<% if @allowed_create_office %>
+<%= render 'offices/modal_office' %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#people_associated_gross_salary").on("keyup", function() {
+            var salary = $(this).val();
+            var confSalary = "<%= @customer_configuration.total_maximum_salary %>";
+            
+
+            if ( Math.round(salary * 100) > Math.round(confSalary * 100)) {
+                $('.por_valor_fixo').show()
+                $('.por_desconto').hide();
+                $("#people_associated_discount_percentage").val(0);
+            }
+
+            if ( Math.round(salary * 100) <= Math.round(confSalary * 100)) {
+                $('.por_desconto').show()
+                $('.por_valor_fixo').hide();
+                $("#people_associated_fixed_value").val("");
+            }
+
+
+        });
+
+        if ($('.form-wizard-basic')[0]) {
+        $('.form-wizard-basic').bootstrapWizard({
+                tabClass: 'fw-nav',
+                'nextSelector': '.next',
+                'previousSelector': '.previous'
+            });
+        }
+
+        $('.create_office').on("click", function(e){
+            $('#modal_new_office').modal('show');          
+            e.stopImmediatePropagation();
+            
+            
+            $.ajax({
+              url: "<%=new_office_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+        });      
+        });
+
+        $('.close-modal-office').on("click", function(e){
+            $('#modal_new_office').modal('hide');
+        });
+    });
+</script>
+<% end %>        
+
+<% if @allowed_create_occupation %>
+<%= render 'occupations/modal_occupation' %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.create_occupation').on("click", function(e){
+            $('#modal_new_occupation').modal('show');          
+            e.stopImmediatePropagation();            
+
+            $.ajax({
+              url: "<%=new_occupation_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+        });   
+        });
+
+        $('.close-modal-occupation').on("click", function(e){
+            $('#modal_new_occupation').modal('hide');
+        });
+    });
+</script>
+<% end %>
+
+<% if @allowed_create_department %>
+<%= render 'departments/modal_department' %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $input = $("#people_associated_name")
+        
+        var options = {
+            getValue: "name",
+            url: function(phrase) {
+              return "/associados/autocomplete.json?q=" + phrase;
+            },
+            list: {
+              onChooseEvent: function() {
+                $input.val("")
+              }
+            }
+        }
+
+        $("#people_associated_name").easyAutocomplete(options)
+
+        $('.create_department').on("click", function(e){
+            $('#modal_new_department').modal('show');          
+            e.stopImmediatePropagation();            
+
+            $.ajax({
+              url: "<%=new_department_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+        });   
+        });
+
+        $('.close-modal-department').on("click", function(e){
+            $('#modal_new_department').modal('hide');
+        });
+    });
+</script>
+<% end %>
+
+<% if @allowed_create_workplace %>
+<%= render 'workplaces/modal_workplace' %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.create_workplace').on("click", function(e){
+            $('#modal_new_workplace').modal('show');          
+            e.stopImmediatePropagation();            
+
+            $.ajax({
+              url: "<%=new_workplace_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+        });   
+        });
+
+        $('.close-modal-workplace').on("click", function(e){
+            $('#modal_new_workplace').modal('hide');
+        });
+    });
+</script>
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        loadSelectPicker();
+        validarCpf('#people_associated_cpf');
+
+
+        $('.search_cep').on("click", function(e){
+            $('#modal_search_cep').modal('show');          
+            e.stopImmediatePropagation();                        
+        });
+
+        
+
+        $("#people_associated_cpf").on('blur', function() {
+            var _this = $(this);
+            var url = "/associados/find_by_cpf?cpf="+_this.val();
+            $.getJSON( url, function( data ) {
+                if ( data.in_use && _this.attr('data-id') != data.people_associated.id ) {
+                    notify('CPF está sendo usado, <br>'+data.people_associated.name, 'danger');
+                }
+            });
+        });   
+
+
+        $("#people_associated_situation").on('change', function() {
+            if( parseInt($(this).find(":selected").val()) == 3 ) {
+                $("#start_registration").show();
+                $("#parading_date").hide();
+                $(".parading_date").val('');
+            } else if( parseInt($(this).find(":selected").val()) == 2 ) {
+                $("#parading_date").show();
+                $("#start_registration").hide();
+                $(".start_registration").val('');
+            } else {
+                $("#start_registration").hide();
+                $("#parading_date").hide();
+                $(".start_registration").val('');
+                $(".parading_date").val('');
+            }
+        });    
+
+        $('#dependent_add').bind('cocoon:after-insert', function(e, added_item) {           
+            var new_id = new Date().getTime();
+            var othermanual = added_item.find(".othermanual");
+            var element = othermanual.find(".form-group");
+            element.attr("id", "other_manual_"+new_id);
+
+            var degreeofkinship = added_item.find(".degreeofkinship");
+            var element = degreeofkinship.find(".selectpicker");
+            element.attr("data-name", "other_manual_"+new_id);
+
+            var max_year = added_item.find('.max_year');
+            max_year.attr("data-token", new_id);
+
+            var birthdate = added_item.find('.birthdate');
+            birthdate.addClass("birthdate_"+new_id); 
+
+            var benefit_until = added_item.find('.benefit_until');
+            benefit_until.addClass("benefit_until_"+new_id); 
+
+            var divStudent = added_item.find('.divStudent');
+            var is_student = divStudent.find('.is_student');
+            is_student.addClass("is_student_"+new_id);
+            is_student.attr("data-name", "institution_name_"+new_id);
+
+            var institutionname = added_item.find('.institutionname');
+            var element = institutionname.find(".form-group");
+            element.attr("id", "institution_name_"+new_id);
+
+            loadMaxYearBlur();
+        });  
+
+        loadMaxYearBlur();
+        function loadMaxYearBlur() {
+	    	$('input.max_year').blur(function() {
+	    		var key = $(this).attr('data-token');
+				var _birthdate = $('.birthdate_'+key).val();
+				var _max_year = $(this).val();
+
+				if (_max_year.length > 0 && _birthdate.length > 0 ) {
+		  			var validate_year = moment(_birthdate, "DD-MM-YYYY").add(parseInt(_max_year), 'years')
+		  			$('.benefit_until_'+key).val(moment(validate_year).format('DD/MM/YYYY'));
+				}
+			});
+		}
+
+            
+    });
+
+    $(function() {
+        var hash = window.location.hash;
+        if ( hash ) 
+            hash && $('ul.tab-nav a[href="' + hash + '"]').tab('show');
+    });
+</script>

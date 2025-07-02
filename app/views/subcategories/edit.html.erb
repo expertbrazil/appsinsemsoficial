@@ -1,0 +1,16 @@
+<div class="card">
+	<div class="card-header ch-alt m-b-20">  
+		<%= link_to subcategories_path, "data-toggle": "tooltip", "data-placement":"bottom", "title": "Voltar", class: 'btn bgm-deeporange btn-float waves-effect' do %>
+		<i class="zmdi zmdi-arrow-left"></i>
+		<% end  if false%>
+
+		<%= link_to @supplier, class: 'btn btn-primary waves-effect' do %>
+		    <span class="glyphicon glyphicon-info-sign"></span>
+		    Show
+		<% end if false%>
+
+		<h2><i class="zmdi zmdi-labels"></i> <%= "Editando subcategoria" %></h2>
+	</div>
+
+	<%= render 'form' %>
+</div>

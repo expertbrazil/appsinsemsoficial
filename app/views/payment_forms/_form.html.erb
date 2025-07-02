@@ -1,0 +1,34 @@
+<div class="card">  
+    <%= simple_form_for(@payment_form, html: { class: "form-horizontal", role: "form" }) do |f| %>
+      <%= f.error_notification %>
+   
+
+      <div class="card-body card-padding">
+        <div class="row">
+          
+          <div class="col-sm-4">    
+            <div class="fg-line ">
+              <%= f.label :name, class: "fg-label" %>
+              <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="checkbox m-b-15">
+                <label>
+                    <%= f.check_box :status %>
+                    <i class="input-helper"></i> 
+                    <%= PaymentForm.human_attribute_name :status %>                            
+                </label>
+            </div>          
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-body card-padding">
+        <%= submit_tag 'Salvar e adicionar', class: "btn bgm-teal waves-effect", name: 'create_and_add' if !edit_mode? %>
+        <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+        <%= link_to "Cancelar", payment_forms_path, class: "btn bgm-red waves-effect" %>
+      </div>  
+    <% end %>    
+</div>

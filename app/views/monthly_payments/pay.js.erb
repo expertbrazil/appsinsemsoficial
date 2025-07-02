@@ -1,0 +1,11 @@
+<% if request.post? %>
+<% else %>
+    <% js = escape_javascript(
+	render(partial: 'monthly_payments/remote_form')
+	) %>
+
+	$("#payment_content").html("<%= js %>");
+	$("#card_header_payment").html("<h2><i class='zmdi zmdi-account-box-o'></i> Baixar Mensalidade</h2>");
+
+	hiddenPreLoader(); 
+<% end %>

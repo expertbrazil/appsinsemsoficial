@@ -1,0 +1,11 @@
+hiddenPreLoader(); 
+
+<% if @saved %>
+	<% js = escape_javascript(
+	  render(partial: 'dependents/index')
+	) %>
+
+	$("#dependent_content").html("<%= js %>");
+<% else %>	
+	$("#people_associated_dependent_error").html("<%= escape_javascript errors(@dependent) %>")
+<% end %>	

@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-body card-padding">
+    <%%= simple_form_for(@<%= singular_table_name %>, html: { class: "form-horizontal", role: "form" }) do |f| %>
+    <%%= f.error_notification %>
+
+    <%- attributes.each do |attribute| -%>
+    <div class="form-group fg-float">
+      <div class="fg-line">              
+        <%%= f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %>, input_html: {class: "input-sm form-control fg-input"}, label: false %> 
+        <%%= f.label <%= attribute.name %>, class: "fg-label" %>  
+      </div>
+    </div>
+    <%- end -%>
+
+
+
+    <%%= f.button :submit, class: "btn bgm-green waves-effect" %>     
+
+    <%% end %>    
+  </div>
+</div>
+

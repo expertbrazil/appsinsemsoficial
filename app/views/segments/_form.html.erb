@@ -1,0 +1,28 @@
+<div class="card">
+  
+  <%= simple_form_for(@segment, html: { class: "", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <div class="card-header">
+    <h2><i class="fa fa-user-md"></i> Dados do <%= Segment.model_name.human %></h2>
+  </div>
+
+  <div class="card-body card-padding">
+    <div class="row">
+      
+      <div class="col-sm-4">    
+        <div class="form-group fg-line ">
+          <%= f.label :name, class: "fg-label" %>
+          <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+        </div>
+      </div>   
+    </div>
+  </div>
+
+  <div class="card-body card-padding">
+    <%= submit_tag 'Criar e adicionar', class: "btn bgm-teal waves-effect", name: 'create_and_add' if !edit_mode? %>
+    <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+    <%= link_to "Cancelar", segments_path, class: "btn bgm-red waves-effect" %>
+  </div>    
+
+  <% end %>    
+</div>

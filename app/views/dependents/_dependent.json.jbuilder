@@ -1,0 +1,1 @@
+json.extract! dependent, :id, :name, :birthdate, :degree_of_kinship, :created_at, :updated_at

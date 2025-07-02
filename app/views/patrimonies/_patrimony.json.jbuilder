@@ -1,0 +1,2 @@
+json.extract! patrimony, :id, :department_id, :name, :description, :quantity, :date_of_acquisition, :amount, :patrimony_number, :created_at, :updated_at
+json.url patrimony_url(patrimony, format: :json)

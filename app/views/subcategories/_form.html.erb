@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-body card-padding">
+    <%= simple_form_for(@subcategory, html: { class: "", role: "form" }) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="card-header">
+      <h2><i class="zmdi zmdi-assignment"></i> Dados</h2>
+    </div>
+
+    <div class="card-body card-padding">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group fg-float">
+            <div class="fg-line">              
+              <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %> 
+              <%= f.label :name, class: "fg-label" %>  
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="form-group fg-line">
+            <div class="fg-line">              
+              <%= f.label :category_id, class: "fg-label" %>  
+              <%= f.input :category, collection: Subcategory.select_options_grouped, input_html: {class: "selectpicker"}, label: false %>               
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-4 m-b-20">
+            <div class="toggle-switch toggle-switch-demo">
+                <label for="bills_receife_work_days_only" class="ts-label"><%= "Ativo?" %>  </label>
+                <%= f.check_box :status %>                
+                <label for="bills_receife_work_days_only" class="ts-helper"></label>
+            </div>
+          </div> 
+      </div>  
+    </div>  
+
+    <div class="card-body card-padding">
+      <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+      <%= link_to "Cancelar", subcategories_path, class: "btn bgm-red waves-effect" %>
+    </div> 
+
+    <% end %>    
+  </div>
+</div>
+

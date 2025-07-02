@@ -1,0 +1,26 @@
+<div class="page-header">
+  <%= link_to inventory_movements_path, class: 'btn btn-default waves-effect' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_inventory_movement_path(@inventory_movement), class: 'btn btn-primary waves-effect' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show inventory_movement</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Inventory:</dt>
+  <dd><%= @inventory_movement.inventory %></dd>
+
+  <dt>Type:</dt>
+  <dd><%= @inventory_movement.type %></dd>
+
+  <dt>Balance:</dt>
+  <dd><%= @inventory_movement.balance %></dd>
+
+  <dt>Amount:</dt>
+  <dd><%= @inventory_movement.amount %></dd>
+
+</dl>

@@ -1,0 +1,137 @@
+<div id="filterrific_results">
+	<% if @grouped.nil? %>
+
+	<table class="table table-striped table-bordered table-hover">
+	    <thead>
+	      <tr>
+	        <th><%= CustomerConfiguration.current.menu_people_associateds.titleize %></th>                      
+	        <th><%= BillsReceife.human_attribute_name(:state) %></th>                 
+	        <th><%= BillsReceife.human_attribute_name(:description) %></th>                 
+	        <th><%= BillsReceife.human_attribute_name(:amount) %></th>                 
+	        <th><%= BillsReceife.human_attribute_name(:due_date) %></th>                 
+	        <th><%= BillsReceife.human_attribute_name(:category) %></th>                 
+	        <th><%= BillsReceife.human_attribute_name(:financial_account) %></th>                 
+	      </tr>
+	    </thead>
+
+	    <tbody>					    	
+			<% @bills_receives.each do |bills_receive| %>
+				<tr>
+	        	<td><%= bills_receive.people_associated.name %></td>    
+	        	<td>
+	            	<% state = bills_receive.state_name %>  
+	            	<span class="label label-<%=state[1][:color]%>">
+	              	
+	              		<%= state[0] %>
+	            	</span>
+	          	</td>           
+	          	<td><%= l bills_receive.due_date%></td>            
+	          	<td><%= bills_receive.description %></td>           	          	
+	          	<td><%= number_to_currency bills_receive.amount%></td>                       
+	          	</tr>
+	      	<% end %>
+	      	<tr>
+	      		<td></td>
+	      		<td></td>
+	      		<td></td>
+	      		<td>TOTAL</td>
+	      		<td><%= number_to_currency @bills_receives.sum(:amount) %></td>
+	      	</tr>
+	      
+	    </tbody>
+	</table>
+
+
+		<%= will_paginate @bills_receives, renderer: BootstrapPagination::Rails %>
+	<% else %>
+		<% @soma_total = 0 %>
+		<% @grouped.each do |category, bills_receives| %> 
+			<div class="card-body card-padding nested-fields">
+				
+				<div class="card p-10">
+					<div class="card-header ch-alt m-t-0">
+				    	<h2>
+				    		<%= 
+				    			if params[:filterrific].present?  && !params[:filterrific][:grouped_by].blank?        
+						        	if params[:filterrific][:grouped_by] === 'category_id'
+						          		bills_receives.first.category.name.mb_chars.upcase
+						        	elsif params[:filterrific][:grouped_by] === 'financial_account_id'
+						          		bills_receives.first.financial_account.name.mb_chars.upcase
+						        	end
+						        else
+						        	bills_receives.first.category.name.mb_chars.upcase
+						      	end
+						      %>				    		
+				    	</h2>
+					</div>
+
+					<div class="card-content ch-alt m-t-0">
+						<table class="table table-striped table-bordered">
+						    <thead>
+						      <tr>
+						        <th><%= 'Cód.' %></th>                      
+						        <th><%= 'Nome' %></th> 
+						        <% if false %>
+						        	CustomerConfiguration.current.menu_people_associateds.titleize.singularize 
+						        <% end %>
+						        <th><%= BillsReceife.human_attribute_name(:state) %></th>                 
+						        <th><%= BillsReceife.human_attribute_name(:due_date) %></th>       
+						        <th><%= BillsReceife.human_attribute_name(:description) %></th>                 
+						        <th><%= BillsReceife.human_attribute_name(:amount) %></th>                 
+						      </tr>
+						    </thead>
+
+						    <tbody>			
+						    	<% @soma = 0 %>		    	
+								<%= content_tag_for(:tr, bills_receives) do |bills_receive| %>
+						        	<td><%= bills_receive.people_associated.hollering_registration %></td>    
+						        	<td><%= bills_receive.people_associated.name %></td>    
+						        	<td>
+						            	<% state = bills_receive.state_name %>  
+						            	<span class="label label-<%=state[1][:color]%>">
+						              	
+						              		<%= state[0] %>
+						            	</span>
+						          	</td>           
+						          	<td><%= l bills_receive.due_date%></td>     
+						          	<td><%= bills_receive.description %></td>           
+						          	<td>
+						          		<%= number_to_currency bills_receive.amount %>
+						          		<% @soma += bills_receive.amount %>
+						          	</td>           
+						          	         
+						      	<% end %>
+					      	 	<tr>
+						      		<td></td>
+						      		<td></td>
+						      		<td></td>
+						      		<td></td>
+						      		<td style="float: right;"><strong>TOTAL</strong></td>
+						      		<td><strong><%= number_to_currency @soma %></strong></td>
+						      		
+						      	</tr>
+						      	<% @soma_total += @soma %>
+						      
+						    </tbody>
+					  	</table>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	  	<table class="table table-striped table-bordered">
+			<tbody>	
+				<tr>
+			  		<td></td>
+			  		<td></td>
+			  		<td></td>
+			  		<td></td>
+			  		<td></td>
+			  		<td></td>
+			  		<td style="font-size: 20px; text-align: right;"><strong>TOTAL</strong></td>
+			  		<td style="font-size: 20px; text-align: left;"><strong><%= number_to_currency @soma_total %></strong></td>			  		
+		  		</tr>
+		  	</tbody>	
+	  	</table>
+
+	<% end %>
+</div>

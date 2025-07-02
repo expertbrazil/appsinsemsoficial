@@ -1,0 +1,8 @@
+<% js = escape_javascript(
+  render(partial: 'suppliers/remote_form')
+) %>
+
+$("#supplier_content").html("<%= js %>");
+$("#card_header_supplier").html("<h2><i class='zmdi zmdi-account-box-o'></i> Novo <%= Supplier.model_name.human %></h2>")
+
+hiddenPreLoader(); 

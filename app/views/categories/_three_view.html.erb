@@ -1,0 +1,59 @@
+<div id="treeCategroies">
+  <ul>
+    <li  data-jstree='{"opened":true}'>
+      <ul>
+        <% @categories.credit_subcategories.roots.each do |category| %>
+          <li data-jstree='{"opened":true}'>
+            <%= category.reduced_code %> - <%= category.name %>                                 
+            <%= render 'categories/links', category: category  %>            
+            <%= render 'categories/tree_children', children: category.children if category.children.any? %>
+          </li>
+        <% end%>
+      </ul>         
+    </li>
+  </ul>           
+</div>
+
+
+            
+
+  <%= javascript_include_tag 'template/jstree.min' %>
+
+<script type="text/javascript">
+  $(document).on('ready show.bs closed.bs load turbolinks:load', function() {
+    $('#treeCategroies').jstree({
+      'core' : {
+        'themes' : {
+          'responsive': false
+        }
+      },
+        'types' : {        
+            'default' : {
+                'icon' : 'fa fa-folder'
+            },
+            'file' : {
+                'icon' : 'fa fa-file-alt'
+            }
+        },
+        'plugins' : ['types', 'search']
+    });
+  });
+  
+  $("#search").submit(function(e) {
+    e.preventDefault();
+    $("#treeCategroies").jstree(true).search($("#box").val());
+  });
+
+  $("#clear").click(function () {
+    $("#treeCategroies").jstree("clear_search");
+    $('#box').val('')
+  });
+
+  $('#treeCategroies').on('ready.jstree', function () {
+    $('#treeCategroies').off("click.jstree", ".jstree-anchor");
+  });
+
+  $('#treeCategroies').bind("select_node.jstree", function (e, data) { 
+      console.log(data); 
+  });
+</script>

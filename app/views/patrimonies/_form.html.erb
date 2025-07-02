@@ -1,0 +1,357 @@
+<%
+@allowed_create_heritages = current_user.allowed_to?({:controller => "patrimonies", :action => "create"}, :global => true)
+%>
+
+
+
+<div class="card">
+  <%= simple_form_for(@patrimony, html: { class: "", role: "form" }) do |f| %>
+  <%= f.error_notification %>  
+  <div class="card-header">
+    <h2><i class="zmdi zmdi-assignment-o"></i> Dados <%= Patrimony.model_name.human %></h2>
+  </div>
+
+  <div class="card-body card-padding">
+    <div class="row">
+        <div class="col-sm-2">    
+          <div class="form-group fg-line ">
+            <%= f.label :patrimony_number, class: "fg-label" %>
+            <%= f.input :patrimony_number, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+          </div>
+        </div>
+       
+        <div class="col-sm-3">    
+          <div class="form-group fg-line ">
+            <%= f.label :name, class: "fg-label" %>
+            <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+          </div>
+        </div>          
+
+        <div class="col-sm-3">    
+          <div class="form-group fg-line ">
+            <%= f.label :request_of, class: "fg-label" %>
+            <%= f.input :request_of, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+          </div>
+        </div> 
+
+        <div class="col-sm-2">
+          <div class="form-group fg-line">
+            <%= f.label :entry_note, class: "fg-label m-b-1" %>
+            <%= f.input :entry_note, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+          </div>
+        </div>     
+
+        <div class="col-sm-2">
+          <div class="form-group fg-line">
+            <%= f.label :date_of_acquisition, class: "fg-label m-b-1" %>
+            <input type='text' class="form-control mask-date" name="patrimony[date_of_acquisition]" value="<%=@patrimony.date_of_acquisition ? I18n.l(@patrimony.date_of_acquisition) : ''%>">
+          </div>
+        </div>  
+    </div>  
+
+    <div class="row">
+        <div class="col-sm-2">    
+          <div class="form-group fg-line ">
+            <%= f.label :amount, class: "fg-label" %>
+            <%= f.input :amount, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+          </div>
+        </div>  
+
+        <div class="col-sm-2">    
+          <div class="form-group fg-line ">
+            <%= f.label :current_amount, class: "fg-label" %>
+            <%= f.input :current_amount, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="input-group">
+            <%= f.label :type_incorporation_id, class: "fg-label" %>
+
+            <% if @allowed_create_heritages %>
+              <%= link_to "javascript::", class: "input-group-addon last create_type_incorporation" do %>
+                <i class="zmdi zmdi-plus"></i>
+              <% end %>                                
+            <% end %>                                
+          </div>
+
+          <div class="form-group fg-line">                             
+            <%= f.association :type_incorporation, collection: TypeIncorporation.all.map {|p| [p.name, p.id, {'data-describe' => p.to_describe ? 1 : 0 }]}, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+          </div>          
+        </div>  
+
+        <div id="type_incorporation_describe" style="display:<%=f.object.type_incorporation_describe? ? 'block' : 'none' %>;" class="col-sm-3">          
+          <div class="form-group fg-line">                             
+            <%= f.label :type_incorporation_describe, class: "fg-label" %>
+            <%= f.input :type_incorporation_describe, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+          </div>          
+        </div>  
+
+
+        <div class="col-sm-2">
+          <div class="form-group fg-line">
+            <%= f.label :date_of_incorporation, class: "fg-label m-b-1" %>
+            <input type='text' class="form-control mask-date" name="patrimony[date_of_incorporation]" value="<%=@patrimony.date_of_incorporation ? I18n.l(@patrimony.date_of_incorporation) : ''%>">
+          </div>
+        </div>  
+    </div>  
+    
+    <div class="row">
+        <div class="col-sm-3">    
+           <div class="form-group fg-line">                             
+              <div class="input-group">
+                <%= f.label :supplier_id, class: "fg-label" %>
+
+                <% if @allowed_create_heritages %>
+                  <%= link_to "javascript::", class: "input-group-addon last create_supplier" do %>
+                    <i class="zmdi zmdi-plus"></i>
+                  <% end %>                                
+               <% end %>                                
+              </div>
+
+               <%= f.association :supplier, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+           </div>        
+        </div> 
+
+
+        <div class="col-sm-3">
+          <div class="form-group fg-line">                             
+              <div class="input-group">
+                <%= f.label :effort_id, class: "fg-label" %>
+
+                <% if @allowed_create_heritages %>
+                  <%= link_to "javascript::", class: "input-group-addon last create_effort" do %>
+                    <i class="zmdi zmdi-plus"></i>
+                  <% end %>                                
+               <% end %>                                
+              </div>
+
+               <%= f.association :effort, collection: Effort.all.map {|p| [p.name, p.id, {'data-describe' => p.to_describe ? 1 : 0 }]}, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+           </div>
+        </div> 
+
+        <div id="effort_describe" style="display:<%=f.object.effort_describe? ? 'block' : 'none' %>;" class="col-sm-3">          
+          <div class="form-group fg-line">                             
+            <%= f.label :effort_describe, class: "fg-label" %>
+            <%= f.input :effort_describe, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+          </div>          
+        </div>  
+
+
+        <div class="col-sm-3">
+           <div class="form-group fg-line">                             
+              <div class="input-group">
+                <%= f.label :room_id, class: "fg-label" %>
+                <% if @allowed_create_heritages %>
+                  <%= link_to "javascript::", class: "input-group-addon last create_room" do %>
+                    <i class="zmdi zmdi-plus"></i>
+                  <% end %>                                
+               <% end %>                                
+              </div>
+
+               <%= f.association :room, input_html: {class: "selectpicker", "data-live-search": true}, label: false  %>
+           </div>                    
+        </div>
+
+        <div class="col-sm-12">    
+          <div class="form-group fg-line ">
+            <%= f.label :description, class: "fg-label" %>
+            <%= f.input :description, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="checkbox m-b-15">
+            <label>
+              <%= f.check_box :car %>
+              <i class="input-helper"></i> 
+              <%= Patrimony.human_attribute_name :car %>                            
+            </label>
+          </div>
+        </div> 
+
+
+        <div id="fields_car" style="display:<%= @patrimony.car ? 'block' : 'none'%>;">
+          <div class="col-sm-4">    
+            <div class="form-group fg-line ">
+              <%= f.label :type_car, class: "fg-label" %>
+              <%= f.input :type_car, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>    
+          
+          <div class="col-sm-2">    
+            <div class="form-group fg-line ">
+              <%= f.label :year_car, class: "fg-label" %>
+              <%= f.input :year_car, input_html: {class: "input-sm form-control fg-input"}, label: false %>
+            </div>
+          </div>
+        </div> 
+
+
+        <div class="col-sm-12">
+          <div class="checkbox m-b-15">
+            <label>
+              <%= f.check_box :active %>
+              <i class="input-helper"></i> 
+              <%= Patrimony.human_attribute_name :active %>                            
+            </label>
+          </div>        
+        </div>   
+
+        <div id="fields_inactive" style="display:<%= @patrimony.active ? 'none' : 'block' %>;"> 
+          <div class="col-sm-12">
+            <div class="form-group fg-line">                             
+              <%= f.label :inactive_describe, class: "fg-label" %>
+              <%= f.input :inactive_describe, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+            </div>  
+          </div>  
+        </div>    
+
+      </div>    
+  </div>
+
+  <div class="card-body card-padding">
+    <%= submit_tag 'Criar e adicionar', class: "btn bgm-teal waves-effect", name: 'create_and_add' if !edit_mode? %>
+    <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+    <%= link_to "Cancelar", patrimonies_path, class: "btn bgm-red waves-effect" %>
+  </div> 
+  <% end %>    
+</div>
+
+<% if @allowed_create_heritages %>
+  <%= render 'type_incorporations/modal_type_incorporation' %>
+  <%= render 'suppliers/modal_supplier' %>
+  <%= render 'efforts/modal_effort' %>
+  <%= render 'rooms/modal_room' %>
+
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+      $("#patrimony_type_incorporation_id").on('change', function(){
+        if ( parseInt($('option:selected',this).data('describe')) == 1 )  {
+          $("#type_incorporation_describe").fadeIn();
+        } else {
+          $("#type_incorporation_describe").fadeOut();
+          $("#patrimony_type_incorporation_describe").val("");
+        }
+      });
+
+
+
+      $("#patrimony_effort_id").on('change', function(){
+        if ( parseInt($('option:selected',this).data('describe')) == 1 )  {
+          $("#effort_describe").fadeIn();
+        } else {
+          $("#effort_describe").fadeOut();
+          $("#patrimony_effort_describe").val("");
+        }
+      });
+
+
+
+      $('.create_type_incorporation').on("click", function(e){
+            $('#modal_new_type_incorporation').modal('show');          
+            e.stopImmediatePropagation();            
+
+            $.ajax({
+              url: "<%=new_type_incorporation_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+          });   
+        });
+
+
+      $('.create_supplier').on("click", function(e){
+            $('#modal_new_supplier').modal('show');          
+            e.stopImmediatePropagation();            
+
+            $.ajax({
+              url: "<%=new_supplier_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+          });   
+        });
+
+
+      $('.create_effort').on("click", function(e){
+            $('#modal_new_effort').modal('show');          
+            e.stopImmediatePropagation();            
+
+            $.ajax({
+              url: "<%=new_effort_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+          });   
+        });
+
+      $('.create_room').on("click", function(e){
+            $('#modal_new_room').modal('show');          
+            e.stopImmediatePropagation();            
+
+            $.ajax({
+              url: "<%=new_room_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+          });   
+        });
+
+      
+    });
+  </script>
+<% end %>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    loadSelectPicker();
+
+    $("#patrimony_car").click(function(){
+      if ( $(this).is(":checked") )  {
+        $("#fields_car").fadeIn();
+      } else {
+        $("#fields_car").fadeOut();
+        $("#patrimony_type_car").val("");
+        $("#patrimony_year_car").val("");
+      }
+    });
+
+
+    $("#patrimony_active").click(function(){
+      if ( $(this).is(":checked") )  {
+        $("#fields_inactive").fadeOut();
+        $("#patrimony_inactive_describe").val("");
+      } else {
+        $("#fields_inactive").fadeIn();
+      }
+    });
+  })
+</script>

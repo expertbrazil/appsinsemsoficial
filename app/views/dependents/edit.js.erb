@@ -1,0 +1,8 @@
+hiddenPreLoader(); 
+<% js = escape_javascript(
+  render(partial: 'dependents/form')
+) %>
+
+$("#dependent_content").html("<%= js %>");
+$("#card_header_dependent").html("<h2><i class='zmdi zmdi-account-box-o'></i> Editando <%= Dependent.model_name.human %></h2>")
+

@@ -1,0 +1,8 @@
+hiddenPreLoader();
+
+<% if @saved %>
+	$('#modal_inventory_movements').modal('hide');
+	$("#dependent_content").html("");
+<% else %>	
+	$("#inventory_movement_error").html("<%= escape_javascript errors(@inventory_movement) %>")
+<% end %>

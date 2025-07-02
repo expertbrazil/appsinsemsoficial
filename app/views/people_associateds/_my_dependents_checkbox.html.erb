@@ -1,0 +1,31 @@
+<div class="card-header">
+	<br>
+	<h5>MARQUE O(S) DEPENDENTE(S)</h5>
+	<table class="table table-hover">
+	    <thead>
+	      <tr>
+	      	<th>√</th>
+	        <th>Nome</th>
+	        <th>Grau de Parentesco</th>       
+	        <th>Situação</th>       
+	      </tr>
+	    </thead>
+	    <tbody>
+			<% @dependents.order("name asc").each do |dependent| %>
+				<tr>
+					<td>
+						<div class="checkbox m-b-15">
+				  			<label>
+				    			<%= check_box_tag 'dependent_ids[]', dependent.id %>
+				    			<i class="input-helper"></i> 				    			
+				  			</label>
+						</div>  
+					</td>
+					<td><%= h dependent.name %></td>
+					<td><%= dependent.degree_of_kinship_name %></td>
+					<td><%= dependent.active ? "Ativo" : "Inativo" %></td>
+				</tr>
+				                        
+			<% end %> 
+		</tbody>
+</div>

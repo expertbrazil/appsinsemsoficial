@@ -1,0 +1,8 @@
+<% js = escape_javascript(
+  render(partial: 'rooms/remote_form')
+) %>
+
+$("#room_content").html("<%= js %>");
+$("#card_header_room").html("<h2><i class='zmdi zmdi-account-box-o'></i> Nova <%= Room.model_name.human %></h2>")
+
+hiddenPreLoader(); 

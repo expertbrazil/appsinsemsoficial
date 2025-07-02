@@ -1,0 +1,10 @@
+<div class="pull-right" style="margin-left: 10px;">
+  <%= icon_link_to("", new_category_path({parent_id: category}), icon: 'fa fa-plus', title: 'Novo', class: 'text-success')%>
+  <%= icon_link_to("", edit_category_path(category), icon: 'fa fa-pencil', title: 'Editar', class: 'text-info')%>
+
+  <% if category.credit? %>
+  	<%= icon_link_to("", category, icon: 'fa fa-trash', title: 'Excluir', class: 'text-danger', method: :delete, data: {confirm: 'Deseja realmente excluir?'}) if category.bills_receifes.blank? %>
+  <% else %>
+  	<%= icon_link_to("", category, icon: 'fa fa-trash', title: 'Excluir', class: 'text-danger', method: :delete, data: {confirm: 'Deseja realmente excluir?'}) if category.bills_pays.blank? %>
+  <% end %>
+</div>

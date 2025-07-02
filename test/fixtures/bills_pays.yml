@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  supplier: one
+  people_associated: one
+  payment_form: one
+  category: one
+  payroll_discount: false
+  due_date: 2022-05-23
+  description: MyText
+  amount: 9.99
+  n_doc: MyString
+  competence_date: 2022-05-23
+  ocorrence: 1
+  expiration_day: 1
+  deadline: 2022-05-23
+  work_days_only: false
+  receive: false
+  receive_date: 2022-05-23
+  stop_recurrence: false
+  state_assm: MyString
+
+two:
+  supplier: two
+  people_associated: two
+  payment_form: two
+  category: two
+  payroll_discount: false
+  due_date: 2022-05-23
+  description: MyText
+  amount: 9.99
+  n_doc: MyString
+  competence_date: 2022-05-23
+  ocorrence: 1
+  expiration_day: 1
+  deadline: 2022-05-23
+  work_days_only: false
+  receive: false
+  receive_date: 2022-05-23
+  stop_recurrence: false
+  state_assm: MyString

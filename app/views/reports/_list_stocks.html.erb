@@ -1,0 +1,51 @@
+<div id="filterrific_results">
+  <table class="table  table-hover">
+    <thead>
+      <tr>
+        <th><%= Inventory.human_attribute_name(:description) %></th>                      
+        <th><%= Inventory.human_attribute_name(:unit) %></th>                      
+        <th><%= Inventory.human_attribute_name(:minimum_balance) %></th>                      
+        <th><%= Inventory.human_attribute_name(:opening_balance) %></th>                      
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @stocks) do |stock| %>
+      <td class="bgm-teal f-color-white"><%= stock.description %></td>                                    
+      <td class="bgm-teal f-color-white"><%= stock.unit %></td>                                            
+      <td class="bgm-teal f-color-white"><%= stock.minimum_balance %></td>                                            
+      <td class="bgm-teal f-color-white"><%= stock.opening_balance %></td>   
+
+        <%= content_tag_for(:tr, stock.inventory_movements, class: "children") do |mov| %>                                         
+          <td></td>
+          <td><%=I18n.l mov.created_at, format: :custom_with_time %></td>                 
+          <td class="<%= mov.entry? ? 'green' : 'red' %>"><%= mov.type_balance_name %></td>                 
+          <td><%= mov.balance %></td>          
+        <% end %>         
+
+        <tr> 
+          <td></td>
+          <td></td>
+          <td><b>Saldo</b></td>
+            <% @entry_amount = stock.opening_balance + stock.inventory_movements.entry.sum(:balance)
+               @output_amount = stock.inventory_movements.output.sum(:balance) %>
+
+          <td><b><%= @entry_amount - @output_amount %></b></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate @stocks, renderer: BootstrapPagination::Rails %>
+</div>
+
+
+<style type="text/css">
+  .green {
+    color: green;
+  }
+
+  .red {
+    color: red;
+  }
+</style>

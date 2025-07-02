@@ -1,0 +1,115 @@
+<div class="card">
+  
+    <%= simple_form_for(@category, html: { class: "", role: "form" }) do |f| %>
+    <%= f.error_notification %>
+    
+
+    <div class="card-body card-padding">
+      <div class="row">
+        <div class="col-sm-3">  
+          <div class="form-group fg-line">
+            <div class="fg-line">              
+              
+              <% if @parent.present? %>
+                <%= @parent.reduced_code %> - <%= @parent.name %>
+                <div class="col-sm-0">
+                  <%= f.input :parent_id, as: :hidden, input_html: { value: @parent.id } %>
+                </div>
+              <% else %>
+                <%= f.label :parent_id, class: "fg-label" %>  
+                <%= f.input :parent_id, collection: @categories.collect { |cate| ["#{cate.reduced_code} - #{cate.name}", cate.id]}, input_html: {class: "selectpicker"}, label: false  %>                
+              <% end %>
+            
+              
+            </div>
+          </div>
+        </div>  
+
+
+        <div class="col-sm-2">  
+          <div class="form-group fg-line">
+            <div class="fg-line">              
+              <%= f.label :reduced_code, class: "fg-label" %>  
+              <%= f.input :reduced_code, input_html: {value: (@category.reduced_code.present? ? @category.reduced_code : (@parent.present? ? "#{@parent.reduced_code}." : nil)), class: "input-sm form-control fg-input"}, label: false %>       
+            </div>
+          </div>
+        </div>    
+
+        <div class="col-sm-3">  
+          <div class="form-group fg-line">
+            <div class="fg-line">              
+              <%= f.label :name, class: "fg-label" %>  
+              <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %>               
+            </div>
+          </div>
+        </div>             
+
+        <div class="col-sm-3">
+          <div class="form-group fg-line">
+            <div class="fg-line">              
+              <%= f.label :type_subcategory, class: "fg-label" %>  
+              <%= f.input :type_subcategory, collection: Category::TYPES, selected: (@parent.present? ? @parent.type_subcategory : (@category.type_subcategory.present? ? @category.type_subcategory : nil)), input_html: {class: "selectpicker"}, label: false %>               
+            </div>
+          </div>
+        </div>
+      </div>  
+
+
+    </div>
+
+
+    <div class="card-body card-padding">        
+        <div class="row">
+          <div class="col-sm-4 m-b-20">
+            <div class="toggle-switch toggle-switch-demo">
+                <label for="bills_receife_work_days_only" class="ts-label"><%= "Ativo?" %>  </label>
+                <%= f.check_box :status %>                
+                <label for="bills_receife_work_days_only" class="ts-helper"></label>
+            </div>
+          </div>             
+        </div>                        
+      </div>  
+
+    <div class="card-body card-padding">
+        <%= submit_tag 'Criar e adicionar', class: "btn bgm-teal waves-effect", name: 'create_and_add' if !edit_mode? %>
+        <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+        <%= link_to "Cancelar", categories_path, class: "btn bgm-red waves-effect" %>
+    </div>  
+
+    <% end %>    
+
+</div>
+
+
+<% if false %>
+
+<%= render 'subcategories/modal_subcategories' %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.create_subcategory').on("click", function(e){
+          $('#modal_new_subcategory').modal('show');          
+            e.stopImmediatePropagation();
+            
+            
+            $.ajax({
+              url: "<%=new_subcategory_path%>",
+              type: 'get',
+              dataType: 'script',
+              beforeSend: function(xhr) {                     
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                showPreLoader();
+            },
+            success: function() { 
+                hiddenPreLoader();            
+            }
+          });      
+        });
+
+        $('.close-modal-subcategory').on("click", function(e){
+            $('#modal_new_subcategory').modal('hide');
+        });
+    });
+</script>
+
+<% end %>

@@ -1,0 +1,30 @@
+<div class="block-header ">
+    <h2><i class="zmdi zmdi-money"></i> <%= "Financeiro" %></h2>
+
+<% @manager_monthly_payments = current_user.allowed_to?(:manager_monthly_payments, :global => true)  %>
+	<ul class="actions">
+		<div class="btn-group">
+		  	<button type="button" class="btn btn-default waves-effect" data-toggle="dropdown" aria-expanded="false">
+			  	<%= "Financeiro" if is_active?(:financials) %>
+			   	<%= "Mensalidades" if is_active?(:monthly_payments) && @manager_monthly_payments %>
+			</button>
+
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+		        <span class="caret"></span>
+		        <span class="sr-only">Split button dropdowns</span>
+		    </button>
+		    
+		    <ul class="dropdown-menu" role="menu">
+		        <li class="<%= is_active?(:financials) %> dropdown">
+		            <%= link_to 'Financeiro', financials_path %>
+		        </li> 
+		        <% if @manager_monthly_payments %>
+		        <li class="<%= is_active?(:monthly_payments) %> dropdown">
+		            <%= link_to 'Mensalidades', monthly_payments_path %>
+		        </li>   
+		        <% end %>
+		    </ul>
+		</div>
+
+    </ul>
+</div>

@@ -1,0 +1,8 @@
+<% js = escape_javascript(
+  render(partial: 'type_incorporations/remote_form')
+) %>
+
+$("#type_incorporation_content").html("<%= js %>");
+$("#card_header_type_incorporation").html("<h2><i class='zmdi zmdi-account-box-o'></i> Novo <%= TypeIncorporation.model_name.human %></h2>")
+
+hiddenPreLoader(); 

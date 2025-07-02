@@ -1,0 +1,37 @@
+<div class="card">
+  
+    <%= simple_form_for(@type_incorporation, html: { class: "form-horizontal", role: "form" }) do |f| %>
+    <%= f.error_notification %>
+    <div class="card-body card-padding">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group fg-float">
+              <div class="fg-line">              
+                <%= f.input :name, input_html: {class: "input-sm form-control fg-input"}, label: false %> 
+                <%= f.label :name, class: "fg-label" %>  
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+              <div class="checkbox m-b-15">
+                <label>
+                  <%= f.check_box :to_describe %>
+                  <i class="input-helper"></i> 
+                  <%= TypeIncorporation.human_attribute_name :to_describe %>                            
+                </label>
+              </div>        
+            </div>      
+          </div>
+        </div>
+
+        
+        <div class="card-body card-padding">
+          <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+          <%= link_to "Cancelar", type_incorporations_path, class: "btn bgm-red waves-effect" %>
+        </div> 
+      </div>
+    <% end %>    
+
+</div>
+

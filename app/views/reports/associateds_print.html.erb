@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="action-header clearfix">
+    <div class="ah-label hidden-xs">  <h1> Relatório de <%= PeopleAssociated.model_name.human.pluralize %> </h1> </div>            
+</div>
+
+
+  <div class="card-body"> 
+    <div class="table-responsive">
+      <% if @people_associateds %>
+        <%= render( partial: 'reports/list_people_associateds', locals: { people_associateds: @people_associateds } )  %>
+      <% else %>  
+        <p> Sem resultados </p>
+      <% end %>
+    </div>                       
+  </div>
+</div>
+
+

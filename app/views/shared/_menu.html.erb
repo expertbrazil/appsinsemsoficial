@@ -1,0 +1,498 @@
+<% @customer_configuration = CustomerConfiguration.current %>
+<% controllers_name = ['roles', 'users', 'customer_configurations'] %>
+
+<aside id="sidebar" class="sidebar c-overflow no-print">
+	<div class="s-profile">
+		<a href="" data-ma-action="profile-menu-toggle">
+			<div class="sp-pic">
+				<img src="/assets/template/profile-pics/1.jpg" alt="">
+			</div>
+
+			<div class="sp-info">
+				<%= current_user.name %>
+				<i class="zmdi zmdi-caret-<%= class_active?(controllers_name) == 'active' ? 'up' : 'down' %>"></i>
+			</div>
+		</a>
+
+
+		<ul class="main-menu" style="display: <%= class_active?(controllers_name) == 'active' ? 'block' : 'none' %> ;">
+			<li>				
+				<a href="<%= meu_perfil_users_path %>"><i class="zmdi zmdi-account"></i> Meu Perfil</a>
+			</li>
+			<% if current_user.allowed_to?(:manager_customer_configurations, :global => true) %>
+			<li>				
+				<a href="<%= customer_configurations_path %>"><i class="zmdi zmdi-settings"></i> Configurações</a>
+			</li>			
+			<% end %>
+
+
+			<% if current_user.allowed_to?(:module_roles, :global => true) || current_user.allowed_to?(:module_users, :global => true) %>			
+				<% controllers = ['roles', 'users'] %>	
+				<li class="sub-menu <%= class_active?(controllers)%> <%= class_toggled?(controllers)%>">
+					<%= link_to "#", "data-ma-action" => "submenu-toggle"  do %>
+						<i class="zmdi zmdi-account-box-o" aria-hidden="true"></i> <%= "Admininstração"  %>
+					<% end %>
+
+					<ul>
+						<% if current_user.allowed_to?(:module_roles, :global => true) %>
+							<li class="<%= is_active?(:roles)%>">
+								<%= link_to roles_path do %>
+								<i class="fa fa-cogs"></i> <%= Role.model_name.human %>
+								<% end %>
+							</li>	
+						<% end %> 
+
+						<% if current_user.allowed_to?(:module_users, :global => true) %>
+							<li class="<%= is_active?(:users)%>">
+								<%= link_to users_path do %>
+								<i class="zmdi zmdi-accounts"></i> <%= User.model_name.human %>
+								<% end %>
+							</li>	
+						<% end %> 
+					</ul>
+				</li>	
+			<% end %>
+
+			<li>
+				<%= link_to( raw("#{content_tag(:i, '', class: "zmdi zmdi-time-restore")} Sair"), destroy_user_session_path, data: {confirm: 'Deseja realmente sair?'}, method: "delete", class: 'dropdown-item') %>	
+			</li>
+		</ul>
+	</div>
+
+	<ul class="main-menu">
+		<li class="<%= is_active?(:dashboard)%>">
+			<%= link_to dashboard_path do %>
+			<i class="zmdi zmdi-home"></i> Dashboard
+			<% end %>
+		</li>
+
+		<% if current_user.allowed_to?(:module_appointment_book, :global => true) %>
+			<li class="<%= is_active_action?(:appointment_book)%>">
+				<%= link_to affiliate_service_appointment_book_path do %>
+				<i class="zmdi zmdi-calendar-note"></i> Atendimento ao <%= @customer_configuration.menu_people_associateds.titleize %>
+				<% end %>
+			</li>
+		<% end %>
+
+
+		<% if current_user.professional && current_user.allowed_to?(:module_appointment_books, :global => true) %>
+			<li class="<%= is_active?(:appointment_books)%>">
+				<%= link_to professional_appointment_books_path(current_user.professional) do %>
+				<i class="zmdi zmdi-calendar-note"></i> <%= "Minha Agenda" %>
+				<% end %>
+			</li>	
+		<% end %> 
+
+		<% if !current_user.professional.present? && false %>
+			<% controllers = ['affiliate_service'] %>
+			<li class="sub-menu <%= class_active?(controllers)%> <%= class_toggled?(controllers)%>">
+				<%= link_to "#", "data-ma-action" => "submenu-toggle"  do %>
+					<i class="zmdi zmdi-account-box-o" aria-hidden="true"></i> <%= "Serviços aos #{@customer_configuration.menu_people_associateds.titleize}"  %>
+				<% end %>
+				
+				<ul>
+					<% if false %>
+						<li class="<%= is_active_action?(:appointment_book)%>">
+							<%= link_to affiliate_service_appointment_book_path, class: "" do %>
+								<i class="zmdi zmdi-calendar-note"></i> <%= "Atendimento ao #{@customer_configuration.menu_people_associateds.titleize}" %>
+							<% end %>
+						</li>	
+					<% end %>
+
+					<li class="<%= @is_active ? 'active' : '' %>">
+						<%= link_to "javascript:void(0);", "data-url": stable_union_statement_path, class: "modal_genfile" do %>
+							<i class="fa fa-file-o"></i> <%= 'Declaração União Estável' %>
+						<% end %>
+					</li>	
+					<li class="<%= @is_active ? 'active' : '' %>">
+						<%= link_to "javascript:void(0);", "data-url": affiliate_statement_path, class: "modal_genfile" do %>
+							<i class="fa fa-file-o"></i> <%= "Declaração #{@customer_configuration.menu_people_associateds}" %>
+						<% end %>
+					</li>	
+					<% if false %>
+					<li class="<%= @is_active ? 'active' : '' %>">
+						<%= link_to "javascript:void(0);", "data-url": affiliate_defiliation_path, class: "modal_genfile" do %>
+							<i class="fa fa-file-o"></i> <%= "Desfiliação #{@customer_configuration.menu_people_associateds}" %>
+						<% end %>
+					</li>	
+					<% end %>
+					<li class="<%= @is_active ? 'active' : '' %>">
+						<%= link_to "javascript:void(0);", "data-url": declaration_of_dependency_path, class: "modal_genfile" do %>
+							<i class="fa fa-file-o"></i> <%= 'Declaração comprovação de dependente' %>
+						<% end %>
+					</li>
+					<li class="<%= @is_active ? 'active' : '' %>">
+						<%= link_to "javascript:void(0);", "data-url": affiliation_requirement_path, class: "modal_genfile" do %>
+							<i class="fa fa-file-o"></i> <%= 'Requerimento de desfiliação' %>
+						<% end %>
+					</li>	
+				</ul>			
+			</li>
+		<% end %>
+
+		<% if current_user.allowed_to?(:module_people_associateds, :global => true) || current_user.allowed_to?(:module_offices, :global => true) || current_user.allowed_to?(:module_occupations, :global => true) || current_user.allowed_to?(:module_workplaces, :global => true) || current_user.allowed_to?(:module_departments, :global => true) %>	
+		<% controllers = ['people_associateds', 'offices', 'occupations', 'workplaces', 'departments'] %>
+			<li class="sub-menu <%= class_active?(controllers)%> <%= class_toggled?(controllers)%>">
+				<%= link_to "#", "data-ma-action" => "submenu-toggle"  do %>
+					<i class="zmdi zmdi-account-box-o" aria-hidden="true"></i> <%= @customer_configuration.menu_people_associateds.titleize  %>
+				<% end %>
+
+				<ul>
+					<% if current_user.allowed_to?(:manager_people_associateds, :global => true) || current_user.allowed_to?(:create_people_associateds, :global => true) %>
+						<% @is_active = is_active?(:people_associateds) == 'active' && (is_active_action?(:new) == 'active' || is_active_action?(:create) == 'active') %> 
+						<li class="<%= @is_active ? 'active' : '' %>">
+							<%= link_to new_people_associated_path do %>
+							<i class="zmdi zmdi-account-add"></i> <%= 'Novo' %>
+							<% end %>
+						</li>	
+					<% end %>
+
+					<% if current_user.allowed_to?(:module_people_associateds, :global => true) %>		<% @is_active = is_active?(:people_associateds) == 'active' && is_active_action?(:index) == 'active' %> 
+						<li class="<%= @is_active ? 'active' : '' %>">
+							<%= link_to people_associateds_path do %>
+							<i class="zmdi zmdi-account-box-o"></i> <%= 'Listagem' %>
+							<% end %>
+						</li>
+					<% end %>
+
+
+					<% if current_user.allowed_to?(:module_offices, :global => true) %>
+						<li class="<%= is_active?(:offices)%>">
+							<%= link_to offices_path do %>
+							<i class="zmdi zmdi-accounts-list-alt"></i> <%= Office.model_name.human.pluralize %>
+							<% end %>
+						</li>
+					<% end %>	
+
+
+					<% if current_user.allowed_to?(:module_occupations, :global => true) %>
+						<li class="<%= is_active?(:occupations)%>">
+							<%= link_to occupations_path do %>
+							<i class="zmdi zmdi-assignment-account"></i> <%= Occupation.model_name.human.pluralize %>
+							<% end %>
+						</li>
+					<% end %>		
+
+					<% if current_user.allowed_to?(:module_workplaces, :global => true) %>
+						<li class="<%= is_active?(:workplaces)%>">
+							<%= link_to workplaces_path do %>
+							<i class="zmdi zmdi-store"></i> <%= Workplace.model_name.human %>
+							<% end %>
+						</li>
+					<% end %>
+
+					<% if current_user.allowed_to?(:module_departments, :global => true) %>	
+						<li class="<%= is_active?(:departments)%>">
+							<%= link_to departments_path do %>
+							<i class="fa fa-cubes"></i> <%= Department.model_name.human.pluralize %>
+							<% end %>
+						</li>
+					<% end %>
+
+				</ul>
+			</li>	
+		<% end %>
+
+
+		<% if current_user.allowed_to?(:manager_companies, :global => true) || current_user.allowed_to?(:module_companies, :global => true) || current_user.allowed_to?(:module_segments, :global => true)  %>	
+			<% controllers = ['companies', 'segments'] %>
+			<li class="sub-menu <%= class_active?(controllers)%> <%= class_toggled?(controllers)%>">
+				<%= link_to "#", "data-ma-action" => "submenu-toggle" do %>
+					<i class="zmdi zmdi-city-alt" aria-hidden="true"></i> <%= Company.model_name.human.pluralize %>
+				<% end %>
+
+				<ul>
+					<% if current_user.allowed_to?(:manager_companies, :global => true) ||  current_user.allowed_to?(:create_companies, :global => true) %>
+
+						<% @is_active = is_active?(:companies) == 'active' && (is_active_action?(:new) == 'active' || is_active_action?(:create) == 'active') %> 
+						
+						<li class="<%= @is_active ? 'active' : '' %>">					
+							<%= link_to new_company_path do %>
+							<i class="zmdi zmdi-city"></i> <%= 'Nova' %>
+							<% end %>
+						</li>	
+					<% end %>
+
+
+					<% if current_user.allowed_to?(:module_companies, :global => true) %>
+						<% @is_active = is_active?(:companies) == 'active' && is_active_action?(:index) == 'active' %> 
+						
+						<li class="<%= @is_active ? 'active' : '' %>">	
+							<%= link_to companies_path do %>
+							<i class="zmdi zmdi-city-alt"></i> <%= 'Listagem' %>
+							<% end %>
+						</li>	
+					<% end %>
+
+					<% if current_user.allowed_to?(:module_segments, :global => true) %>	
+						<li class="<%= is_active?(:segments)%>">
+							<%= link_to segments_path do %>
+							<i class="zmdi zmdi-city"></i> <%= Segment.model_name.human.pluralize %>
+							<% end %>
+						</li>
+					<% end %>				
+				</ul>
+			</li>
+		<% end %>
+
+		<% if current_user.allowed_to?(:module_reports, :global => true) %>	
+		<% controllers = ['reports'] %>
+		<li class="sub-menu <%= class_active?(controllers)%> <%= class_toggled?(controllers)%>">
+			<%= link_to "#", "data-ma-action" => "submenu-toggle" do %>
+			<i class="fa fa-bar-chart-o" aria-hidden="true"></i> <%= "Relatórios" %>
+			<% end %>
+
+			<ul>
+				<% if current_user.allowed_to?({controller: "reports", action: "bills_receives"}, global: true) %>
+				<li class="<%= is_active_action?(:bills_receives)%>">
+					<%= link_to report_bills_receives_url do %>
+					<i class="zmdi zmdi-money"></i> <%= "Contas a Receber" %>
+					<% end %>
+				</li>
+				<% end %>
+
+				<% if current_user.allowed_to?({controller: "reports", action: "bills_pays"}, global: true) %>
+				<li class="<%=is_active_action?(:bills_pays)%>">
+					<%= link_to report_bills_pays_url do %>
+						<i class="zmdi zmdi-money-box"></i> <%= "Contas a Pagar" %>
+					<% end %>
+				</li>
+				<% end %>
+
+			
+
+				<% if current_user.allowed_to?({controller: "reports", action: "birthdays"}, global: true) %>
+				<li class="<%= is_active_action?(:birthdays)%>">
+					<%= link_to birthdays_url do %>
+					<i class="zmdi zmdi-cake"></i> <%= "Aniversariantes" %>
+					<% end %>
+				</li>
+				<% end %>
+
+				<% if current_user.allowed_to?({controller: "reports", action: "associateds"}, global: true) %>
+				<li class="<%= is_active_action?(:associateds)%>">
+					<%= link_to associateds_url do %>
+					<i class="zmdi zmdi-account-box-o"></i> <%= @customer_configuration.menu_people_associateds.titleize %>
+					<% end %>					
+				</li>
+				<% end %>			
+
+				<% if current_user.allowed_to?({controller: "reports", action: "monthly_payments"}, global: true) %>
+				<li class="<%= is_active_action?(:monthly_payments)%>">
+					<%= link_to monthly_payments_report_url do %>
+					<i class="fa fa-calendar"></i> <%= "Mensalidades" %>
+					<% end %>					
+				</li>
+				<% end %>
+
+				<% if current_user.allowed_to?({controller: "reports", action: "business"}, global: true) %>
+				<li class="<%= is_active_action?(:business)%>">
+					<%= link_to business_url do %>
+					<i class="zmdi zmdi-city-alt"></i> <%= "Convênios" %>
+					<% end %>
+				</li>
+				<% end %>
+
+				<% if current_user.allowed_to?({controller: "reports", action: "stocks"}, global: true) %>
+				<li class="<%= is_active_action?(:stocks)%>">
+					<%= link_to stocks_url do %>
+					<i class="zmdi zmdi-library"></i> <%= "Invetários" %>
+					<% end %>
+				</li>
+				<% end %>
+
+				<% if current_user.allowed_to?({controller: "reports", action: "heritages"}, global: true) %>
+				<li class="<%= is_active_action?(:heritages)%>">
+					<%= link_to heritages_url do %>
+					<i class="zmdi zmdi-assignment"></i> <%= "Patrimônios" %>
+					<% end %>
+				</li>
+				<% end %>
+
+				<% if current_user.allowed_to?({controller: "reports", action: "calls"}, global: true) %>
+				<li class="<%= is_active_action?(:calls)%>">
+					<%= link_to calls_url do %>
+					<i class="zmdi zmdi-calendar-note"></i> <%= "Atendimentos" %>
+					<% end %>
+				</li>
+				<% end %>				
+
+
+				<% if current_user.allowed_to?({controller: "reports", action: "dependents"}, global: true) %>
+				<li class="<%= is_active_action?(:dependents)%>">
+					<%= link_to dependents_url do %>
+					<i class="zmdi zmdi-accounts"></i> <%= "Dependentes" %>
+					<% end %>
+				</li>
+				<% end %>
+
+				<% if current_user.allowed_to?({controller: "reports", action: "voters"}, global: true) %>
+				<li class="<%= is_active_action?(:voters)%>">
+					<%= link_to voters_url do %>
+					<i class="zmdi zmdi-accounts-list-alt"></i> <%= "Votantes" %>
+					<% end %>
+				</li>
+				<% end %>
+			</ul>
+		</li>
+		<% end %>
+
+		<% controllers = ['financials', 'monthly_payments', 'bank_accounts', 'categories', 'subcategories', 'bills_receives', 'financial_accounts', 'payment_forms', 'bills_pays'] %>
+		<% if current_user.allowed_to?(:module_financials, :global => true) %>
+			<li class="sub-menu <%= class_active?(controllers)%> <%= class_toggled?(controllers)%>">
+				<%= link_to "#", "data-ma-action" => "submenu-toggle" do %>
+				<i class="zmdi zmdi-money" aria-hidden="true"></i> <%= "Financeiro" %>
+				<% end %>
+
+				<ul>
+					<% if false %>
+						<li class="<%= is_active?(:financials)%> <%=is_active?(:monthly_payments)%>">
+							<%= link_to financials_path do %>
+								<i class="zmdi zmdi-money"></i> <%= "Dashboard" %>
+							<% end %>
+						</li>
+					<% end %>
+					<li class="<%=is_active?(:bills_pays)%>">
+						<%= link_to bills_pays_path do %>
+							<i class="zmdi zmdi-money-box"></i> <%= "Contas a Pagar" %>
+						<% end %>
+					</li>
+
+					<li class="<%=is_active?(:bills_receives)%>">
+						<%= link_to bills_receives_path do %>
+							<i class="zmdi zmdi-money"></i> <%= "Contas a Receber" %>
+						<% end %>
+					</li>
+
+					<li class="<%=is_active?(:financial_accounts)%>">
+						<%= link_to financial_accounts_path do %>
+							<i class="zmdi zmdi-library"></i> <%= "Contas Contábeis" %>
+						<% end %>
+					</li>
+
+
+					<li class="<%=is_active?(:bank_accounts)%>">
+						<%= link_to bank_accounts_path do %>
+							<i class="zmdi zmdi-balance"></i> <%= "Bancos" %>
+						<% end %>
+					</li>
+
+					<li class="<%= is_active?(:payment_forms) %>">
+						<%= link_to payment_forms_path do %>
+							<i class="zmdi zmdi-label-alt-outline"></i> <%= "Formas de Pagamento" %>
+						<% end %>
+					</li>
+
+					
+					<li class="<%= is_active?(:categories) %>">
+						<%= link_to categories_path do %>
+							<i class="zmdi zmdi-label"></i> <%= "Plano de Contas" %>
+						<% end %>
+					</li>
+					
+					<% if Category.count > 0 && false %>
+					<li class="<%= is_active?(:subcategories) %>">
+						<%= link_to subcategories_path do %>
+							<i class="zmdi zmdi-labels"></i> <%= "Subcategorias" %>
+						<% end %>
+					</li>
+					<% end %>
+				</ul>
+			</li>
+		<% end %>
+
+
+
+		<% if current_user.allowed_to?(:module_professionals, :global => true) %>
+			<li class="<%= is_active?(:professionals)%>">
+				<%= link_to professionals_path do %>
+				<i class="fa fa-user-md" aria-hidden="true"></i> <%= "#{Professional.model_name.human(:count => 2)}/Agenda" %>
+				<% end %>
+			</li>
+		<% end %>
+
+		<% if current_user.allowed_to?(:module_patrimonies, :global => true) %>		
+			<li class="sub-menu <%= is_active?(:patrimonies) || is_active?(:type_incorporations) || is_active?(:suppliers) || is_active?(:efforts) || is_active?(:rooms) %>">
+				<%= link_to "#", "data-ma-action" => "submenu-toggle" do %>
+					<i class="zmdi zmdi-assignment" aria-hidden="true"></i> <%= Patrimony.model_name.human.pluralize %>
+				<% end %>
+
+				<ul>			
+					<li class="<%= is_active?(:patrimonies) %>">
+						<%= link_to patrimonies_path do %>
+							<i class="zmdi zmdi-assignment"></i> Listagem
+						<% end %>
+					</li>
+
+					<li class="<%= is_active?(:type_incorporations) %>">
+						<%= link_to type_incorporations_path do %>
+							<i class="zmdi zmdi-assignment"></i> <%= TypeIncorporation.model_name.human.pluralize %>
+						<% end %>
+					</li>
+
+					<li class="<%= is_active?(:suppliers) %>">
+						<%= link_to suppliers_path do %>
+							<i class="zmdi zmdi-assignment"></i> <%= "Fornecedores" %>
+						<% end %>
+					</li>
+
+					<li class="<%= is_active?(:efforts) %>">
+						<%= link_to efforts_path do %>
+							<i class="zmdi zmdi-assignment"></i> <%= Effort.model_name.human.pluralize %>
+						<% end %>
+					</li>
+
+					<li class="<%= is_active?(:rooms) %>">
+						<%= link_to rooms_path do %>
+							<i class="zmdi zmdi-assignment"></i> <%= Room.model_name.human.pluralize %>
+						<% end %>
+					</li>
+				</ul>
+			</li>
+		<% end %>
+
+
+		<% if current_user.allowed_to?(:module_inventories, :global => true) %>	
+		<li class="<%= is_active?(:inventories)%>">
+			<%= link_to inventories_path do %>
+			<i class="zmdi zmdi-library"></i> <%= Inventory.model_name.human.pluralize %>
+			<% end %>
+		</li>
+		<% end %>
+
+		
+	</ul>
+</aside>
+
+<style type="text/css">
+<% if !CustomerConfiguration.current.logo.nil? %>
+.s-profile a {
+    background: rgba(0, 0, 0, 0) url(<%= CustomerConfiguration.current.logo %>) no-repeat scroll top/60% auto;
+}
+<% end %>
+</style>
+
+<%= render "shared/modal_generate_file"  %>
+
+
+<script type="text/javascript">
+  	$('.modal_genfile')
+        .on("click", function(e){
+          $('#people_associated_generate_file').modal('show');          
+          
+          
+          var data_url = $(this).attr('data-url');
+          var url = "<%= load_all_people_associateds_path %>"
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'script',
+            data: { data_url: data_url },
+            beforeSend: function(xhr) {                     
+              xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));            
+            },
+            success: function() { 
+            }
+          });        
+      });      
+</script>

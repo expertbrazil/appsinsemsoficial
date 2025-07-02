@@ -1,0 +1,38 @@
+<div class="page-header">
+  <%= link_to monthly_payments_path, class: 'btn btn-default waves-effect' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_monthly_payment_path(@monthly_payment), class: 'btn btn-primary waves-effect' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show monthly_payment</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>People associated:</dt>
+  <dd><%= @monthly_payment.people_associated %></dd>
+
+  <dt>Month:</dt>
+  <dd><%= @monthly_payment.month %></dd>
+
+  <dt>Amount:</dt>
+  <dd><%= @monthly_payment.amount %></dd>
+
+  <dt>Amount paid:</dt>
+  <dd><%= @monthly_payment.amount_paid %></dd>
+
+  <dt>Due date:</dt>
+  <dd><%= @monthly_payment.due_date %></dd>
+
+  <dt>Pay day:</dt>
+  <dd><%= @monthly_payment.pay_day %></dd>
+
+  <dt>Paid:</dt>
+  <dd><%= @monthly_payment.paid %></dd>
+
+  <dt>Observation:</dt>
+  <dd><%= @monthly_payment.observation %></dd>
+
+</dl>

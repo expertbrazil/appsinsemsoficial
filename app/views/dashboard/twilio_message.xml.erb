@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Message>
+        <% if @send_return_message %>
+			<% if (@body.to_i == 1 || @body.to_i == 3) %>
+	 			Seu horário foi confirmado. Esperamos você!
+	 		<% elsif @body.to_i == 2 || @body.to_i == 4 %>	
+				Seu horário foi cancelado.	 		
+	 		<% end %>
+	 	<% end %>
+    </Message>
+</Response>
+
+
+<!-- <Response>
+<script id="tinyhippos-injected"/>
+	<Message>
+		<Body>
+			aqui
+		</Body>
+	</Message>
+</Response> -->

@@ -1,0 +1,125 @@
+<div class="container container-alt">
+    <div class="block-header">
+        <h2>
+          <strong>Fornecedor</strong>
+        </h2>  
+
+        
+        <ul class="actions">
+          <li>
+            <%= link_to bills_pays_path, "data-toggle": "tooltip", "data-placement":"bottom", "title": "Voltar", class: 'btn btn-default waves-effect' do %>
+              <span class="zmdi zmdi-arrow-left"></span>
+              
+            <% end %>
+          </li>               
+
+          <li>
+              <%= link_to edit_bills_pay_path(@bills_pay), title: "Editar", "data-toggle": "tooltip", "data-placement":"bottom", class: 'btn btn-info waves-effect' do %>
+                  <%= content_tag(:span, nil, class: "zmdi zmdi-edit") %>                    
+              <% end %>            
+          </li>            
+        </ul>
+    </div>
+
+    <div class="card" id="profile-main">
+        <div class="pm-overview c-overflow">
+
+            <div class="pmo-block pmo-contact hidden-xs">
+                <h2><%= @bills_pay.supplier.name %></h2>
+
+                <ul>
+                    <% if !@bills_pay.description.blank? %>
+                        <li><%= @bills_pay.description %></li>
+                    <% end %>
+
+                    <% if !@bills_pay.amount.blank? %>
+                        <li><strong> Valor: </strong>
+                        <%= number_to_currency @bills_pay.amount %></li>
+                    <% end %>
+
+                    <% if !@bills_pay.due_date.blank? %>
+                        <li><strong> Vencimento: </strong>
+                        <%=l @bills_pay.due_date %></li>
+                    <% end %>
+
+                    
+                    <% if !@bills_pay.payment_form.blank? %>
+                        <li><strong> Forma de Pagamento: </strong>
+                        <%= @bills_pay.payment_form.name %></li>
+                    <% end %>
+
+                    <% if !@bills_pay.bank_account.blank? %>
+                        <li><strong> Banco: </strong>
+                        <%= @bills_pay.bank_account.name %></li>
+                    <% end %>
+                    
+                    <li>
+                      <strong> Situação: </strong>
+                      <% state = @bills_pay.state_name %>                            
+                      <span class="label label-<%=state[1][:color]%>">
+                        
+                        <%= best_in_place @bills_pay, :state_assm, :as => :select, collection: BillsPay::STATES.collect { |br| [br[1], br[0].upcase] }, inner_class: "bestinplace-title-black" %>
+                      </span>
+                    </li>
+                
+                    
+                    <% if @bills_pay.has_recurrence? %>
+                        <li>       
+                            <strong> Cancelar Recorrência: </strong>
+                            <span class="label label-<%=@bills_pay.stop_recurrence ? 'default' : 'success' %>">
+                              <%= best_in_place @bills_pay, :stop_recurrence, :as => :select, collection: [[true, "Sim"], [false, "Não"]], inner_class: "bestinplace-title-black" %>
+                            </span>                         
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pm-body clearfix">
+            <ul class="tab-nav tn-justified">
+                <li role="presentation" class="active"><a href="#documents" aria-controls="about" role="tab" data-toggle="tab">Arquivos</a></li>                
+            </ul>            
+
+            <div class="pmb-block">
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="documents">
+                    <% if @bills_pay.system_attachments.count > 0 %>  
+                      <div class="pmbb-header">
+                          <h2><i class="zmdi zmdi-file m-r-10"></i> Arquivos </h2>                    
+                      </div>
+                      <div class="pmbb-body p-l-30">
+                          <div class="pmbb-view">
+                              <% @bills_pay.system_attachments.each do |system_attachment| %>
+                              <dl class="dl-horizontal">
+                                  <dt><%= system_attachment.name.titleize %></dt>
+                                  
+                                  <dd> 
+                                    <dl class="dl-horizontal">
+                                      <dt>  
+                                        <%= link_to system_attachment.archive.url, title: "Abrir", target: 'blank' do %>
+                                          <span class='fa fa-file'></span> <%= system_attachment.archive.identifier %>
+                                        <% end %>
+                                      </dt>
+                                      <dd>   
+                                        <embed  
+                                           src="<%= system_attachment.archive.url %>"
+                                           width="200"
+                                           height="250"> 
+                                      </dd>   
+                                    </dl>
+                                  </dd>    
+                              </dl>
+                            <% end %>
+                         </div>              
+                     </div>
+                    <% else %>
+                      Nenhum Arquivo.
+                    <% end %>
+               </div>
+
+               
+    </div>
+</div>            
+</div>
+</div>
+</div>

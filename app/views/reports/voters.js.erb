@@ -1,0 +1,10 @@
+<% js = escape_javascript(
+  render(partial: 'reports/list_voters', locals: { birthdays: @birthdays })
+) %>
+
+<% js_links = escape_javascript(
+  render(partial: 'reports/voters_links', locals: { filterrific: params[:filterrific] })
+) %>
+
+$("#links").html("<%= js_links %>");
+$("#filterrific_results").html("<%= js %>");

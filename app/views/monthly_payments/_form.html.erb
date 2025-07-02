@@ -1,0 +1,88 @@
+<div class="card">  
+  <%= simple_form_for(@monthly_payment, html: { class: "", role: "form" }) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="card-body card-padding">
+       <div class="row">
+          <div class="col-sm-6">
+              <div class="form-group fg-line m-b-5">   
+                  <%= f.label :due_date, class: "fg-label  m-b-1" %>
+                  <input type='text' class="form-control mask-date" name="monthly_payment[due_date]" value="<%=I18n.l(@monthly_payment.due_date ? @monthly_payment.due_date : DateTime.current, format: :custom)%>" >
+              </div>
+          </div>
+
+          <div class="col-sm-6">
+              <div class="form-group fg-line">
+                  <%= f.label :people_associated, class: "fg-label" %>
+                  <%= f.association :people_associated, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+              </div>
+          </div> 
+
+          <div class="col-sm-6">
+              <div class="form-group fg-line">
+                  <%= f.label :amount, class: "fg-label" %>
+                  <%= f.input :amount, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+              </div>
+          </div> 
+
+          <div class="col-sm-6">
+              <div class="form-group fg-line">
+                  <%= f.label :observation, class: "fg-label" %>
+                  <%= f.input :observation, input_html: {class: "input-sm form-control fg-input"}, label: false  %>
+              </div>
+          </div>           
+      </div>    
+
+      <div class="row">        
+        <% if @monthly_payment.new_record? %>
+          <div class="clearfix"></div>
+          <div class="col-sm-12">
+            <label>
+              <input type="checkbox" name="repeat" id="repeat" class="js-single">
+         
+              <span class="custom-control-description">Repetir?</span>
+            </label>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="form-group fg-line months" style="display:none;">
+              <label class="fg-label" id="basic-addon2">Selecione o tempo</label>
+              <select class="input-sm form-control fg-input" name="period">
+                <option value="1">Todo dia</option>
+                <option value="7">Toda semana</option>
+                <option value="15">A cada 15 dias</option>
+                <option value="31" selected>Todo mês</option>
+                <option value="365">Todo ano</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="form-group fg-line months" style="display:none;">
+              <label class="fg-label" id="basic-addon2">Quantidade de parcelas</label>
+              <input type="number" class="input-sm form-control fg-input" placeholder="" aria-describedby="basic-addon2" name="quantity">
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+    
+    <div class="card-body card-padding">
+      <%= f.button :submit, class: "btn bgm-green waves-effect" %>
+      <%= link_to "Cancelar", monthly_payments_path, class: "btn bgm-red waves-effect" %>
+    </div>  
+  <% end %>    
+ </div>
+
+    
+<script type="text/javascript">
+  $("#repeat").click(function(){
+    if($(this).is(':checked')){
+      $(".months").show()
+    }else{
+      $(".months").hide()
+    }
+  })
+
+</script>

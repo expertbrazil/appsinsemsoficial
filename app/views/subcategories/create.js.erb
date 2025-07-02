@@ -1,0 +1,11 @@
+<% if @saved %>
+	<% js = escape_javascript(render(partial: 'categories/select_subcategories') ) %>
+	$("#categories_select_subcategory").html("<%= js %>");
+
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_subcategory').modal('hide');
+<% else %>	
+	$("#subcategory_error").html("<%= escape_javascript errors(@subcategory) %>")
+<% end %>	
+
+hiddenPreLoader(); 

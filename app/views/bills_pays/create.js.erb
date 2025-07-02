@@ -1,0 +1,22 @@
+hiddenFullLoader();
+<% if @saved %>
+	<% if @bills_pay.payroll_discount %>
+		$.ajax({
+          url: "<%=new_bills_receife_path({ bills_pay_id: @bills_pay.id }) %>",
+          type: 'get',
+          dataType: 'script',
+          beforeSend: function(xhr) {                     
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            showPreLoader();
+        },
+        success: function() { 
+            hiddenFullLoader();            
+        }
+    });
+	<% else %>
+    	window.location.href = "<%= @url %>"
+    <% end %>
+<% else %>	
+  hiddenFullLoader(); 
+	$("#bills_pay_error").html("<%= escape_javascript errors(@bills_pay) %>")
+<% end %>	

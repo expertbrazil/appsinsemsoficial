@@ -1,0 +1,85 @@
+<% @customer_configuration = CustomerConfiguration.current %>
+<div id="header">
+    <div style="display: table; font-family: Arial;"> 
+		<span style="width: 100px; height: 110px; padding: 10px;"><!-- margin-right: 20px; --> </span>
+		<div style="display: table-cell;vertical-align: top;width: 100%; padding-right: 20px;">
+			<h2 style="font-size: 17px;"><%= @customer_configuration.name %></h2>
+			<div style="border-bottom: 1px solid #000;"><!--height: 75px;-->
+				<img src="/assets/logo_in_dash.jpeg" style="width: 50px;float: left;">
+				<div style="display: table; font-size: 13px;">
+					<div style="display: table-cell; padding: 0 15px; ">
+						<span style="display: block;"><b>Endereço:</b> <%= @customer_configuration.address %></span>
+						<span style="display: block;"><b>Cidade:</b> <%= @customer_configuration.city %></span>
+						<span style="display: block;"><b>CNPJ:</b> <%= @customer_configuration.cnpj %></span>
+						<span style="display: block;"><b>Telefone:</b> <%= @customer_configuration.phone %></span>
+					</div>
+					<div style="display: table-cell;">
+						<span style="display: block;"><b>Bairro:</b> <%= @customer_configuration.street %></span>
+						<span style="display: block;"><b>UF:</b> <%= @customer_configuration.state %></span>
+						<span style="display: block;"><b>Data de Fundação:</b> <%=l @customer_configuration.date_fundation %></span>
+						<span style="display: block;"><b>Celular:</b> <%= @customer_configuration.cell_phone %></span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div id="outer">
+    <div id="content">
+    	<div class="inner">   
+
+		<!--style="margin: 80px 40px;"-->
+			<h3 style='text-align: center;'> REQUERIMENTO DE DESFILIAÇÃO </h3>
+<br>
+<br>
+<br>
+			<p>
+				<strong>ILMO SR.</strong><br>
+				<strong>LEOCIR JOSÉ FACCIO </strong><br>
+				Presidente do SINSEMS <br>
+				Nesta
+			</p> 
+
+			<br>
+			<br>
+
+			<p style="text-align: justify; text-indent: 50px;">Eu, <%= @p.name.upcase %>, brasileiro(a), maior, inscrito(a) no CPF sob nº <%= @p.cpf %>,  Servidor(a) Público(a) Municipal <%= @p.bond_name %> no cargo de <%= @p.office.name if @p.office.present? %>, com matrícula n° <%= @p.hollering_registration %>, venho pelo presente requerer a partir desta data a DESFILIAÇÃO do Sinsems - Sindicato dos Servidores Públicos Municipais de Sorriso/MT. </p>			
+			<p style="text-align: justify; text-indent: 50px;">Estou ciente que a partir desta data deixarei de utilizar das vantagens (convênios) e dos serviços prestados na sede do Sindicato (médicos, jurídicos, psicológicos, odontológicos, acupuntura, massagem relaxante, entre outros) prestados pelo Sindicato, pois, são de direito e exercitáveis apenas aos <%=CustomerConfiguration.current.menu_people_associateds.downcase%>, nos termos do artigo 7º, alínea “c” do Estatuto Social da entidade Sindical.</p>
+			<p style="text-align: justify; text-indent: 50px;">Resto ciente ainda de que a partir desta data, o Sindicato dos Servidores Públicos Municipais de Sorriso – SINSEMS não possui legitimidade para atuar como representante ou substituto processual, tendo em vista a ausência de legitimidade para defender em juízo, direitos e interesses coletivos ou individuais de servidores não sindicalizados, nos termos do Art. 8º, inciso III, da Constituição Federal, a exemplo das ações já ajuizadas por este Sindicato, como a AÇÃO COLETIVA DE OBRIGAÇÃO DE FAZER – URV, dentre outras.</p>
+			<p>Informo que estou devolvendo em anexo a Carteirinha do SINSEMS.</p>
+
+
+			<br>
+			<br>	
+		
+
+			<div style="margin-rigth: 0px; float: right;">
+				<p><span >Sorriso/MT, <%=l Date.today, format: :long %>. </span></p>
+				<br>
+				<br>			
+			</div>	
+		
+		</div>	
+	</div>	
+</div>
+
+
+
+
+<div id="footer">
+	<p style="text-align: center;">
+		________________________________________<br>
+		Assinatura Servidor(a)
+	</p>	
+</div>
+
+<%= render "people_associateds/css_docs" %>
+
+<style type="text/css">
+
+#outer {
+	margin: -50px auto 0;
+}
+</style>

@@ -1,0 +1,2 @@
+class HeritageGroup < ApplicationRecord
+end

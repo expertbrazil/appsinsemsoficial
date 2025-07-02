@@ -1,0 +1,83 @@
+<% @include_blank = @data_url == "/declaracao-comprovacao-de-dependente" ? true : false %>
+<div class="card-body">
+  <div class="row">
+
+    <div class="col-sm-12">    
+      <div class="fg-line ">
+      	<%= select_tag "people", options_from_collection_for_select(@people_associateds, "id", "name"), include_blank: @include_blank, class: "input-sm form-control fg-input" %>
+        
+      </div>
+    </div> 
+
+
+    <div class="col-sm-12">    
+      <div class="fg-line " id='my_dependents_check'>       
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+<% unless @data_url.nil? %>
+	<%= button_tag class: "btn btn-primary btn-generate", data: { disable_with: "<i class='icofont icofont-spinner-alt-6 rotate-refresh'></i> Aguarde ..."}  do %>
+    Gerar
+  <% end %>
+<% end %>
+
+  
+  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+</div>   
+
+<% unless @data_url.nil? %>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			 var token = parseInt($("#people").val());
+			 <% if @include_blank %>
+				 $('#people').on('change', function() {
+				 	showPreLoader();
+				 	token = parseInt($("#people").val());
+				 	var url = "/associados/my_dependents?id="+token;
+
+				 	$.ajax({
+			            url: url ,
+			            type: 'get',
+			            dataType: 'script',
+			            beforeSend: function(xhr) {                     
+			              xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));            
+			            },
+			            success: function() { 
+			            }
+			        });  
+				 });
+			 <% end %>
+
+			$('.btn-generate')
+	        .on("click", function(e){
+	        
+	         	token = parseInt($("#people").val());
+	         	
+	          	if ( token != undefined ) {
+	          		var dependent_ids = [];
+	          		
+	          		$(".checkbox input[type=checkbox]:checked").each(function(){
+					    dependent_ids.push($(this).val());
+					});
+					
+		          	var url = "<%= @data_url %>"+ "/" + token + "?dependent_ids="+dependent_ids;
+		          	$('#people_associated_generate_file').modal('hide');    
+
+			        $.ajax({
+			            url: url ,
+			            type: 'get',
+			            dataType: 'script',
+			            beforeSend: function(xhr) {                     
+			              xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));            
+			            },
+			            success: function() { 
+			            }
+			        });        
+	      		}
+	      	});   
+		});
+	</script>
+<% end %>

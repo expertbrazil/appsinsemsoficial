@@ -1,0 +1,31 @@
+<div id="filterrific_results">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th><%= "ORD" %></th>
+        <th><%= PeopleAssociated.human_attribute_name(:name) %></th>                  
+        <th><%= PeopleAssociated.human_attribute_name(:affiliate_date) %></th>                  
+        <th><%= PeopleAssociated.human_attribute_name(:workplace) %></th>              
+        <th><%= PeopleAssociated.human_attribute_name(:phone) %></th>                                    
+        <th><%= "Assinatura" %></th>                                    
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @birthdays.each_with_index do |people_associated, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= people_associated.name %></td>                            
+        <td><%= I18n.l(people_associated.affiliate_date) unless people_associated.affiliate_date.blank? %></td>                            
+        <td><%= people_associated.workplace.name if people_associated.workplace.present? %></td>                            
+        <td><%= people_associated.cell_phone1 %></td>                            
+        <td></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% will_paginate @birthdays, renderer: BootstrapPagination::Rails if false %>
+  <br>
+  <p><b>Total:</b><%= @birthdays.count %></p>
+</div>

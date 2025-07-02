@@ -1,0 +1,2 @@
+json.extract! people_associated, :id, :number_registration, :name, :birthdate, :gender, :email, :phone, :address, :number, :complement, :zipcode, :burgh, :city, :state, :cpf, :rg, :marital_status, :place_birth, :scholarity, :profession, :photo, :situation, :mother, :father, :breed, :title_voter, :zone_voter, :section_voter, :workplace, :admission_date, :bond, :created_at, :updated_at
+json.url people_associated_url(people_associated, format: :json)

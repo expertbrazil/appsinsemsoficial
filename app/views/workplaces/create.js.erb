@@ -1,0 +1,14 @@
+<% if @saved %>
+	$('#people_associated_workplace_id').append($('<option>', {
+	    value: "<%=@workplace.id%>",
+	    text: "<%=@workplace.name%>"
+	}));
+
+	
+	$('.selectpicker').selectpicker('refresh');
+	$('#modal_new_workplace').modal('hide');
+<% else %>	
+	$("#workplace_error").html("<%= escape_javascript errors(@workplace) %>")
+<% end %>	
+
+hiddenPreLoader(); 
